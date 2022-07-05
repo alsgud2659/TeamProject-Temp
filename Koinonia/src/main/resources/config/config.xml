@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0/EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias type="com.example.teamproject.domain.vo.UserVO" alias="UserVO"/>
+        <typeAlias type="com.example.teamproject.domain.vo.UserDTO" alias="UserDTO"/>
+        <typeAlias type="com.example.teamproject.domain.vo.DeclareVO" alias="DeclareVO"/>
+        <typeAlias type="com.example.teamproject.domain.vo.BoardVO" alias="BoardVO"/>
+        <typeAlias type="com.example.teamproject.domain.vo.BoardReplyVO" alias="ReplyVO"/>
+        <typeAlias type="com.example.teamproject.domain.vo.ProductReplyVO" alias="PreplyVO"/>
+        <typeAlias type="com.example.teamproject.domain.vo.ProductVO" alias="ProductVO"/>
+        <typeAlias type="com.example.teamproject.domain.vo.RequestVO" alias="RequestVO"/>
+        <typeAlias type="com.example.teamproject.domain.vo.RequestReplyVO" alias="RreplyVO"/>
+        <typeAlias type="com.example.teamproject.domain.vo.FileVO" alias="fileVO"/>
+        <typeAlias type="com.example.teamproject.domain.vo.ProductFileVO" alias="ProductFileVO"/>
+        <typeAlias type="com.example.teamproject.domain.vo.BoardDTO" alias="boardDTO"/>
+    </typeAliases>
+</configuration>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.teamproject.mapper.ProductFileMapper">
+
+    <select id="getList" resultType="productFileVO">
+        SELECT UUID, UPLOAD_PATH, FILE_NAME, IMAGE, PNO, FILE_SIZE
+        FROM TBL_PFILE
+        WHERE PNO = #{pno}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM TBL_PFILE WHERE PNO = #{pno}
+    </delete>
+
+    <insert id="insert">
+        INSERT INTO TBL_PFILE (UUID, UPLOAD_PATH, FILE_NAME, IMAGE, PNO, FILE_SIZE)
+        VALUES (#{uuid}, #{uploadPath}, #{fileName}, #{image}, #{pno}, #{fileSize})
+    </insert>
+
+    <select id="getOldFiles" resultType="productFileVO">
+        SELECT UUID, UPLOAD_PATH, FILE_NAME, IMAGE, PNO, FILE_SIZE
+        FROM TBL_PFILE
+    </select>
+
+</mapper>

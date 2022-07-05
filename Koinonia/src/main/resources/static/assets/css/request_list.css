@@ -1,0 +1,567 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    font: 100% sans-serif;
+    box-sizing: border-box;
+}
+.btn.active {
+    background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+    background-color:#ffffff;
+    border-radius:6px;
+    border:1px solid #dcdcdc;
+    display:inline-block;
+    cursor:pointer;
+    color:#666666;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+}
+div#myBtnContainer {
+    left: 649px;
+}
+.btn.active:hover {
+    background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+    background-color:#f6f6f6;
+}
+.btn.active:active {
+    position:relative;
+    top:1px;
+}
+
+h4.title2 {
+    font-size: 26px;
+    text-align: left;
+}
+.request-list-filter-tiltle {
+    padding: 22px;
+    left: auto;
+    background-color: #fff;
+    top: 10px;}
+section.product {
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
+    height: 10px;
+}
+.request-list-title {
+    padding: 26px;
+    margin: 4px;
+    text-align: center;
+}
+.request-list-filter-tiltle {
+    padding: 22px;
+    left: 0px;
+    background-color: #fff;
+    top: 10px
+}
+h2 {
+    font-size: 27px;
+    right: 396px;
+}
+h3 {
+    right: 419px;
+    bottom: -21px;
+}
+button.request_content.request-save-btn {
+    font-size: 15px;
+    box-sizing: border-box;
+    color: #ffffff;
+    left: 527px;
+    top: -48px;
+    padding: 13px;
+    margin-block: -19px;
+    background-color: #0058ab;
+    border-end-end-radius: -6px;
+    border-radius: 38px;
+}
+div#myBtnContainer {
+    background-color: #fff;
+    padding: 19px;
+    text-align: left;
+}
+.slider.owl-carousel.owl-loaded.owl-drag {
+    left: 98px;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    background-color: white;
+}
+html,body{
+    display: grid;
+    height: 100%;
+    place-items: center;
+    text-align: center;
+    background: #fff;
+    background-color: #fff;
+}
+.slider{
+    max-width: 1100px;
+    display: flex;
+}
+.slider .card{
+    flex: 1;
+    margin: 0 10px;
+    background: #fff;
+}
+.slider .card .img{
+    height: 200px;
+    width: 100%;
+}
+.slider .card .img img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.slider .card .content {
+    padding: 32px 30px;
+}
+.card .content .title{
+    font-size: 25px;
+    font-weight: 600;
+}
+.card .content .sub-title{
+    font-size: 15px;
+    font-weight: 600;
+    color: #000000;
+    line-height: 20px;
+}
+.request-content{
+    padding: 89px;
+    margin: -18px;
+    bottom: -49px;
+}
+
+.card .content p{
+    text-align: justify;
+    margin: 28px -11px;
+    top: -22px
+}
+.card .content .btn{
+    display: block;
+    text-align: left;
+    margin: 10px 0;
+}
+.card .content .btn button{
+    background: #0058ab;
+    color: #fff;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px 8px;
+    border-radius: 35px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.card .content .btn button:hover{
+    transform: scale(0.9);
+}
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f1f1f1;
+    padding: 20px;
+    font-family: Arial;
+}
+
+/* Center website */
+.main {
+    max-width: 1000px;
+    margin: auto;
+}
+
+h1 {
+    font-size: 50px;
+    word-break: break-all;
+}
+
+.row {
+    margin: 8px -16px;
+}
+
+/* Add padding BETWEEN each column (if you want) */
+.row,
+.row > .column {
+    padding: 8px;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 33.33%;
+    display: none; /* Hide columns by default */
+}
+
+/* Clear floats after rows */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Content */
+.content {
+    background-color: white;
+    padding: 10px;
+}
+
+/* The "show" class is added to the filtered elements */
+.show {
+    display: block;
+}
+
+/* Style the buttons */
+.btn {
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Add a grey background color on mouse-over */
+.btn:hover {
+    background-color: #ddd;
+}
+
+/* Add a dark background color to the active button */
+.btn.active {
+    background-color: #666;
+    color: rgb(5, 5, 5);
+}
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fff;
+    padding: 20px;
+    font-family: Arial;
+}
+
+/* Center website */
+.main {
+    max-width: 1000px;
+    margin: auto;
+}
+
+h1 {
+    font-size: 50px;
+    word-break: break-all;
+}
+
+.row {
+    margin: 4px 0px;
+}
+
+/* Add padding BETWEEN each column (if you want) */
+.row,
+.row > .column {
+    padding: 8px;
+    background-color: #fff;
+}
+img {
+    border-radius: 23px;
+}
+/* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 33.33%;
+    display: none; /* Hide columns by default */
+}
+
+/* Clear floats after rows */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Content */
+.content {
+    background-color: white;
+    padding: 0px;
+}
+
+/* The "show" class is added to the filtered elements */
+.show {
+    display: block;
+}
+
+/* Style the buttons */
+.btn {
+    background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
+    display: inline-block;
+    cursor: pointer;
+    color: #666666;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+}
+
+/* Add a grey background color on mouse-over */
+.btn:hover {
+    background-color: #ddd;
+}
+
+/* Add a dark background color to the active button */
+.btn.active {
+    background-color: #666;
+    color: #0e0e0e;
+}
+/* PRODUCTS */
+.product {
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.product-category {
+    padding: 0 10vw;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 63px;
+    text-transform: capitalize;
+    top: 40px;
+    right: 532px;
+}
+
+.product-container {
+    padding: 0 10vw;
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.product-container::-webkit-scrollbar {
+    display: none;
+}
+
+.product-card {
+    flex: 0 0 auto;
+    width: 250px;
+    height: 450px;
+    margin-right: 40px;
+}
+
+.product-image {
+    position: relative;
+    width: 110%;
+    height: 290px;
+    overflow: hidden;
+    border-radius: 14px;
+}
+
+.product-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.discount-tag {
+    position: absolute;
+    background: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    color: #0058ab;
+    right: 10px;
+    top: 10px;
+    text-transform: capitalize;
+}
+
+.card-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    width: 90%;
+    text-transform: capitalize;
+    border: none;
+    outline: none;
+    background: #fff;
+    border-radius: 5px;
+    transition: 0.5s;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.product-card:hover .card-btn {
+    opacity: 1;
+}
+
+.card-btn:hover {
+    background: #0036ab;
+    color: #fff;
+}
+
+.product-info {
+    width: 100%;
+    height: 100px;
+    padding-top: 10px;
+}
+
+.product-brand {
+    text-transform: uppercase;
+    font-size: 20px;
+    right: 0;
+}
+
+.product-short-description {
+    width: 100%;
+    height: 24px;
+    line-height: 29px;
+    overflow: hidden;
+    opacity: 0.5;
+    text-transform: capitalize;
+    margin: 5px 0;
+}
+
+.price {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.actual-price {
+    margin-left: 20px;
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+.pre-btn,
+.nxt-btn {
+    border: none;
+    width: 10vw;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
+    cursor: pointer;
+    z-index: 8;
+}
+
+.pre-btn {
+    left: 0;
+    transform: rotate(180deg);
+}
+
+.nxt-btn {
+    right: 0;
+}
+
+.pre-btn img,
+.nxt-btn img {
+    opacity: 0.2;
+}
+
+footer {
+    margin-top: 160px;
+    width: 2500px;
+}
+.pre-btn:hover img,
+.nxt-btn:hover img {
+    opacity: 1;
+}
+
+.collection-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+.collection {
+    position: relative;
+}
+
+.collection img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.collection p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    font-size: 50px;
+    text-transform: capitalize;
+}
+
+.collection:nth-child(3) {
+    grid-column: span 2;
+    margin-bottom: 10px;
+}
+.product-container {
+    right: 28px;
+}
+.exp_img {
+    left: 24px;
+}
+.row {
+    width: 1800px;
+}
+.s1vteuqm {
+    display: flex;
+    flex-wrap: wrap;
+    margin: calc(1.25rem / 2 * -1);
+}
+.exp-content1 {
+    text-align: left;
+    font-size: 27px;
+    font-weight: 600;
+    top: -32px;
+    right: -240px;
+
+}
+h4.title2 {
+    text-align: center;
+}
+h4.exp-title {
+    font-size: 37px;
+    padding: 65px;
+}
+.row {
+    left: 147px;
+}
+div#myBtnContainer {
+    left: 536px;
+}
+.exp-content3 {
+    text-align: center;
+    font-size: 27px;
+    font-weight: 600;
+    left: 553px;
+    top: -105px;
+}
+.exp-content2 {
+
+    right: 62px;
+    text-align: center;
+    font-size: 27px;
+    font-weight: 600;
+    top: -70px;
+}

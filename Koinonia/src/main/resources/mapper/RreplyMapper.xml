@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.teamproject.mapper.RreplyMapper">
+
+    <insert id="insert">
+        INSERT INTO TBL_RREPLY
+        (RRNO, RNO, CONTENT, NAME)
+        VALUES(SEQ_RREPLY.NEXTVAL, #{rno}, #{content}, #{name})
+    </insert>
+
+
+    <select id="getReply" resultType="RreplyVO">
+        SELECT RRNO, RNO, CONTENT, NAME, REGISTER_DATE, UPDATE_DATE
+        FROM TBL_RREPLY WHERE RRNO = #{rrno}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM TBL_RREPLY WHERE RRNO = #{rrno}
+    </delete>
+
+    <update id="update">
+        UPDATE TBL_RREPLY
+        SET CONTENT = #{content}, UPDATE_DATE = SYSDATE
+        WHERE RRNO = #{rrno}
+    </update>
+
+    <select id="getList" resultType="RreplyVO">
+        <![CDATA[
+        SELECT RRNO, RNO, CONTENT, NAME, REGISTER_DATE, UPDATE_DATE FROM
+            (
+                SELECT ROWNUM RN, RRNO, RNO, CONTENT, NAME, REGISTER_DATE, UPDATE_DATE
+                FROM (
+
+                    SELECT /*+ INDEX_DESC(TBL_RREPLY SYS_C007301) */ ROWNUM RN, RRNO, RNO, CONTENT, NAME, REGISTER_DATE, UPDATE_DATE
+                    FROM TBL_RREPLY
+                    WHERE RNO = #{rno} AND ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+                     )
+                WHERE RNO = #{rno} AND ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+            )
+        WHERE RN > (#{criteria.pageNum} - 1) * #{criteria.amount}
+        ]]>
+    </select>
+
+
+    <select id="getTotal" resultType="_int">
+        SELECT COUNT(rrno) FROM TBL_RREPLY WHERE RNO = #{rno}
+    </select>
+
+
+
+
+
+</mapper>

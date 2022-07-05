@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.teamproject.mapper.FileMapper">
+
+    <insert id="insert">
+        INSERT INTO TBL_FILE (UUID, UPLOAD_PATH, FILE_NAME, BNO)
+        VALUES (#{uuid}, #{uploadPath}, #{fileName}, #{bno})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM TBL_FILE WHERE BNO = #{bno}
+    </delete>
+
+    <select id="findBno" resultType="fileVO">
+        SELECT UUID, UPLOAD_PATH, FILE_NAME, IMAGE, BNO, PNO, FILE_SIZE
+        FROM TBL_FILE
+        WHERE BNO = #{bno}
+    </select>
+
+    <select id="getOldFiles" resultType="fileVO">
+        SELECT UUID, UPLOAD_PATH, FILE_NAME, IMAGE, BNO, RNO, FILE_SIZE
+        FROM TBL_FILE
+        WHERE UPLOAD_PATH = TO_CHAR(SYSDATE - 1, 'YYYY/MM/DD')
+    </select>
+
+
+    <select id="getList" resultType="FileVO">
+        SELECT UUID, UPLOAD_PATH, FILE_NAME, IMAGE, BNO, FILE_SIZE
+        FROM TBL_FILE
+        WHERE BNO = #{bno}
+    </select>
+
+
+</mapper>

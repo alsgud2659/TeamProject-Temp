@@ -1,0 +1,84 @@
+* {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: none;
+  font-style: normal;
+  word-wrap: break-word;
+  word-break: keep-all;
+  list-style: none;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+a,
+button {
+  cursor: pointer;
+}
+input:focus {
+  outline: none;
+}
+
+/* 버튼 사이즈 2개 */
+.btnL {
+  width: 448px;
+  height: 56px;
+  font-size: 0.875rem;
+  line-height: 1.4285714286;
+  font-weight: 700;
+}
+.btnM {
+  width: 150px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 26px;
+  padding: 0 10px !important;
+}
+.btnS {
+  width: 95px;
+  height: 30px;
+  font-size: 13px;
+  line-height: 26px;
+  padding: 0 10px !important;
+}
+/* 버튼 스타일 3개 */
+.btnStyleA {
+  color: #fff;
+  background: #111;
+  text-align: center;
+  border-radius: 64px;
+  padding: 0 32px;
+}
+.btnStyleA:hover {
+  opacity: 0.8;
+}
+.btnStyleB {
+  color: #fff;
+  background: #0058a3;
+  text-align: center;
+  border-radius: 64px;
+  padding: 0 32px;
+}
+.btnStyleB:hover {
+  background: #004792;
+}
+.btnStyleB_1 {
+  border-radius: 3px;
+  border: 2px solid #0058a3;
+}
+.btnStyleC {
+  color: #111;
+  text-align: center;
+  border: solid 1px #000;
+  border-radius: 64px;
+  padding: 0 32px;
+}
+.btnStyleC:hover {
+  border-width: 2px;
+}
+.btnStyleC_1 {
+  border-radius: 3px;
+  border-color: #ccc;
+}

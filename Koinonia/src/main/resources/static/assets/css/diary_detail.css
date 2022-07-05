@@ -1,0 +1,35 @@
+#st-view {margin:auto;padding:0 0 20px 0;}
+#st-view .viewbox .header {border-top:2px solid #aaa; border-bottom:1px solid #aaa;}
+#st-view .viewbox .subject h1 {padding:10px 0;margin:0;font-size:15px;font-weight:bold;border-bottom:#aaa dotted 1px;word-break:break-all;word-break:break-word;overflow:auto;}
+#st-view .viewbox .subject .cat {color: #888;letter-spacing: -1px;font-size:90%;}
+#st-view .viewbox .info {padding:6px 0 5px;color:#888;}
+#st-view .viewbox .info .common {padding-top:2px;}
+#st-view .viewbox .info .btn-group .btn {color:#888;}
+#st-view .viewbox .info .split {padding:0 5px 0 5px;color:#ccc;font-size:90%;}
+#st-view .viewbox {padding-top: 3rem!important;}
+
+#st-view .viewbox .content {padding:20px 0 20px 0; line-height:160%; border-bottom:1px solid #aaa; word-break:break-all; word-break:break-word; overflow:auto;}
+#st-view .viewbox .content p {margin-bottom:0;}
+#st-view .viewbox .content img {max-width:100%; height:auto;}
+#st-view .viewbox .content .tag {padding:10px 0 0 0;}
+#st-view .viewbox .content .tag a {color:#222;}
+#st-view .viewbox .content .tag a:hover {text-decoration:underline;}
+#st-view .viewbox .content .attach {padding:10px 0 0 0; line-height:120%;}
+#st-view .viewbox .content .attach ul {padding:0; margin:0; line-height:1.5}
+#st-view .viewbox .content .attach li {list-style-type:none; background:url('img/ico_file.png') left no-repeat; padding:0 0 0 15px;}
+#st-view .viewbox .content .attach li a {color:#666;}
+#st-view .viewbox .content .attach li a:hover {text-decoration:underline;}
+#st-view .viewbox .content .attach li .size {font-size:90%; font-family:arial; color:#999;}
+#st-view .viewbox .content .attach li .down {font-size:90%; font-family:arial;color:#333;}
+#st-view .viewbox .content .scorebox {text-align:center; padding-top:20px;}
+#st-view .viewbox .content .scorebox .btn {font-weight:bold;}
+#st-view .viewbox .content .snsbox {padding-top:20px; text-align:right;}
+#st-view .viewbox .content .snsbox img {cursor:pointer;}
+#st-view .viewbox .content .hidden-content {margin: 0 0 20px 0; color: #F07090;}
+#st-view .action {padding:10px 0; text-align:left;}
+#st-view .action .right {float:right; text-align:right;}
+.right_1 {float:right;}
+
+#st-view .comment {padding:20px 0 10px 0; color:#c0c0c0;}
+#st-view .comment a {font-weight:bold; color:#3EA9CD;}
+#st-view .comment .icon1 {position:relative; top:-2px;}

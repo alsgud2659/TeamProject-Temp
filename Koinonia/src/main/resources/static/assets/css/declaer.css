@@ -1,0 +1,277 @@
+* {
+    position: relative;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    text-decoration: none;
+    font-style: normal;
+    word-wrap: break-word;
+    word-break: keep-all;
+    list-style: none;
+  }
+  a,
+  button {
+    cursor: pointer;
+  }
+  input:focus {
+    outline: none;
+  }
+
+  header{
+      width: 100%;
+  }
+  .container{
+    padding: 0 40px 0 40px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .menubar{
+      background-color: white;
+      width: 50px;
+      height: 50px;
+      margin-top: 25px;
+      margin-right: 15px;
+      border-radius: 50%;
+  }
+  .menubar:hover{
+    background-color: #dfdfdf;
+  }
+  .logo{
+      background-color: white;
+      width: 90px;
+      height: 36px;
+      margin-left: 40px;
+      margin-top: 32px;
+  }
+  .mypage ul{
+    display: flex;
+    height: 40px;
+    background-color: white;
+    margin-top: 25px;
+    margin-left: 15px;
+  }
+  .mypage > ul > li{
+      background-color: white;
+      width: 40px;
+      height: 40px;
+      margin-left: 15px;
+    }
+  /*  .mypage > ul > li :hover{*/
+  /*    border-radius: 64px;*/
+  /*  background-color: #dfdfdf;*/
+  /*}*/
+  .mypage > ul > .login{
+    width: 270px;
+}
+
+  .login{
+      font-weight: bold;
+  }
+
+
+  .selectbar{
+    width: 550px;
+    height: 54px;
+    margin-left: 40px;
+    margin-top: 18px;
+    background-color: grey;
+    
+  }
+.menubar img{
+    width: 24px;
+    height: 24px;
+    margin-top: 12px;
+    margin-left: 12px;
+    border-radius: 64px
+}
+
+.menu_list{
+    padding-left: 0;
+}
+
+.login > a > img {
+    width: 24px;
+    height: 24px;
+    margin-top: 12px;
+    margin-left: 12px;
+}
+.mypage  a{
+    width: 100%;
+    height: 100%;
+    display: block;
+} 
+.message > a > img{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%); 
+}
+
+.heart > a > img{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+} 
+
+.cart > a > img{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+
+
+.menubtn{
+    width: 80%;
+    margin: 0 auto;
+    border-bottom: solid 1px #dfdfdf;
+    padding-top: 30px;
+    color: black;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 40px;
+    padding-bottom: 10px;
+}
+
+.menubtn > a{
+    padding-right: 30px;
+}
+
+a:visited{
+    color:black
+}
+.topbar{
+    background-color: black;
+    width: 100%;
+    height: 35px;
+}
+
+.logo > a{
+    font-size: larger;
+}
+
+.login > a > span{
+    position: absolute;
+    display: block;
+    width: 200px;
+    bottom: 8px;
+    left: 40px;
+}
+
+footer {
+   background-color: #f5f5f5;
+}
+
+.footer_container{
+    margin-top: 20px;
+    height: 280px;
+    margin-left: 130px;
+    margin-right: 80px;
+    border-top: solid 1px #dfdfdf;
+    
+}
+
+.footer_wrap{
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer_copyright{
+    width: 230px;
+    height: 91px;
+    margin: 2.5rem 0 2rem 0;
+    font-size: .75rem;
+}
+
+.footer_use ul{
+    width: 890px;
+    height: 91px;
+    display: flex;
+    margin-top: 2.5rem;
+    justify-content: flex-end;
+}
+
+.footer_use ul > li{
+     padding-left: 40px;
+
+}
+
+.footer_icons{
+    position: absolute;
+    right: 0;
+    top: 180px;
+
+}
+
+.footer_icons ul{
+    display: flex;
+}
+
+.footer_icons ul > li {
+    padding-left: 20px;
+}
+
+.footer_icons a > img{
+    width: 30px;
+    height: 30px;
+
+}
+/*.content {transform: scale(0.8);}*/
+.content{
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 50px;
+
+}
+
+
+.line {
+    border-bottom: 1px solid #dfdfdf;
+}
+li {
+    list-style: none;
+    padding: 0px;
+}
+.gd8{
+    margin-bottom: 40px;
+
+}
+section{
+    margin-bottom: 64px;
+}
+.pd-1{
+    padding-top: 55px;
+    padding-bottom: 55px;
+}
+.bt_1{
+    justify-content: space-between;
+    display: flex;
+}
+.accordion-button:not(.collapsed){
+    color: black;
+    background-color: white;
+}
+.accordion-button:focus{
+    border-color: white;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 0%);
+}
+
+.img1{
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    left: 15px;
+    position: absolute
+}

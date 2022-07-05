@@ -1,0 +1,166 @@
+
+#st-gal {margin:auto;padding:0;}
+#st-gal .catbox {color:#555; padding:0 0 5px 0; min-height:35px;}
+#st-gal .catbox .info {min-height:30px; line-height:30px; vertical-align:middle;}
+#st-gal .catbox .info img {position:relative; top:-2px;}
+#st-gal .thumbs {
+	padding-top: 20px;
+	margin-bottom: 10px;
+
+}
+#st-gal .thumbs .none {
+	width: 100%;
+	text-align: center;
+	margin-bottom: 20px;
+}
+#st-gal .thumbs .row-tiny {
+	margin-right: -5px;
+	margin-left: -5px;
+}
+#st-gal .thumbs .col-tiny {
+	padding-right: 5px;
+	padding-left: 5px;
+}
+#st-gal .thumbnail {
+	border: 0;
+	border-radius: 0;
+	overflow: hidden;
+	padding: 0;
+}
+#st-gal .thumbnail .image {
+	position: relative;
+	display: block;
+	color: #999;
+	text-align: center;
+	overflow: hidden;
+	padding-bottom: 75%;
+	background-position: center;
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;	
+}
+#st-gal .thumbnail .image:hover {
+	background-image:url('https://cdn.pixabay.com/photo/2019/10/13/16/20/nice-4546506_960_720.jpg');
+	opacity : 0.5;
+}
+#st-gal .thumbnail .image .no-image {
+	position: absolute;
+	top: 30px;
+	left:0;
+	right:0;
+	margin-left:auto;
+	margin-right:auto;
+}
+#st-gal .thumbnail .image .label-wrap {
+	position: absolute;
+	left: 3px; top: 0;
+}
+#st-gal .thumbnail .image .label-wrap .label {
+	font-family: arial;
+	padding: .2em .6em;
+	border-radius: 0;
+}
+#st-gal .thumbnail a > img {
+	width: auto;
+	max-height: 200px;
+}
+#st-gal .thumbnail .info {
+	margin: 10px 0 0;
+	margin-bottom: 20px;
+	font-size: 85%;
+	text-align: right;
+}
+
+#st-gal .thumbnail .user_icon{
+	width: 20px;
+	height: 15px;
+	background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture1-128.png");
+	background-size: cover;
+	display: inline-block;
+}
+
+
+#st-gal .thumbnail .caption {
+	text-align: left;
+	font-weight: bold;
+	padding: 0;
+	margin: 10px 0 0;
+	overflow: hidden;
+	cursor: pointer;
+}
+#st-gal .thumbnail .caption img { 
+	position: relative;
+	top: -1px;
+}
+#st-gal .thumbnail .caption .title {
+	position: relative;
+	font-size: 16px;
+	padding-right: 15px;
+}
+#st-gal .thumbnail .caption .title:hover {
+	text-decoration: underline;
+}	
+#st-gal .thumbnail .caption .title a {color:#222222;text-decoration:none;line-height:150%;}
+#st-gal .thumbnail .caption .title .cat {
+	color: #888;
+	font-size: 90%;
+}
+#st-gal .thumbnail .caption .title .new {
+	color: #ff0000;
+	font-size: 85%;
+}
+#st-gal .thumbnail .caption .title .comment {
+	color: #FC6138;
+	font: normal 12px arial;
+}
+#st-gal .thumbnail .caption .title .arrow {
+	position: absolute;
+	top: 1px;
+	right: 0;
+	color: #aaa;
+}
+#st-gal .thumbnail .desc {
+	margin: 5px 0 5px;
+	font-size: 90%;
+	word-break: break-all;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 63px;
+	
+}
+#st-gal .thumbnail .action {
+	text-align: right;
+}
+#st-gal .thumbnail .action .btn-view {
+	background-color: #fcfcfc;
+}
+#st-gal .thumbnail .action .btn-view:hover, 
+#st-gal .thumbnail .action .btn-view:focus {
+	background-color: #ededed;
+	color: #434955;
+}
+#st-gal .right-side {
+    text-align:right;
+}
+
+#st-gal .buttons {margin:0 0 20px; text-align: center;}
+#st-gal .searchbox {text-align:center; padding: 20px 0;}
+#st-gal .searchbox select {display:inline-block; max-width:110px; margin-bottom:5px;}
+#st-gal .searchbox .input-search {display:inline-block; min-width:190px;}
+
+@media (max-width: 991px) { 
+	#st-gal .buttons {margin-bottom: 0;}
+	#st-gal .searchbox {padding-top: 10px;}
+}
+@media (max-width: 768px) { 
+	#st-gal thead .side1-xs {border-left:#D5D5D5 solid 1px;}
+}
+@media (max-width: 480px) {
+	#st-gal .hidden-xs-v {display: none;}
+	#st-gal .col-xs-v12 { width: 100% !important; }	
+}

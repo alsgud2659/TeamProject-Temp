@@ -1,0 +1,151 @@
+label {
+  cursor: pointer;
+}
+
+.topArea {
+  width: 100%;
+  height: 301px;
+  background: url(../../images/board_write_topArea_bg5.jpg) no-repeat;
+  background-size: cover;
+  background-position-y: 90%;
+}
+.topArea > .infoArea {
+  width: 100%;
+  height: 210px;
+  padding-top: 141px;
+  text-align: center;
+  color: #fff;
+}
+.topArea > .infoArea > .title {
+  font-size: 48px;
+  line-height: 48px;
+  font-weight: 600;
+}
+.topArea > .infoArea > .intro {
+  margin-top: 15px;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 400;
+}
+
+.mainArea {
+  margin-top: 30px !important;
+  margin: 0 auto;
+  width: 1140px;
+}
+.nationalityArea {
+  margin-bottom: 10px;
+}
+.mainArea .selectArea {
+  width: 50%;
+  position: relative;
+}
+.mainArea .selectArea .select {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  height: 30px;
+  line-height: 28px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  border-radius: 3px;
+  border-width: 0 0 1px 0;
+  background-color: #eee;
+  color: #333;
+  text-align: left;
+  cursor: pointer;
+  font-family: gothamL, notokrL;
+  font-weight: 400;
+  font-size: 13px;
+  padding-left: 20px;
+}
+.mainArea .selectArea .select::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -1px;
+  width: 11px;
+  height: 7px;
+  background: url(../../images/spr_form.png) no-repeat 0 -39px;
+}
+.open:after {
+  background-position: -11px -39px !important;
+}
+.mainArea .selectArea .option {
+  width: 100%;
+  display: block;
+  z-index: 3;
+  height: 150px;
+  overflow-y: scroll;
+  position: absolute;
+  border: solid #333;
+  border-width: 0 1px 1px 1px;
+  background: #fff;
+  display: none;
+}
+.openOption {
+  display: block !important;
+}
+.mainArea .selectArea .option li > a {
+  height: 50px;
+  background: #fff;
+  padding: 0 20px;
+  color: #000;
+  font-family: notokrL, gothamL, playfair;
+  font-weight: 400;
+  font-size: 13px;
+  position: relative;
+  display: block;
+  text-align: left;
+  line-height: 50px;
+}
+.mainArea .selectArea .option li > a:hover {
+  background: #f7f7f7;
+}
+.mainArea .selectArea .option::-webkit-scrollbar {
+  width: 10px;
+  height: 200px;
+}
+.mainArea .selectArea .option::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  background-clip: padding-box;
+  border-top: solid 10px #fff;
+  border-bottom: solid 10px #fff;
+}
+.mainArea .selectArea .option::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+.viewthum {
+  display: flex;
+  margin-bottom: 13px;
+}
+.viewthum > .viewlabel {
+  width: 85px;
+  height: 30px;
+  padding: 5px 10px;
+  background-color: #ddd;
+  border-radius: 3px 0px 0px 3px;
+  text-align: center;
+  font-size: 13px;
+}
+.viewthum > .viewInput {
+  width: 958px;
+  height: 30px;
+  padding: 5px 10px;
+  background-color: #eee;
+  font-size: 13px;
+}
+.writeArea {
+  margin-top: 10px;
+}
+.note-statusbar {
+  display: none;
+}
+.btnArea {
+  margin-top: 15px;
+  padding: 20px 0;
+  text-align: center;
+}
