@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/request_detail.css">
+    <title>header</title>
+</head>
+<body>
+
+<div th:fragment="headerFragment">
+    <div class="topbar"></div>
+    <header>
+
+        <div class="container_header">
+            <div class="menubar">
+                <div class="btn_menu_open"><button type="button"><img src="/images/134216_menu_lines_hamburger_icon.png" style="margin-top: 0; margin-left: 0;"></button></div>
+                <div id="mask"></div>
+                <div class="slide_menu">
+                    <div class="menu_close"><button type="button" class="btn_menu_close"><img  src="/images/x_106506.png"></button>
+                    </div>
+                    <ul class="menu_list">
+                        <li><a th:href="@{/board/register}">여행 다이어리 작성하기</a></li>
+                        <li><a th:href="@{/board/list}">여행 다이어리 보러가기</a></li>
+                        <li><a th:href="@{/product/register}">여행 속 물품 판매하기</a></li>
+                        <li><a th:href="@{/product/list}">여행 속 물품 구매하기</a></li>
+                        <li><a th:href="@{/request/register}">해외 물품 요청하기</a></li>
+                        <li><a th:href="@{/request/list}">희망 물품 보러가기</a></li>
+                        <li><a th:href="@{/declare/register}">신고하기</a></li>
+                        <li><a th:href="@{/declare/}">신고 이력 보러가기</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="logo">
+                <a th:href="@{/}"><img src ="/images/KakaoTalk_20220613_184630975.png"></a>
+            </div>
+            <div class="selectbar">
+                <form action="">
+                    <img src="/images/4801315_glass_magnifier_magnifying_search_searching_icon.png" >
+                    <input type="text" placeholder="검색어 입력">
+                </form>
+            </div>
+            <div class="mypage">
+                <ul>
+                    <li class="login">
+                        <a>
+                            <img src="/images/4092564_profile_about_mobile%20ui_user_icon.png">
+                            <div class="btn_menu_open1"><button type="button"><span>Hej! <span id="islogin">로그인 또는 가입하기</span></span></button></div>
+                        </a>
+                        <div id="mask1"></div>
+                        <div class ="slide_menu1">
+                            <section class="header_side">
+                                <div class="menu_close1"><button type="button" class="btn_menu_close1"><img  src="/images/x_106506.png"></button>
+                                </div>
+                                <div class ="header_content">
+                                    <h2>Hej
+                                        <sapn class="header__username"></sapn>
+                                    </h2>
+                                    <a role="button" class="btn btn--small btn--primary-inverse" th:href="@{/user/login}" id="header__button"
+                                       style="display: flex; justify-content: end;">
+
+                                        <span class="btn__inner">로그인</span></a>
+                                </div>
+                                <ul class="sidebar">
+                                    <li>
+                                        <a class="sidebar_tag">
+                                            <div class="sidebar_tag-content">
+                                                <div class="sidebar_tag-content-text">
+                                                    <h3>계정생성하기</h3>
+                                                    <div>계정을 생성하여 IKEA Family 클럽에 지금 가입해보세요,가입은 무료입니다!</div>
+                                                </div>
+                                                <button type="button" class="btn" aria-hidden="true" tabindex="-1" id="btnGoToJoin">
+                                                <span class="btn__inner" style="align-items:stretch">
+                                                    <svg focusable="false" viewBox="0 0 24 24" class="svg-icon" aira-hidden="true">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="m16.415 12.0011-8.0012 8.0007-1.4141-1.4143 6.587-6.5866-6.586-6.5868L8.415 4l8 8.0011z"></path>
+                                                    </svg>
+                                                </span>
+                                                </button>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </section>
+                            <section class="body_side">
+                                <ul class="menu_list">
+                                    <li><a th:href="@{/user/login}">로그인</a></li>
+                                    <li><a th:href="@{/board/list}">여행자 다이어리</a></li>
+                                    <li><a th:href="@{/product/list}">여행 기념품</a></li>
+                                    <li><a th:href="@{/request/list}">기념품 요청</a></li>
+                                </ul>
+                            </section>
+                        </div>
+                    </li>
+                    <li class="message"><a><img src="/images/622401_mail_packet_email_envelope_letter_icon.png" style="position: inherit;"></a></li>
+                    <li class="heart"><a><img src="/images/216236_heart_icon.png" style="position: inherit;"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="menubtn">
+            <a th:href="@{/board/list}">여행자 다이어리</a>
+            <a th:href="@{/product/list}">여행 기념품</a>
+            <a th:href="@{/request/list}">기념품 요청</a>
+        </div>
+    </header>
+
+</div>
+</body>
+<script src="/assets/js/header.js"></script>
+</html>

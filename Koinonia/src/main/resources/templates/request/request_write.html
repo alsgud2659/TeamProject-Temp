@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>요청 신청</title>
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/d1d8464fd3.js" 
+    crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script type="text/javascript" src="./lib/slick/slick.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./lib/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/slick/slick-theme.css" />
+    <link rel="stylesheet" href="/assets/css/request_write.css">
+    <link rel="stylesheet" href="/assets/css/header.css" />
+    <link rel="stylesheet" href="/assets/css/footer.css" />
+
+    
+</head>
+
+<body>
+<div class="topbar"></div>
+<header>
+    <div class="header_container">
+        <div class="menubar">
+            <a>
+                <img src="/images/134216_menu_lines_hamburger_icon.png">
+            </a>
+        </div>
+        <div class="logo">
+            <img src="/images/logo.png">
+        </div>
+        <div class="selectbar">
+            <form action="">
+                <img src="/images/4801315_glass_magnifier_magnifying_search_searching_icon.png" >
+                <input type="text" placeholder="검색어 입력">
+            </form>
+        </div>
+        <div class="mypage">
+            <ul>
+                <li class="login">
+                    <a>
+                        <img src="/images/4092564_profile_about_mobile ui_user_icon.png">
+                        <span>Hej! 로그인 또는 가입하기</span>
+                    </a>
+                </li>
+                <li class="message"><a><img src="/images/622401_mail_packet_email_envelope_letter_icon.png"></a></li>
+                <li class="heart"><a><img src="/images/216236_heart_icon.png"></a></li>
+                <li class="cart"><a><img src="/images/6351908_bag_basket_cart_ecommerce_shop_icon.png"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="menubtn">
+        <a href="">여행자 기념품 </a>
+        <a href="">여행 다이어리</a>
+        <a href="">기념품 요청</a>
+    </div>
+</header>
+
+<article class="write-request" style="background-color:#F7F7F7">
+    <div class="request_select_box select-type">
+        <table class="request_select_box">
+            <tbody class="request_select_box">
+            <tr class="request_select_box">
+                <th class="request_select_box">요청 제목</th>
+                <td class="request_select_box">
+                    <input type="text" style="width:425px" name="partnerName" placeholder="" class="request_select_box">
+                </td>
+            </tr>
+            <tr class="request_select_box">
+                <th class="request_select_box">국가 선택</th>
+                <td class="request_select_box">
+                    <p style="width:205px;margin-right:15px" class="request_select_filter select-box   ">
+                        <select name="continent" class="request_select_filter">
+                            <option selected="" value="" hidden="" class="request_select_filter">대륙명</option>
+                            <option value="동북아시아" class="request_select_filter">동북아시아
+                            </option>
+                            <option value="동남아시아" class="request_select_filter">동남아시아
+                            </option>
+                            <option value="중앙아시아" class="request_select_filter">중앙아시아
+                            </option>
+                            <option value="서아시아" class="request_select_filter">서아시아
+                            </option>
+                            <option value="동유럽" class="request_select_filter">동유럽
+                            </option>
+                            <option value="서유럽" class="request_select_filter">서유럽
+                            </option>
+                            <option value="남유럽" class="request_select_filter">남유럽
+                            </option>
+                            <option value="북유럽" class="request_select_filter">북유럽
+                            </option>
+                            <option value="북아메리카" class="request_select_filter">북아메리카
+                            </option>
+                            <option value="남아메리카" class="request_select_filter">남아메리카
+                            </option>
+                            <option value="북아프리카" class="request_select_filter">북아프리카
+                            </option>
+                            <option value="남아프리카" class="request_select_filter">남아프리카
+                            </option>
+                            <option value="오스트레일리아" class="request_select_filter">오스트레일리아
+                            </option>
+                        </select>
+                    </p>
+                    <p style="width:205px" class="request_select_filter select-box  disabled ">
+                        <select name="area" class="request_select_filter">
+                            <option selected="" value="" hidden="" class="request_select_filter">나라이름</option>
+                        </select>
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="request_write_btn articles">
+        <div class=" article">
+            <div class="request_write_content article-wrap">
+                <div class="request_write_content image-wrap">
+                    <div class="request_write_content no-image">
+
+                    </div>
+                </div>
+                <div class="request_img_content article__content">
+                    <div class="request_img_content">
+                        <p class="request_img_content info-text">사진에 대한 이야기를 작성해주세요</p>
+                    </div>
+                </div>
+            </div>
+            <div class="request_keyword keyword">
+                <p class="request_keyword keyword-title disabled">커뮤니티 키워드</p>
+                <ul class="request_keyword selected-keyword-list">
+                    <li class="request_keyword">
+                        <p class="request_keyword tag-input-wrap">
+                            <span class="request_keyword tag-icon disabled">#</span>
+                            <input type="text" disabled="" placeholder="키워드를 입력하세요." maxlength="15" class="request_keyword tag-input" value="">
+                        </p>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="request_write_content close-button-wrap">
+                <span class="request_write_content icon-ic_action_close disabled"></span>
+            </div>
+        </div>
+        <div class="img_upload image-add">
+            <label for="file-seq-3" class="img_upload first-upload__button">
+                <div class="img_upload">
+                    <div class="img_upload">
+                                <span src="/src/main/resources/static/images/plus.png" class="img_upload add-icon icon-ic_plus ">
+
+                                </span>
+                        <p class="img_upload add-info">어떤 것이 필요한가요?
+                            <br class="img_upload">사진을 등록하고 요청해보세요^^
+                        </p>
+                    </div>
+                </div>
+            </label>
+            <div style="display:none" class="img_upload">
+                <input type="file" name="files" id="file-seq-0" accept="image/*" multiple="" class="img_upload">
+                <input type="file" name="files" id="file-seq-1" accept="image/*" multiple="" class="img_upload">
+                <input type="file" name="files" id="file-seq-2" accept="image/*" multiple="" class="img_upload">
+                <input type="file" name="files" id="file-seq-3" accept="image/*" multiple="" class="img_upload">
+            </div>
+        </div>
+        <button class="request_write_btn story-save-btn">게시하기</button>
+    </div>
+</article>
+
+
+<footer>
+    <div class="footer_container">
+        <div class="footer_wrap">
+            <div class="footer_copyright">
+                <p>© 2022 Company, Inc. All rights reserved.</p>
+            </div>
+
+            <div class="footer_use">
+                <ul class="">
+                    <li class=""><a class=""></a>개인정보처리방침</li>
+                    <li class=""><a href=""></a>쿠키 정책</li>
+                    <li class=""><a href=""></a>쿠키 설정</li>
+                    <li class=""><a href=""></a>웹사이트 이용약관</li>
+                    <li class=""><a href=""></a>Responsible disclosure</li>
+                </ul>
+            </div>
+        </div>
+        <div class="team">
+            <p > captin corin </p>
+            <p> 고혁배 김지나 나기업 김정관 안요셉 이진성 강승훈</p>
+        </div>
+        <div class="footer_icons">
+            <ul>
+                <li>
+                    <a href="">
+                        <img src="/images/5279111_network_fb_social media_facebook_facebook logo_icon.png" >
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="/images/1161953_instagram_icon.png" >
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="/images/211929_social_youtube_icon.png" >
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="/images/8679415_kakao_talk_fill_icon.png" >
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>비밀번호 재설정</title>
+    <!-- css -->
+    <link rel="stylesheet" href="/assets/css/common.css" >
+    <link rel="stylesheet" href="/assets/css/new_pw.css" >
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <div class="subArea">
+          <div class="goToBackArea">
+            <a href="./login.html" class="goToBack">
+              <span>메인페이지로 이동</span>
+              <img src="/images/gotobeforeIcon2.png" />
+            </a>
+          </div>
+          <div class="logoArea">
+            <a class="logo">
+              <img src="/images/logo.png" />
+            </a>
+          </div>
+          <div class="title">
+            <h1>비밀번호를<br>재설정해주세요.</h1>
+            <h5><br>비밀번호는 최소 다음이 포함되어야 합니다.</h5>
+          </div>
+          <div class="guideArea">
+
+            <p>
+              -최소 8 자 이상을 입력해야 합니다.<br>
+              -숫자<br>
+              -영문 대문자<br>
+              -특수 문자<br>
+            </p>
+          </div>
+          <div class="InfoArea">
+            <div class="policyArea">
+              <span>KOINONIA</span>
+              <a href="#쿠키정책">쿠키 정책</a>
+              <a href="#개인정보처리방침">개인정보처리방침</a>
+            </div>
+            <div class="projectInfoArea">
+              <span class="teamName">© 캡틴 코린</span>
+              <span>
+                고혁배, 강승훈, 김정관, 김지나, 나기업, 안요셉, 이진성
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="mainArea">
+          <div class="mainInner">
+            <form
+              th:action="@{/user/new_pw}"
+              method="post"
+              id="form"
+              onsubmit="return dobuleCheck();"
+            >
+              <div class="inputPw">
+                <label for="pw">새로운 비밀번호</label>
+                <div class="inputWrapper">
+                  <input type="password" id="pw" name="pw" />
+                  <button type="button">
+                    <img src="/images/eye_see.png" alt="" />
+                    <span>비밀번호 표시하기</span>
+                  </button>
+                  <p id="pwGuidMsg" class="guideMsg"></p>
+              <div class="inputPw1">
+                <label for="pw1">새로운 비밀번호 확인</label>
+                <div class="inputWrapper1">
+                  <input type="password" id="pw1" name="pw1" />
+                  <button type="button">
+                    <img src="/images/eye_see.png" alt="" />
+                    <span>비밀번호 표시하기</span>
+                  </button>
+                  <p id="pwGuidMsg1" class="guideMsg"></p>
+              <div class="btnArea">
+                <input id="email" name="email" th:value="${email}" readonly style="display: none;">
+                <button type="submit" class="btnL btnStyleB">
+                  새로운 비밀번호 저장
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/assets/js/new_pw.js"></script>
+
+
+</html>

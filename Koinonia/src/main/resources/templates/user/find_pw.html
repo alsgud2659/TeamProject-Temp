@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>비밀번호 찾기</title>
+  <!-- css -->
+  <link rel="stylesheet" href="/assets/css/common.css" />
+  <link rel="stylesheet" href="/assets/css/find_pw.css" />
+</head>
+<body>
+<div class="wrapper">
+  <div class="container">
+    <div class="subArea">
+      <div class="goToBackArea">
+        <a th:href="@{/user/login}" class="goToBack">
+          <span>메인페이지로 이동</span>
+          <img src="/images/gotobeforeIcon2.png" />
+        </a>
+      </div>
+      <div class="logoArea">
+        <a class="logo">
+          <img src="/images/logo.png" />
+        </a>
+      </div>
+      <div class="title">
+        <h1>비밀번호 찾기</h1>
+      </div>
+      <div class="guideArea">
+        <p>
+          이메일을 입력하여 비밀번호 재설정 링크를 받거나 확인된 휴대폰
+          번호를 입력하여 일회성 코드 를받습니다.
+        </p>
+      </div>
+      <div class="InfoArea">
+        <div class="policyArea">
+          <span>KOINONIA</span>
+          <a href="#쿠키정책">쿠키 정책</a>
+          <a href="#개인정보처리방침">개인정보처리방침</a>
+        </div>
+        <div class="projectInfoArea">
+          <span class="teamName">© 캡틴 코린</span>
+          <span>
+                고혁배, 강승훈, 김정관, 김지나, 나기업, 안요셉, 이진성
+              </span>
+        </div>
+      </div>
+    </div>
+    <div class="mainArea">
+      <div class="mainInner">
+        <form
+                th:action="@{/user/find_pw}"
+                method="post"
+                id="form"
+                onsubmit="return dobuleCheck();"
+        >
+          <div class="inputId">
+            <label for="email">이메일</label>
+            <div class="inputWrapper">
+              <input type="text" id="email" name="email" />
+            </div>
+            <p id="emailGuidMsg" class="guideMsg"></p>
+          </div>
+
+          <div class="btnArea">
+            <button type="submit" class="btnL btnStyleB">
+              비밀번호 재설정
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/assets/js/find_pw.js"></script>
+<script>
+  // 등록된 이메일이 아닌 경우
+  var msg = "[[${msg}]]";
+  if(!(msg == null || msg.length <= 0)){
+    alert(msg);
+  }
+</script>
+</html>

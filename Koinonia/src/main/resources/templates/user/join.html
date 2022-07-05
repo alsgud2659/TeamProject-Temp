@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/assets/css/common.css" />
+    <link rel="stylesheet" href="/assets/css/join.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="bg"></div>
+      <div class="mainContainer">
+        <div class="subArea">
+          <div class="goToBackArea">
+            <a th:href="@{/user/login}" class="goToBack">
+              <span>로그인페이지로 이동</span>
+              <img src="/images/gotobeforeIcon2.png" />
+            </a>
+          </div>
+          <div class="logoArea">
+            <a class="logo">
+              <img src="/images/logo.png" />
+            </a>
+          </div>
+          <div class="title">
+            <h1><span>KOINONIA</span>회원가입</h1>
+          </div>
+          <div class="guideArea">
+            <div>
+              <span>이미 가입하셨나요?</span>
+              <a th:href="@{/user/login}">로그인 하기</a>
+            </div>
+          </div>
+          <!-- <div class="imgArea"></div> -->
+          <div class="InfoArea">
+            <div class="policyArea">
+              <span>KOINONIA</span>
+              <a href="#쿠키정책">쿠키 정책</a>
+              <a href="#개인정보처리방침">개인정보처리방침</a>
+            </div>
+            <div class="projectInfoArea">
+              <span class="teamName">© 캡틴 코린</span>
+              <span>
+                고혁배, 강승훈, 김정관, 김지나, 나기업, 안요셉, 이진성
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="mainArea">
+          <div class="mainInner">
+            <div>
+              <form
+                action="/user/join"
+                method="post"
+                id="form"
+                onsubmit="return doubleCheck();"
+              >
+                <ul class="inputArea">
+                  <li>
+                    <label for="name">이름</label>
+                    <div class="inputWrapper">
+                      <input type="text" id="name" name="name" />
+                    </div>
+                    <p id="nameGuidMsg" class="guideMsg">이름을 입력하세요</p>
+                  </li>
+                  <li>
+                    <label for="cover">자기소개</label>
+                    <div class="textareaWrapper">
+                      <textarea
+                        id="cover"
+                        name="cover"
+                        wrap="soft"
+                      ></textarea>
+                    </div>
+                    <p class="guideMsg"></p>
+                  </li>
+                  <li>
+                    <label for="email">이메일</label>
+                    <div class="inputWrapper">
+                      <input type="text" id="email" name="email" />
+                    </div>
+                    <p id="emailGuidMsg" class="guideMsg"></p>
+                  </li>
+                  <li>
+                    <label for="pw">비밀번호</label>
+                    <div class="inputWrapper">
+                      <input type="password" id="pw" name="pw" />
+                      <button type="button">
+                        <img src="/images/eye_see.png"/>
+                        <span>비밀번호 표시하기</span>
+                      </button>
+                    </div>
+                    <p id="pwGuidMsg" class="guideMsg"></p>
+                  </li>
+                  <li class="checkbox">
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="check01"
+                        id="check01"
+                        value="y"
+                      />
+                      <label for="check01">
+                        <span>(필수) 약관을 모두 읽고 동의합니다.</span>
+                        <a href="#이용약관">이용약관</a>
+                      </label>
+                    </div>
+                    <p id="check01GuidMsg" class="guideMsg"></p>
+                  </li>
+                  <li class="checkbox">
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="check02"
+                        id="check02"
+                        value="y"
+                      />
+                      <label for="check02">
+                        <span> (필수) 개인정보 수집ㆍ이용에 동의합니다. </span>
+                        <a href="#개인정보수집이용동의">개인정보 수집ㆍ이용 동의</a>
+                      </label>
+                    </div>
+                    <p id="check02GuidMsg" class="guideMsg"></p>
+                  </li>
+                  <li>
+                    <div class="btnArea">
+                      <button id="submit" type="submit" class="btnL btnStyleA">
+                        가입 완료하기
+                      </button>
+                    </div>
+                  </li>
+                </ul>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/assets/js/joinService.js"></script>
+  <script src="/assets/js/join.js"></script>
+</html>

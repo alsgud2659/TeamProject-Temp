@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행 다이어리</title>
+
+    <!--  jquery  -->
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="/assets/css/common_diary.css"/>
+    <link type="text/css" rel="stylesheet" href="/assets/css/list.css"/>
+    <link type="text/css" rel="stylesheet" href="/assets/css/t1.css"/>
+    <link type="text/css" rel="stylesheet" href="/bootstrap-5.1.3-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/assets/css/header.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/request_detail.css">
+    <link rel="stylesheet" href="/assets/css/footer.css"/>
+    <style>
+        .search-selector{
+            height: 100%;
+            margin-right: 8px;
+            border: 1px solid #ced4da;
+            color: rgb(33, 37, 41);
+        }
+        .search-selector:focus{
+            outline: none;
+        }
+        .temp-margin{
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+<!--  header start  -->
+<div th:replace="~{/header/header :: headerFragment}"></div>
+<!--  header end  -->
+<div id="st-body" class="homepage fullsize">
+
+
+    <div id="wrapper">
+
+
+        <div id="main" role="main">
+            <div id="main-content-header">
+                <style>
+                    #wrapper {
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        -webkit-background-size: cover;
+                        -moz-background-size: cover;
+                        -o-background-size: cover;
+                        background-size: cover;
+                        background-image: url('http://linkandleave.com/files/2017/02/23/6e006508201242416d4d62cc6e260ac3143147.jpg');
+                    }
+
+                    #main-content-header {
+                        min-height: 210px
+                    }
+                </style>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="title st-font2">
+                                여행 다이어리 <small class="st-font1">전 세계를 여행하는 여행자들의 살아 숨쉬는 이야기들!</small>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div id="main-content" class="content-wrapper">
+
+                <div class="container">
+
+                    <div class="buttons">
+
+                        <div class="searchbox py-lg-5" style="border-bottom: solid 1px #cccccc;">
+
+                            <div class="input-group input-group-sm" style="width: 70%; margin:0 auto;">
+                                <div class="select-box">
+                                    <select class="search-selector" name="type">
+                                        <option value="">선택</option>
+                                        <option value="title">제목</option>
+                                        <option value="name">작성자</option>
+                                        <option value="content">내용</option>
+                                    </select>
+                                </div>
+                                <input type="text" name="keyword" value="" class="form-control input-search temp-margin"
+                                       placeholder="검색어" size="10">
+                                <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary search-btn" title="검색">검색</button>
+                            </span>
+                            </div>
+                        </div>
+
+
+                        <div id="st-gal">
+                            <div class="thumbs">
+                                <div class="right-side py-1">
+                                    <a href="" class="btn btn-outline-dark" style="margin-bottom: 14px;"> 다이어리 작성하기</a>
+                                </div>
+                                <div class="row row-tiny result-list-box">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  footer start  -->
+<div th:replace="~{/footer/footer :: footerFragment}"></div>
+<!--  footer end  -->
+<!-- header,footer -->
+<script src="/assets/js/header.js"></script>
+<script src="/assets/js/board_index.js"></script>
+</body>
+</html>
+
+
+

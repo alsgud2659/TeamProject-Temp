@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Product Detail</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../../static/Vendor/bootstrap/css/bootstrap.min.css">             <!--사진사이즈-->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../../static/assets/font/font-awesome-4.7.0/css/font-awesome.min.css">  <!--아이콘-->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../../static/Vendor/slick/slick.css">                          <!--이미지 버튼-->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../../static/Vendor/MagnificPopup/magnific-popup.css">       <!--이미지 팝업 확대-->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../../static/assets/css/util.css">
+	<link rel="stylesheet" type="text/css" href="../../static/assets/css/request_detail.css">
+	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body class="animsition">	
+	<header>
+        <div class="container_header">
+            <div class="menubar">
+                <div class="btn_menu_open"><button type="button"><img src="../../static/images/134216_menu_lines_hamburger_icon.png"></button></div>
+                    <div id="mask"></div>
+                        <div class="slide_menu">
+                        <div class="menu_close"><button type="button" class="btn_menu_close"><img  src="../../static/images/x_106506.png"></button>
+                        </div>
+                        <ul class="menu_list">
+                            <li><a href="#">메뉴 12</a></li>
+                            <li><a href="#">메뉴 23</a></li>
+                            <li><a href="#">메뉴 34</a></li>
+                            <li><a href="#">메뉴 45</a></li>
+                            <li><a href="#">메뉴 56</a></li>
+                        </ul>
+                    </div>
+                
+            </div>
+            <div class="logo">
+                <a href="">Koinonia </a>
+            </div>
+            <div class="selectbar">
+                <form action="">
+                    <input type="text" placeholder="검색어 입력">
+                </form>
+            </div>
+            <div class="mypage">
+                <ul>
+                    <li class="login">
+                        <a>
+                            <img src="../../static/images/4092564_profile_about_mobile%20ui_user_icon.png">
+                            <div class="btn_menu_open1"><button type="button"><span style="padding: 14px; position: fixed; top: 26px; right: 317px;">Hej! 로그인 또는 가입하기</span></button></div>
+                        </a>
+                        <div id="mask1"></div>
+                        <div class ="slide_menu1">
+
+
+                        <section class="header_side">
+                            <div class="menu_close1"><button type="button" class="btn_menu_close1"><img  src="../../static/images/x_106506.png"></button>
+                            </div>
+                            <div class ="header_content">
+                                <h2>Hej
+                                <sapn class="header__username"></sapn>
+                                </h2>
+                                <a role="button" class="btn btn--small btn--primary-inverse" href="https://www.ikea.com/kr/ko/profile/login?itm_campaign=logged-out&amp;itm_element=slider&amp;itm_content=login" id="header__button"
+                                style="display: flex; justify-content: end;">
+                                    
+                                <span class="btn__inner">로그인</span></a>
+                            </div>
+                            <ul class="sidebar">
+                                <li>
+                                    <a class="sidebar_tag">
+                                        <div class="sidebar_tag-content">
+                                            <div class="sidebar_tag-content-text">
+                                                <h3>계정생성하기</h3>
+                                                <div>계정을 생성하여 IKEA Family 클럽에 지금 가입해보세요,가입은 무료입니다!</div>
+                                            </div>
+                                            <button type="button" class="btn" aria-hidden="true" tabindex="-1">
+                                                <span class="btn__inner" style="align-items:stretch">
+                                                    <svg focusable="false" viewBox="0 0 24 24" class="svg-icon" aira-hidden="true">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="m16.415 12.0011-8.0012 8.0007-1.4141-1.4143 6.587-6.5866-6.586-6.5868L8.415 4l8 8.0011z"></path>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                        </div>    
+                                    </a>
+                                </li>
+                            </ul>
+                   
+
+                        </section>
+
+                        <section class="body_side">  
+                            <ul class="menu_list">
+                                <li><a href="#">로그인</a></li>
+                                <li><a href="#">구매 내역</a></li>
+                                <li><a href="#">위시리스트</a></li>
+                                <li><a href="#">플래너</a></li>
+                                <li><a href="#">배송 조회</a></li>
+                            </ul> 
+
+                        </section>
+
+
+
+
+                    </div>
+                
+                    </li>
+                    <li class="message"><a><img src="../../static/images/622401_mail_packet_email_envelope_letter_icon.png" style="position: inherit;"></a></li>
+                    <li class="heart"><a><img src="../../static/images/216236_heart_icon.png" style="position: inherit;"></a></li>
+                    <li class="cart"><a><img src="../../static/images/6351908_bag_basket_cart_ecommerce_shop_icon.png" style="position: inherit;"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="menubtn">
+            <a href="">모든 제품</a>
+            <a href="">온라인 쇼룸</a>
+            <a href="">더 낮은 새로운 가격</a>
+        </div>
+    </header>
+
+	
+
+
+
+
+
+	<!-- Product Detail -->
+	<section class="sec-product-detail bg0 p-t-65 p-b-60">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-lg-7 p-b-30">
+					<div class="p-l-25 p-r-30 p-lr-0-lg">
+						<div class="wrap-slick3 flex-sb flex-w">
+							<div class="wrap-slick3-dots"></div>
+							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+
+							<div class="slick3 gallery-lb">
+								<div class="item-slick3" data-thumb="../../static/assets/images/product-detail-01.jpg">
+									<div class="wrap-pic-w pos-relative">
+										<img src="../../static/assets/images/product-detail-01.jpg" alt="IMG-PRODUCT">
+
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="../../static/assets/images/product-detail-01.jpg">
+											<i class="fa fa-expand"></i>
+										</a>
+									</div>
+								</div>
+
+								<div class="item-slick3" data-thumb="../../static/assets/images/product-detail-02.jpg">
+									<div class="wrap-pic-w pos-relative">
+										<img src="../../static/assets/images/product-detail-02.jpg" alt="IMG-PRODUCT">
+
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="../../static/assets/images/product-detail-02.jpg">
+											<i class="fa fa-expand"></i>
+										</a>
+									</div>
+								</div>
+
+								<div class="item-slick3" data-thumb="../../static/assets/images/product-detail-03.jpg">
+									<div class="wrap-pic-w pos-relative">
+										<img src="../../static/assets/images/product-detail-03.jpg" alt="IMG-PRODUCT">
+
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="../../static/assets/images/product-detail-03.jpg">
+											<i class="fa fa-expand"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+					
+				<div class="col-md-6 col-lg-5 p-b-30">
+					<div class="p-r-50 p-t-5 p-lr-0-lg">
+						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+							독일에서 굴러온 굴렁쇠
+                        
+                    
+						</h4>
+
+						<span class="mtext-106 cl2">
+						    ￦ 29,800 
+						</span>
+
+						<p class="stext-102 cl3 p-t-23">
+							독일여행중 어린이가 굴리던 굴렁쇠
+						</p>
+                        
+                        <button class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10" style="margin-top:20px; margin-left: 110px;">
+                            쪽지보내기
+                        </button>
+						
+					</div>
+				</div>
+			</div>
+
+			<div class="bor10 m-t-50 p-t-43 p-b-40">
+				<!-- Tab01 -->
+				<div class="tab01">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="nav-item p-b-10">
+							<a class="nav-link active" data-toggle="tab" href="#description" role="tab">지역 세부사항</a>
+						</li>
+
+						<li class="nav-item p-b-10">
+							<a class="nav-link" data-toggle="tab" href="#information" role="tab">제품설명</a>
+						</li>
+<<<<<<< HEAD
+					</ul>
+
+=======
+						<li class="nav-item p-b-10">
+							<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">댓 글</a>
+						</li>
+
+
+
+					</ul>
+
+
+
+>>>>>>> 7c63baf3c9cd7749d6fef87933b0335a23abcc37
+					<!-- Tab panes -->
+					<div class="tab-content p-t-43">
+						<!-- - -->
+						<div class="tab-pane fade show active" id="description" role="tabpanel">
+							<div class="how-pos2 p-lr-15-md">
+								<p class="stext-102 cl6">
+									독일을 가리키는 명칭은 유럽의 그 어느 나라보다 다양하다. 예를 들어 독일 내에서 헌법상이나 외교 관계 등에서 사용하는 자국어 표기는 도이칠란트(Deutschland)이지만, 영어로는 '저머니'(Germany)라고 하며 프랑스어로는 '알마뉴'(Allemagne), 폴란드어로는 '니엠치'(Niemcy), 중국어로는 '더궈'(德国)라고 한다.
+								</p>
+							</div>
+						</div>
+
+						<!-- 세부사항 작성 페이지 -->
+						<div class="tab-pane fade" id="information" role="tabpanel">
+							<div class="row">
+								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+									<ul class="p-lr-28 p-lr-15-sm">
+										<li class="flex-w flex-t p-b-7">
+											<span class="stext-102 cl3 size-205">
+												Weight
+											</span>
+
+											<span class="stext-102 cl6 size-206">
+												0.79 kg
+											</span>
+										</li>
+
+										<li class="flex-w flex-t p-b-7">
+											<span class="stext-102 cl3 size-205">
+												Dimensions
+											</span>
+
+											<span class="stext-102 cl6 size-206">
+												110 x 33 x 100 cm
+											</span>
+										</li>
+
+										<li class="flex-w flex-t p-b-7">
+											<span class="stext-102 cl3 size-205">
+												Materials
+											</span>
+
+											<span class="stext-102 cl6 size-206">
+												60% cotton
+											</span>
+										</li>
+
+										<li class="flex-w flex-t p-b-7">
+											<span class="stext-102 cl3 size-205">
+												Color
+											</span>
+
+											<span class="stext-102 cl6 size-206">
+												Black, Blue, Grey, Green, Red, White
+											</span>
+										</li>
+
+										<li class="flex-w flex-t p-b-7">
+											<span class="stext-102 cl3 size-205">
+												Size
+											</span>
+
+											<span class="stext-102 cl6 size-206">
+												XL, L, M, S
+											</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+<<<<<<< HEAD
+=======
+						<div class="tab-pane fade" id="reviews" role="tabpanel">
+							<div class="row">
+								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+									<div class="p-b-30 m-lr-15-sm">
+										<!-- Review -->
+										<div class="flex-w flex-t p-b-68">
+											<div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
+											</div>
+											<div class="size-207">
+												<div class="flex-w flex-sb-m p-b-17">
+													<span class="mtext-107 cl2 p-r-20">
+														Test 01
+													</span>
+												</div>
+
+												<p class="stext-102 cl6">
+													어디에 쓰나요?
+												</p>
+											</div>
+										</div>
+
+
+										<!-- Add review -->
+										<form class="w-full">
+											<h5 class="mtext-108 cl2 p-b-7">
+												댓글을 작성하세요
+											</h5>
+
+											<p class="stext-102 cl6">
+
+											</p>
+
+
+
+											<div class="row p-b-25">
+												<div class="col-12 p-b-5">
+													<label class="stext-102 cl3" for="review">댓글 내용</label>
+													<textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review" style="resize: none"></textarea>
+												</div>
+
+
+											</div>
+
+											<button class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
+												작 성
+											</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+>>>>>>> 7c63baf3c9cd7749d6fef87933b0335a23abcc37
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+
+	<footer>
+        <div class="footer_container">
+        <div class="footer_wrap">
+            <div class="footer_copyright">
+                <p>© 2022 Company, Inc. All rights reserved.</p>
+            </div>
+    
+            <div class="footer_use">
+                <ul class="">
+                <li class=""><a class=""></a>개인정보처리방침</li>
+                <li class=""><a href=""></a>쿠키 정책</li>
+                <li class=""><a href=""></a>쿠키 설정</li>
+                <li class=""><a href=""></a>웹사이트 이용약관</li>
+                <li class=""><a href=""></a>Responsible disclosure</li>
+                </ul>
+            </div>
+        </div>
+        <div class="team">        
+            <p > captin corin </p>
+            <p> 고혁배 김지나 나기업 김정관 안요셉 이진성 강승훈</p>
+        </div>
+        <div class="footer_icons">
+            <ul>
+                <li>
+                    <a href="">
+                        <img src="../../static/assets/images/icons/8679415_kakao_talk_fill_icon.png" >
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="../../static/assets/images/icons/1161953_instagram_icon.png" >
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="../../static/assets/images/icons/211929_social_youtube_icon.png" >
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="../../static/assets/images/icons/8679415_kakao_talk_fill_icon.png" >
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </footer>
+
+<!--===============================================================================================-->	
+	<script src="../../static/Vendor/jquery/jquery-3.2.1.min.js"></script> <!-- 필요 -->
+<!--===============================================================================================-->
+	<script src="../../static/Vendor/bootstrap/js/popper.js"></script>            <!--필요 -->
+	<script src="../../static/Vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src=../../static/Vendor/slick/slick.min.js/></script>      <!--필요-->
+	<script src="../../static/assets/js/slick-custom.js"></script>
+<!--===============================================================================================-->
+	<script src="../../static/Vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>       <!-- 필요 -->
+	<script>
+		$('.gallery-lb').each(function() { // the containers for all your galleries
+			$(this).magnificPopup({
+		        delegate: 'a', // the selector for gallery item
+		        type: 'image',
+		        gallery: {
+		        	enabled:true
+		        },
+		        mainClass: 'mfp-fade'
+		    });
+		});
+	</script>
+	<!-- 사이드바 ------------------------------------------ -->
+	<script>
+		$(document).ready(function(){
+			$(".btn_menu_open").click(function(){
+				$("#mask").fadeIn(100);
+				$(".slide_menu").show().animate({left: "0"});
+			});
+			$("#mask, .btn_menu_close").click(function(){
+				$("#mask").fadeOut(100);
+				$(".slide_menu").hide().animate({left: "0"});
+			});
+		
+	
+			$(".btn_menu_open1").click(function(){
+				$("#mask1").fadeIn(100);
+				$(".slide_menu1").show().animate({right: "0"});
+			});
+			$("#mask1, .btn_menu_close1").click(function(){
+				$("#mask1").fadeOut(100);
+				$(".slide_menu1").hide().animate({right: "0"});
+			});
+	
+		});
+	</script>
+
+
+</body>
+</html>

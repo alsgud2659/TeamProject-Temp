@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인</title>
+    <!-- font -->
+    <link rel="stylesheet" href="/assets/font/font.css" />
+    <!-- css -->
+    <link rel="stylesheet" href="/assets/css/common.css" />
+    <link rel="stylesheet" href="/assets/css/login.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <div class="subArea">
+          <div class="goToBackArea">
+            <a th:href="@{/}" class="goToBack">
+              <span>메인페이지로 이동</span>
+              <img src="/images/gotobeforeIcon2.png" />
+            </a>
+          </div>
+          <div class="logoArea">
+            <a class="logo">
+              <img src="/images/logo.png" />
+            </a>
+          </div>
+          <div class="title">
+            <h1>로그인</h1>
+          </div>
+          <div class="guideArea"></div>
+          <div class="InfoArea">
+            <div class="policyArea">
+              <span>KOINONIA</span>
+              <a href="#쿠키정책">쿠키 정책</a>
+              <a href="#개인정보처리방침">개인정보처리방침</a>
+            </div>
+            <div class="projectInfoArea">
+              <span class="teamName">© 캡틴 코린</span>
+              <span>
+                고혁배, 강승훈, 김정관, 김지나, 나기업, 안요셉, 이진성
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="mainArea">
+          <div class="mainInner">
+            <div>
+              <form
+                th:action="@{/user/login}"
+                method="post"
+                id="form"
+                onsubmit="return dobuleCheck();"
+              >
+                <div class="inputId">
+                  <label for="email">이메일</label>
+                  <div class="inputWrapper">
+                    <input type="text" id="email" name="email" />
+                  </div>
+                  <p id="emailGuidMsg" class="guideMsg"></p>
+                </div>
+                <div class="inputPw">
+                  <label for="pw">비밀번호</label>
+                  <div class="inputWrapper">
+                    <input type="password" id="pw" name="pw" />
+                    <button type="button">
+
+                      <img src="/images/eye_see.png"/>
+
+                      <span>비밀번호 표시하기</span>
+                    </button>
+                  </div>
+                  <p id="pwGuidMsg" class="guideMsg"></p>
+                  <div class="goToFindPw">
+                    <a th:href="@{/user/find_pw}">비밀번호 찾기</a>
+                  </div>
+                </div>
+                <div class="checkbox">
+                  <input type="checkbox" name="check01" id="check01" />
+                  <label for="check01">
+                    <span>로그인 상태 유지</span>
+                  </label>
+                </div>
+                <div class="btnArea">
+                  <button type="submit" class="btnL btnStyleB">
+                    로그인
+                  </button>
+                </div>
+              </form>
+              <div class="goToJoinArea">
+                <div class="guideArea">
+                  <p>KOINONIA 계정이 없으신가요? 지금 바로 만들어보세요:</p>
+                </div>
+                <div class="btnArea">
+                  <button
+                    type="button"
+                    class="btnL btnStyleC"
+                    onclick="location.href='/user/join'"
+                  >
+                    회원 가입하기
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/assets/js/login.js"></script>
+
+  <script>
+    // 로그인 실패
+    var msg = "[[${msg}]]";
+    if(!(msg == null || msg.length <= 0)){
+      alert(msg);
+    }
+  </script>
+
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>다이어리 작성</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- summernote scripts, css, js start -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <!-- summernote scripts, css, js start -->
+    <!-- css -->
+    <link rel="stylesheet" href="/assets/css/common.css" />
+    <link rel="stylesheet" href="/assets/css/board_write.css" />
+    <link rel="stylesheet" href="/assets/css/header.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/request_detail.css">
+    <link rel="stylesheet" href="/assets/css/footer.css" />
+
+  </head>
+  <body>
+  <!--  header start  -->
+  <div th:replace="~{/header/header :: headerFragment}"></div>
+  <!--  header end  -->
+    <div class="wrapper">
+      <div class="topArea">
+        <div class="infoArea">
+          <p class="title">다이어리 작성</p>
+          <p class="intro">
+            KOINONIA와 함께 특별한 여행을 경험한 여행자들의 살아있는 이야기를
+            소개합니다!
+          </p>
+        </div>
+      </div>
+      <div class="mainArea" th:object="${diary}">
+        <form action="/board/register"  name="registerForm" method="post">
+          <div class="nationalityArea">
+            <div class="selectArea"  style="display: none"`>
+              <select name="" id="select" class="selectBcate" hidden>
+                <option value="01">유럽</option>
+                <option value="02">북아메리카</option>
+                <option value="03">남아메리카</option>
+                <option value="04">오세아니아</option>
+                <option value="05">아프리카</option>
+                <option value="00" selected>아시아</option>
+              </select>
+              <button type="button" id="selectBtn" class="select">
+                여행한 대륙은 어디인가요?
+              </button>
+              <div class="option" id="option">
+                <ul>
+                  <li><a class="optionList" id="00">아시아</a></li>
+                  <li><a class="optionList" id="01">유럽</a></li>
+                  <li><a class="optionList" id="02">북아메리카</a></li>
+                  <li><a class="optionList" id="03">남아메리카</a></li>
+                  <li><a class="optionList" id="04">오세아니아</a></li>
+                  <li><a class="optionList" id="05">아프리카</a></li>
+                  <input type="hidden" name="bcate">
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="thumArea">
+            <input type="file" name="thum" id="thum" hidden />
+
+            <div class="viewthum">
+              <div class="viewlabel">제목</div>
+              <input
+                      type="text"
+                      class="viewInput"
+                      id="boardTitle"
+                      name="title"
+                      placeholder="제목을 입력하세요."
+                      th:field="*{title}"
+              />
+            </div>
+
+            <div class="viewthum" style="display: none;">
+              <div class="viewlabel">썸네일</div>
+              <input
+                type="text"
+                class="viewInput"
+                id="viewInput"
+                placeholder="썸네일을 올려주세요"
+                readonly
+              />
+              <label for="thum" class="btnS btnStyleB btnStyleB_1"
+                >파일선택</label
+              >
+            </div>
+          </div>
+
+          <div class="writeArea">
+            <div id="summernote" name="editordata"></div>
+            <!-- 에디터 이미지 임시 저장-->
+            <input type="hidden" id="content" name="content">
+            <input type="hidden" name="tempFolder" id="tempFolder" value="임시폴더명" />
+          </div>
+
+          <div class="btnArea">
+            <button id="cancleBtn" class="btnM btnStyleC btnStyleC_1">
+              취소
+            </button>
+            <button type="submit" class="btnM btnStyleB btnStyleB_1" id="uploadBtn">
+              확인
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  <!--  footer start  -->
+  <div th:replace="~{/footer/footer :: footerFragment}"></div>
+  <!--  footer end  -->
+  </body>
+  <script src="/assets/js/board_write.js"></script>
+  <!-- header,footer -->
+  <script src="/assets/js/header.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+  <script th:inline="javascript">
+    let count = 1;
+    $(document).ready(function() {
+      $('#summernote').summernote({
+        tabsize: 2,
+        height: 450, // 에디터 높이
+        minHeight: 450, // 최소 높이
+        maxHeight: 450, // 최대 높이
+        focus: false, // 에디터 로딩후 포커스를 맞출지 여부
+        lang: "ko-KR", // 한글 설정
+        placeholder: "", //placeholder 설정
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ],
+        callbacks: {
+          onImageUpload: function(files, editor, welEditable) {
+            sendFile(files, this, welEditable);
+          }
+        }
+      });
+      let textarea = $(".note-editable");
+      let content = [[${diary.content}]];
+      textarea.html(content);
+    });
+
+    function sendFile(files, editor, welEditable){
+      let data = new FormData();
+      data.append("uploadFiles", files[0]);
+      $.ajax({
+        url: "/boardFile/upload",
+        type: "post",
+        data: data,
+        contentType: false,
+        processData: false,
+        success: function(file){
+          let keys = Object.keys(file[0]);
+          let uuid = file[0][keys[1]];
+          let uploadPath = file[0][keys[2]];
+          let fileName = file[0][keys[3]];
+          let url = "/boardFile/display?fileName=" + uploadPath + "/" + uuid + "_" + fileName;
+          $(editor).summernote('insertImage', url);
+          if (count == 1) {
+            $('img[src=url]').attr("id", "thumbnail")
+            console.log($("body").filter("li"))
+          }
+          count += 1;
+        }
+      });
+    }
+
+
+
+
+  </script>
+</html>

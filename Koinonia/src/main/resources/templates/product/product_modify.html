@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/main/main}">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>상품 작성</title>
+    <link type="text/css" rel="stylesheet" href="/bootstrap-5.1.3-dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="/assets/css/common_diary.css" />
+    <link type="text/css" rel="stylesheet" href="/assets/css/t1.css" />
+    <link rel="stylesheet" href="/assets/css/header.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/request_detail.css">
+    <link rel="stylesheet" href="/assets/css/footer.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+<!--  header start  -->
+<div th:replace="~{/header/header :: headerFragment}"></div>
+<!--  header end  -->
+
+<div id="wrapper">
+
+    <div id="main" role="main">
+        <div id="main-content-header">
+
+            <style>
+
+                #att_zone{
+                    width: 100%;
+                    min-height:150px;
+                    padding:10px;
+                    border:1px dotted #000;
+                }
+                #att_zone:empty:before{
+                    content : attr(data-placeholder);
+                    color : #999;
+                    font-size:.9em;
+                }
+
+                #wrapper {
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    -webkit-background-size: cover;
+                    -moz-background-size: cover;
+                    -o-background-size: cover;
+                    background-size: cover;
+                    background-image: url('http://linkandleave.com/files/2017/02/23/6e006508201242416d4d62cc6e260ac3143147.jpg');
+                }
+
+                #main-content-header {min-height: 210px}
+                textarea.form-control {
+                    min-height: calc(17.5em + 0.75rem + 2px);
+                }
+                .form-group row{
+                    margin-bottom: 20px;
+                }
+                .form-group row flex{
+                    display: flex;
+                    flex-wrap: nowrap;
+                    margin-top: 20px;
+
+                }
+                .col-sm-10 {
+                    flex: 0 0 auto;
+                    width: 4.9%;
+                }
+
+                select {
+                    width: 300px;
+                    padding: 0.375rem 0.75rem;
+                    border: 1px solid #ced4da;
+                    font-family: inherit;
+                    border-radius: 0.25rem;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg)
+                    no-repeat 95% 50%;
+
+                }
+            </style>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="title st-font2">
+                            여행 상품 등록						<small class="st-font1">전 세계적으로 아름다운 여행물품들을 판매해 보세요!</small>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="main-content" class="content-wrapper">
+
+            <div class="container">
+
+                <form id="formData" name="newProduct" action="/product/modisucces"  th:object="${product}" class="form-horizontal" method="post"
+                      enctype="multipart/form-data">
+                    <input type="hidden" th:value="${criteria.pageNum}">
+                    <input type="hidden" th:value="${criteria.amount}">
+                    <input type="hidden" th:value="*{pno}">
+                    <div class="form-group row">
+                        <label class="col-sm-2 py-2">대륙</label>
+                        <div class="com-sm-3" style="margin-bottom: 20px">
+                            <select id="theSelect" name ="pcate" th:value="*{pcate}">
+                                <option value='대륙'>대륙</option>
+                                <option value="유럽" selected>유럽</option>
+                                <option value="아시아">아시아</option>
+                                <option value="아프리카">아프리카</option>
+                                <option value="남아메리카">남아메리카</option>
+                                <option value="북아메리카">북아메리카</option>
+                                <option value="오스트레일리아">오스트레일리아</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 font-size">작성자</label>
+                        <div class="com-sm-3 py-2">
+                            <input type="text"  name="name" class="form-control" th:value="*{name}" readonly>
+                        </div>
+                    </div>
+
+                    <input type="text"  name="psold" class="form-control" value="1" hidden>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 font-size">상품 이름</label>
+                        <div class="com-sm-3 py-2">
+                            <input type="text"  name="pname" class="form-control"  th:value="*{pname}">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 py-2">제목</label>
+                        <div class="com-sm-3">
+                            <input type="text" id ="ti" name="title" class="form-control" th:value="*{title}">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 py-2">가격</label>
+                        <div class="com-sm-3">
+                            <input type="text" name="price" class="form-control" th:value="*{price}">
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 py-2">상세 내용</label>
+                        <div class="com-sm-10">
+                            <textarea name="content" cols="50" rows="2" class="form-control" th:value="*{content}"></textarea>
+                        </div>
+                    </div>
+
+
+
+                    <div class="field">
+                        <h4>첨부파일</h4>
+                        <input type="file" name="uploadFiles" multiple>
+                    </div>
+                    <div class="field">
+                        <div class="uploadResult">
+                            <ul></ul>
+                        </div>
+                    </div>
+                    <div class="bigPictureWrapper">
+                        <div class="bigPicture"></div>
+                    </div>
+
+                    <div class="form-group row flex" style="justify-content: center">
+                        <div class="col-sm-offset-2 col-sm-10" >
+                            <input type="submit" class="btn btn-primary"  value="수정완료" >
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input type="reset" class="btn btn-primary" value="취소">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--  footer start  -->
+<div th:replace="~{/footer/footer :: footerFragment}"></div>
+<!--  footer end  -->
+</body>
+<script src="/assets/js/header.js"></script>
+<script src="/assets/js/jquery.min2.js"></script>
+<script th:inline="javascript">
+
+    let regex = new RegExp("(.*?)\.(exe|sh|zip|alz)");
+    const $uploadResult = $(".uploadResult ul");
+    let pno = [[${product.pno}]];
+    let paging = [[${criteria.listLink}]];
+
+    // 이미지 원본이 있는 지 검사
+    let check = false;
+    // 애니메이션이 진행중인 지 검사
+    let progress = false;
+    // 이전에 클릭한 이미지 경로 저장
+    let temp = "";
+
+    function showImage(filePath){
+
+        // 만약 temp에 무언가가 들어가 있다면(undefined가 아니라면)
+        if(temp){
+            //현재 클릭한 썸네일의 경로와 이전에 클릭했던 썸네일의 경로를 비교한다.
+            if(filePath == temp){
+                //만약 이전에 눌렀던 썸네일과 동일하다면 애니메이션을 막아준다.
+                //똑같은 거 또 누르지 않게 막아주기
+                return;
+            }
+        }
+
+        // 애니메이션이 진행중일 경우 true
+        if(progress) { return; }
+        // 만약 애니메이션 진행중이 아닐 때에는
+        // 썸네일을 클릭했기 때문에 progress를 true로 변경시켜준다.
+        progress = true;
+
+        //정상적으로 해당 썸네일의 원본이 보이게 된다면,
+        //클릭한 썸네일의 경로를 temp에 담아준다.
+        temp = filePath;
+
+        let time = 0;
+
+        if(check){ //만약 check가 true라면 원본 이미지가 이미 보여지고 있는 상태
+
+            //이미 있는 원본 이미지를 없애준다.
+            $(".bigPicture").animate({width:"0%", height:"0%"}, 1000);
+            setTimeout(function(){
+                $(".bigPictureWrapper").hide();
+                // 애니메이션이 다 끝났을 때
+                progress = false;
+            },950);
+
+            //이미 있는 원본 이미지가 없어지는 데에 걸리는 시간을 time에 담아놓는다.
+            time = 1000;
+        }
+        setTimeout(function(){
+            $(".bigPictureWrapper").css("display", "flex").show();
+            $(".bigPicture").html("<img src='/upload/display?fileName=" + filePath + "'>")
+                .animate({width:"100%", height:"100%"}, 1000);
+            // 이미지 원본이 보이고 있음.
+            check = true;
+
+            setTimeout(function(){
+                // 애니메이션이 다 끝났을 때
+                progress = false;
+            }, 1000);
+
+            //    만약 원본 이미지가 있었다면 time에는 1000이 들어가서 없어지는 동안 기다리게 되고
+            //    원본 이미지가 없었다면 time에는 초기값인 0이 들어가서 클릭한 썸네일의 원본이 바로 보이게 된다.
+        }, time);
+    }
+
+    $(".bigPictureWrapper").on("click", function(){
+        temp = "";
+        // 원본 이미지 클릭 시 사라지는 이벤트 진행중
+        progress = true;
+        $(".bigPicture").animate({width:"0%", height:"0%"}, 1000);
+
+        setTimeout(function(){
+            $(".bigPictureWrapper").hide();
+            //이미지 원본 안보임
+            check = false;
+            //애니메이션이 다 끝났을 때
+            progress = false;
+        },1000);
+    })
+
+    $("input[type='submit']").on("click", function(e){
+        e.preventDefault();
+
+        if(!newProduct.title.value){
+            alert("제목을 입력하세요");
+            return;
+        }
+        if(!newProduct.pname.value){
+            alert("상품명을 입력하세요");
+            return;
+        }
+        if(!newProduct.content.value){
+            alert("내용을 입력하세요");
+            return;
+        }
+        if(!newProduct.price.value){
+            alert("가격을 입력하세요");
+            return;
+        }
+
+        checkfile();
+
+    });
+
+
+
+    function checkfile(){
+        let $form = $("form#formData");
+        let str ="";
+
+        $.each($(".uploadResult ul li"), function(i, li){
+            str += "<input type='hidden' name='fileList[" + i + "].fileName' value='" + $(li).data("filename") + "'>"
+            str += "<input type='hidden' name='fileList[" + i + "].uuid' value='" + $(li).data("uuid") + "'>"
+            str += "<input type='hidden' name='fileList[" + i + "].uploadPath' value='" + $(li).data("uploadpath") + "'>"
+            str += "<input type='hidden' name='fileList[" + i + "].image' value='" + $(li).data("image") + "'>"
+            str += "<input type='hidden' name='fileList[" + i + "].fileSize' value='" + $(li).data("filesize") + "'>"
+        });
+
+        $form.append(str).submit();
+
+
+    };
+
+    function checkExtension(fileName, fileSize){
+        if(regex.test(fileName)){
+            alert("업로드 할 수 없는 파일의 형식입니다.");
+            return false;
+        }
+        if(fileSize >= 5242880){
+            alert("파일 사이즈 초과");
+            return false;
+        }
+        return true;
+    }
+
+    function showUploadResult(files){
+        let str ="";
+        $(files).each(function(i, file){
+            str += "<li data-filesize='" + file.fileSize + "' data-filename='" + file.fileName + "' data-uuid='" + file.uuid + "' data-uploadpath='" + file.uploadPath + "' data-image='" + file.image + "'>";
+            if(file.image){
+                str += "<a href=\"javascript:showImage(\'" + file.uploadPath + "/" + file.uuid + "_" + file.fileName +"\');\"><img src='/upload/display?fileName=" + file.uploadPath + "/s_" + file.uuid + "_"  + file.fileName + "'></a>";
+            }else{
+                str += "<a href='/upload/download?fileName=" + file.uploadPath + "/" + file.uuid + "_" + file.fileName + "'><img src='/images/attach.png' width='100'></a>";
+            }
+            str += "<span data-file='" + file.uploadPath + "/s_" + file.uuid + "_" + file.fileName + "' style='cursor: pointer;'>x</span>"
+            str += "<p>" + file.fileName + "</p>"
+            str += "</li>"
+        });
+        $uploadResult.append(str);
+    }
+
+    (function(){
+        $.getJSON("/upload/list", {pno: pno}, function(list){
+            showUploadResult(list);
+        })
+    })();
+
+    let arFile = Array.from($("input[type='file']")[0].files);
+
+    $("input[type='file']").on("change", function(e){
+        let formData =   new FormData();
+        let inputFile = $("input[name='uploadFiles']");
+        let files = inputFile[0].files;
+        for(let i=0; i<files.length; i++){
+            if(!checkExtension(files[i].name, files[i].size)){ return; }
+            formData.append("uploadFiles", files[i]);
+        }
+        Array.from($(this)[0].files).forEach(file => arFile.push(file));
+        const dataTransfer = new DataTransfer();
+        arFile.forEach(file => dataTransfer.items.add(file));
+        $(this)[0].files = dataTransfer.files;
+
+        $.ajax({
+            url: "/upload/upload",
+            type: "post",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(files){
+                showUploadResult(files);
+            }
+        });
+    });
+
+    $(".uploadResult").on("click", "span", function(){
+        let $target = $(this).data("file");
+        let $li = $(this).closest("li");
+        let temp = $target.substring($target.indexOf("_") + 1);
+        const dataTransfer = new DataTransfer();
+
+        $li.remove();
+
+        temp = temp.substring(temp.indexOf("_") + 1);
+
+        for(let i=0; i<arFile.length; i++){
+            if(arFile[i].name == temp){
+                arFile.splice(i, 1);
+            }
+        }
+        arFile.forEach(file => dataTransfer.items.add(file));
+        $("input[name='uploadFiles']")[0].files = dataTransfer.files;
+
+    });
+
+    $("a#goList").click(function(e){
+        e.preventDefault();
+        location.href = "/product/list" + paging;
+    });
+
+    //    엔터 막아주기
+    //     $("input[name='title']").keydown(function(e){
+    //         if(e.keyCode == 13){
+    //             e.preventDefault();
+    //         }
+    //     });
+
+
+
+</script>
+
+</html>

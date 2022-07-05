@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>다이어리 상세보기</title>
+    <!--  jquery  -->
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="/assets/css/common_diary.css"/>
+    <link type="text/css" rel="stylesheet" href="/assets/css/list.css"/>
+    <link type="text/css" rel="stylesheet" href="/assets/css/t1.css"/>
+    <link type="text/css" rel="stylesheet" href="/assets/css/diary_detail.css"/>
+    <link type="text/css" rel="stylesheet" href="/assets/css/comment.css"/>
+    <link type="text/css" rel="stylesheet" href="/bootstrap-5.1.3-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/assets/css/header.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/request_detail.css">
+    <link rel="stylesheet" href="/assets/css/footer.css"/>
+
+</head>
+<body>
+<!--  header start  -->
+<div th:replace="~{/header/header :: headerFragment}"></div>
+<!--  header end  -->
+<div id="st-body" class="homepage fullsize">
+
+
+    <div id="wrapper">
+
+        <div id="main" role="main">
+            <div id="main-content-header">
+                <style>
+
+                    #wrapper {
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        -webkit-background-size: cover;
+                        -moz-background-size: cover;
+                        -o-background-size: cover;
+                        background-size: cover;
+                        background-image: url('http://linkandleave.com/files/2017/02/23/6e006508201242416d4d62cc6e260ac3143147.jpg');
+                    }
+
+                    #main-content-header {
+                        min-height: 210px
+                    }
+                </style>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="title st-font2">
+                                여행 다이어리 <small class="st-font1">전 세계를 여행하는 여행자들의 살아 숨쉬는 이야기들!</small>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="main-content" class="content-wrapper">
+
+
+                <div class="search-box">
+                    <div class="container">
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="container">
+                    <style>
+                    </style>
+
+
+                    <div id="st-view">
+                        <div class="viewbox">
+                            <div class="header ">
+                                <div class="subject">
+                                    <div class="st-table" style="border-bottom: #aaa dotted 1px;">
+                                        <div class="h4 st-font1 bold" th:text="${board.title}"></div>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <div class="common pull-left">
+                                        <i class="glyphicon glyphicon-tint"></i>  <span id="name" th:text="${board.name}"></span>
+                                        <span  class="split">|</span>
+                                        <i class="glyphicon glyphicon-time"></i> <span th:text="${board.registerDate}"></span>
+                                    </div>
+
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+
+                            <div id="vContent" class="content" th:utext="${board.content}">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action clearfix">
+                        <a th:href="@{/board/list}" class="btn btn-default btn-sm">목록으로</a>
+
+                        <div class="right_1" style="display: none" id="userBtn">
+                            <a th:href="@{/board/modify(bno=${board.bno})}"
+                               class="btn btn-default btn-sm">수정</a>
+                            <a th:href="@{/board/remove(bno=${board.bno})}" target="_action_frame_stbbs"
+                               class="btn btn-default btn-sm" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- Review -->
+                    <div class="area_reply ">
+                        <strong class="tit_reply" id="reply">댓글
+                            <div type="button" class="btn_reply">
+                                <span id="commentCount15_0"></span>
+                            </div>
+                        </strong>
+                        <div id="entry15Comment">
+                            <ul class="list_reply">
+                            </ul>
+                            <div class="area_paging area_paging_list">
+                                                    <span class="inner_paging">
+
+                                                    </span>
+                            </div>
+                            <form id="dataForm" style="margin: 0">
+                                <fieldset class="fld_reply">
+                                    <legend class="screen_out">댓글쓰기</legend>
+                                    <div class="reply_write ">
+                                        <input type="hidden" name="bno" id=bno th:value="${board.bno}">
+                                        <label for="content" class="lab_write"></label>
+                                        <textarea id="content" name="content" class="diary_reply"
+                                                  placeholder="여러분의 소중한 댓글을 입력해주세요"
+                                                  tabindex="1"></textarea>
+                                    </div>
+                                    <div class="writer_btn">
+                                        <button id="formBtn" class="btn_enter" tabindex="5">입력
+                                        </button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!--  footer start  -->
+            <div th:replace="~{/footer/footer :: footerFragment}"></div>
+            <!--  footer end  -->
+
+            <!-- header,footer -->
+            <script src="/assets/js/header.js"></script>
+
+
+        <!--===============================================================================================-->
+        <script src="/Vendor/jquery/jquery-3.2.1.min.js"></script> <!-- 필요 -->
+        <!--===============================================================================================-->
+        <script src="/Vendor/bootstrap/js/popper.js"></script>            <!--필요 -->
+        <script src="/Vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="/Vendor/slick/slick.min.js"></script>      <!--필요-->
+        <script src="/assets/js/slick-custom-b.js"></script>
+        <!--===============================================================================================-->
+        <script src="/Vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>       <!-- 필요 -->
+        <script>
+            $('.gallery-lb').each(function () { // the containers for all your galleries
+                $(this).magnificPopup({
+                    delegate: 'a', // the selector for gallery item
+                    type: 'image',
+                    gallery: {
+                        enabled: true
+                    },
+                    mainClass: 'mfp-fade'
+                });
+            });
+
+            if(sessionStorage.getItem("user")==$("#name").text()){
+                $("#userBtn").attr("style", "display:block;");
+            }
+        </script>
+</body>
+
+</html>
