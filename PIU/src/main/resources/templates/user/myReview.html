@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/3e4acc40f3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/mypage_style.css">
+    <title>내 후기내역</title>
+</head>
+<!--640px헤더 필요-->
+<body class="my-body-total">
+<div id="my-review-top">
+    <div class="my-review-main">
+        <div class="my-review-title">
+            <div class="my-review-title-box">
+                    <span class="my-review-left-sign">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="css-5wsq80">
+                            <path
+                                    d="M15.175 2.075 16.59 3.49c.1.1.1.255 0 .355L8.435 12l8.16 8.16c.1.1.1.255 0 .355L15.18 21.93c-.1.1-.255.1-.355 0l-9.75-9.75c-.1-.1-.1-.255 0-.355l9.745-9.75c.1-.1.26-.1.355 0Z"
+                                    class="my-review-left-sign-span"></path>
+                        </svg>
+                    </span>
+                <div class="my-review-real-title-box">
+                    <h5 class="my-review-real-user" th:text="|${user.getNickname()}님의 후기|"></h5>
+                </div>
+            </div>
+        </div>
+        <th:block th:each="myReview: ${reviewList}">
+        <div class="my-real-review-box" th:object="${myReview}">
+            <div class="my-real-review-box-inside"><a href="#">
+                <div class="my-review-profile">
+                    <div size="32" class="review-step1"><span
+                            class="review-step2">
+                                    <picture class="review-step3">
+                                    </picture>
+                                </span></div>
+                    <div class="review-step5">
+                        <div class="review-step6" th:text="${user.getNickname()}"></div>
+                        <div class="review-step7">
+
+                            <div class="review-step8" th:text="*{#temporals.createDate(updateDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                            <div class="review-step9" th:text="*{title}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-review-bottom-space"></div>
+                <pre
+                        class="review-by1" th:text="*{content}"></pre>
+            </a>
+                <div class="review-by2" th:id="*{num}">
+                </div>
+            </div>
+            <div class="review-with4"></div>
+            <div class="sc-f8caeb8b-0 review-with5">
+                <hr color="#f8f8f8" class="review-with6">
+            </div>
+            <div class="review-with7"></div>
+            <div class="my-review-bottom-space"></div>
+
+            <div class="review-list2"></div>
+        </div>
+        </th:block>
+    </div>
+</div>
+
+<!--640px푸터 필요-->
+</body>
+<script src="/assets/js/mypage.js"></script>
+<script th:inline="javascript">
+let profile = $(".review-step3");
+let fileName = [[${user.profileFileName}]];
+let uploadPath = [[${user.profileUploadPath}]];
+let str = "";
+str += "<img src ='/userFile/display?fileName=" + uploadPath + "/" + fileName + "'>";
+profile.html(str);
+
+let reviews = [[${reviewList}]];
+$(reviews).each(function (i, review) {
+    var contentNum = review.num;
+    console.log(contentNum);
+    if(contentNum < 100) {
+        $.ajax({
+            url: "/productReviewFile/list/" + contentNum,
+            type: "get",
+            success: function (files) {  //각 리뷰의 파일들
+                let text = "";
+                $(files).each(function (i, file) {
+                    text += "<img width='100px' src='/productReviewFile/display?fileName=" + file.uploadPath + "/" + file.uuid + "_" + file.fileName + "'>";
+                })
+                $('#' + review.num).html(text);
+            }
+        })
+    } else {
+        $.ajax({
+            url: "/projectReviewFile/list/" + contentNum,
+            type: "get",
+            success: function (files) {  //각 리뷰의 파일들
+                let text = "";
+                $(files).each(function (i, file) {
+                    text += "<img width='100px' src='/projectReviewFile/display?fileName=" + file.uploadPath + "/" + file.uuid + "_" + file.fileName + "'>";
+                })
+                $('#' + review.num).html(text);
+            }
+        })
+    }
+})
+
+
+</script>
+</html>

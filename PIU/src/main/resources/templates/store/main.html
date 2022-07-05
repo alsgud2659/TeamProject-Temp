@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/Header.css" />
+    <link rel="stylesheet" href="/assets/css/Footer.css" />
+    <link rel="stylesheet" href="/assets/css/pickitupStore.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<style>
+    .material-icons {
+        font-family: 'Material Icons';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;  /* Preferred icon size */
+        display: inline-block;
+        line-height: 1;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+        color: red;
+
+        /* Support for all WebKit browsers. */
+        -webkit-font-smoothing: antialiased;
+        /* Support for Safari and Chrome. */
+        text-rendering: optimizeLegibility;
+
+        /* Support for Firefox. */
+        -moz-osx-font-smoothing: grayscale;
+
+        /* Support for IE. */
+        font-feature-settings: 'liga';
+    }
+</style>
+<body>
+
+<!--헤더  -->
+
+<div th:replace="~{/main/Header :: HeaderImport}"></div>
+<!--헤더 -->
+
+<div class="media_store_categories">
+    <ul style="display: flex; list-style: none;">
+        <li class="active"><a href="" th:value="전체">전체</a></li>
+        <li><a href="생활">생활</a></li>
+        <li><a href="주방">주방</a></li>
+        <li><a href="욕실">욕실</a></li>
+        <li><a href="반려동물">반려동물</a></li>
+        <li><a href="화장품">화장품</a></li>
+        <li><a href="식품">식품</a></li>
+        <li><a href="문구">문구</a></li>
+        <li><a href="원예">원예</a></li>
+    </ul>
+</div>
+
+<div class="store_all_body">
+    <section class="store_container">
+        <div class="store_cate_items">
+            <div class="store_categories">
+                <ul>
+                    <li class="active"><a href="" th:value="전체">전체</a></li>
+                    <li><a href="생활">생활</a></li>
+                    <li><a href="주방">주방</a></li>
+                    <li><a href="욕실">욕실</a></li>
+                    <li><a href="반려동물">반려동물</a></li>
+                    <li><a href="화장품">화장품</a></li>
+                    <li><a href="식품">식품</a></li>
+                    <li><a href="문구">문구</a></li>
+                    <li><a href="원예">원예</a></li>
+                </ul>
+            </div>
+
+            <!-- -----------------------------임시 데이터 --------------------------------->
+            <div class="store_items">
+                <div class="onetime">
+                    <h4 class="items_header">전체 상품 목록 &nbsp;</h4>
+                    <p class="item_headerp" th:text="|${productsCount} 개|"></p>
+                </div>
+                <div class="all_items">
+                    <ul></ul>
+                </div>
+            </div>
+            <div class="gototop">
+                 <span class="material-symbols-outlined toTop" style="font-size: 35px;">
+                     vertical_align_top
+                     </span >
+            </div>
+        </div>
+    </section>
+</div>
+<!-- -----------------------------임시 데이터 --------------------------------->
+<div th:replace="~{/main/Footer :: FooterImport}"></div>
+</body>
+<!--<script src="/assets/js/store.js"></script>-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/assets/js/storeQna.js"></script>
+<script src="/assets/js/storeMain.js"></script>
+<script src="/assets/js/storeReview.js"></script>
+<script th:inline="javascript">
+    let url = [[${url}]];
+    let productlist = [[${productlist}]];
+    let li = {};
+    // 임시 유저 userNum = 22;
+    let userNum = [[${userNum}]];
+    //상품의 총 갯수
+    let productsCount = [[${productsCount}]];
+    let possible = true;
+    //무한스크롤
+    let standard = 8 // 리뷰 뽑아줄 갯수 위에 html 도 바꿔줘야함
+    let start = standard;
+    let next =0;
+    let total = productsCount;
+    console.log(url);
+    if(url == "store") {
+        $('.nav-container').css("display", "none");
+        $('.menu-plogging').css("color", "black");
+        $('.menu-store').css("color","#1F89FF");
+    }
+
+    //메인 리스트 뿌려주기
+    let category = ""; //카테고리 클릭안했을때 공백 넘겨줌
+    showmain(category);
+
+    // 스크롤이 바닥에 닿았을때
+    $(window).on("scroll", function() {
+        var scrollHeight = $(document).height();
+        var scrollPosition = $(window).height() + $(window).scrollTop();
+
+        $("#scrollHeight").text(scrollHeight);
+        $("#scrollPosition").text(scrollPosition);
+        $("#bottom").text(scrollHeight - scrollPosition);
+
+        if(possible){
+            if (scrollPosition > scrollHeight - 1) {
+                f(li);
+            }
+        }
+    });
+
+    // ============================================scroll top =================================
+    $('.gototop').click(function(){
+        $('html, body').animate({scrollTop : 0},300);
+    });
+
+    //---------------------------------------찜 ajax-------------------------------------------
+    $('.all_items').on("click",".jjim-ajax",function() {
+        let productNum = $(this).attr("name");
+        let data = {userNum : userNum, category: "1", productNum : productNum};
+        if($(this).hasClass("material-symbols-outlined")){ //찜 안되어있을때, insert ajax
+            $(this).removeClass("material-symbols-outlined");
+            $(this).addClass("material-icons");
+            $(this).css("color","red");
+
+            mainService.doJjim(data,function (result) {
+                showmain(category);
+            })
+
+        }else{                                             //찜 되어있으면,   delete ajax
+            $(this).addClass("material-symbols-outlined");
+            $(this).removeClass("material-icons");
+            $(this).css("color","#d3cdcd");
+
+            mainService.deleteJjim(data,function (result) {
+                showmain(category);
+            })
+        }
+    });
+
+    //이미지를 눌렀을떄
+    $('.all_items ul').on("click", ".goDetail" , function (e) {
+        e.preventDefault();
+        location.href = "/store/detail?num="+$(this)[0].getAttribute('th:href');
+    })
+
+
+    function showmain(category){
+        standard = 8 // 리뷰 뽑아줄 갯수 위에 html 도 바꿔줘야함
+        start = standard;
+        next =0;
+        possible = true;
+
+        mainService.mainLists(category,function (lists) {
+
+            li = lists
+            let str = "";
+            let first =0;
+            if(lists.length<standard){
+                first = lists.length;
+            }else{
+                first =standard;
+                total = lists.length;
+            }
+            for(let i =0; i<first;i++){
+                str += "<li>";
+                str += "<div class=\"item\">";
+
+                str += "<span class='heart'></span>"
+                str += "<span class=\"material-symbols-outlined jjim jjim-ajax\" name=\""+lists[i].num+"\" style='color: #d3cdcd; font-weight: bold;'>";
+                str += "favorite";
+                str += "</span>";
+                str += "<a class=\"goDetail\" th:href=\""+lists[i].num+"\" style=\"cursor:pointer\">";
+                (function () {
+                    mainService.getFileLists(li[i].num,function (files) {
+                        str += "<img src='/productFile/display?fileName=" + files[0].uploadPath + "/" + files[0].uuid + "_"  + files[0].fileName + "'>";
+                    })
+                })(i);
+                str += "</a>";
+                str += "<div class=\"flex\" style=\"flex-direction: column; margin: 12px 0;\">";
+                str += "<div>";
+                str += "<p class=\"store_main_item_title\">"+lists[i].name+"</p>";
+                str += "</div>";
+                str += "<div style=\"margin-top: 6px; height: 16px;\">";
+                str += "<p class=\"store_main_item_category\">"+lists[i].category+"</p>";
+                str += "</div>";
+                str += "<div style=\"display: flex; align-items: end; margin-top: 5px\">";
+                str += "<span class=\"material-symbols-outlined\" style=\"font-size: 12px;\">";
+                str += "favorite";
+                str += "</span>";
+                str += "<small style=\"font-size: 11px; margin-left: 5px\">";
+                //찜 갯수 ajax
+                (function(){
+                    mainService.jjimcount(li[i].num,function (count) {
+                        str += count;
+                    })
+                })(i);
+                str += "</small>";
+                str += "</div>";
+                str += "</div>";
+                str += "<div style=\"height: 18px;\">";
+                str += "<p class=\"store_item_price\">"+lists[i].price+"P</p>";
+                str += "</div>";
+                str += "</div>";
+                str += "</li>";
+            }
+            $('.all_items ul').html(str);
+
+
+            mainService.jjimCheck(function (jjims) {
+                $(jjims).each(function (i, jjim) {
+                    if(jjim.userNum==userNum){
+                        if($(".jjim[name="+jjim.productNum+"]").hasClass("material-symbols-outlined")){
+                            $(".jjim[name="+jjim.productNum+"]").removeClass("material-symbols-outlined");
+                            $(".jjim[name="+jjim.productNum+"]").addClass("material-icons");
+                            $(".jjim[name="+jjim.productNum+"]").css("color","red")
+                        }
+                    }
+                })
+            })
+        })
+    }
+
+
+    // 스토어 카테고리 ajax
+    $('.store_categories a').click(function (e) {
+        e.preventDefault();
+        category = $(this).attr('href');
+        showmain(category);
+    })
+    // 스토어 카테고리 ajax  (반응형)
+    $('.media_store_categories a').click(function (e) {
+        e.preventDefault();
+        category = $(this).attr('href');
+        showmain(category);
+    })
+
+    //정상웹 일때
+    $('.store_categories li').click(function(){
+        $('.store_categories li').removeClass('active');
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+        }else{
+            $(this).addClass('active');
+        }
+    })
+
+    //반응형 웹
+    $('.media_store_categories li').click(function(e){
+        $('.media_store_categories li').removeClass('active');
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+        }else{
+            $(this).addClass('active');
+        }
+    })
+
+
+    function f(lists) {
+        let str="";
+
+        next = start + standard;
+        console.log("start = " + start)
+        console.log("next = " + next)
+        console.log("total = " + total)
+        if (next >= total) {
+            next = total;
+            possible = false;
+        }
+
+
+        for (let i = start; i < next; i++) {
+            str += "<li>";
+            str += "<div class=\"item\">";
+
+            str += "<span class='heart'></span>"
+            str += "<span class=\"material-symbols-outlined jjim jjim-ajax\" name=\"" + lists[i].num + "\" style='color: #d3cdcd; font-weight: bold;'>";
+            str += "favorite";
+            str += "</span>";
+            str += "<a class=\"goDetail\" th:href=\"" + lists[i].num + "\" style=\"cursor:pointer\">";
+            (function () {
+                mainService.getFileLists(lists[i].num,function (files) {
+                    str += "<img src='/productFile/display?fileName=" + files[0].uploadPath + "/" + files[0].uuid + "_"  + files[0].fileName + "'>";
+                })
+            })(i);
+            str += "</a>";
+            str += "<div class=\"flex\" style=\"flex-direction: column; margin: 12px 0;\">";
+            str += "<div>";
+            str += "<p class=\"store_main_item_title\">" + lists[i].name + "</p>";
+            str += "</div>";
+            str += "<div style=\"margin-top: 6px; height: 16px;\">";
+            str += "<p class=\"store_main_item_category\">" + lists[i].category + "</p>";
+            str += "</div>";
+            str += "<div style=\"display: flex; align-items: end; margin-top: 5px\">";
+            str += "<span class=\"material-symbols-outlined\" style=\"font-size: 12px;\">";
+            str += "favorite";
+            str += "</span>";
+            str += "<small style=\"font-size: 11px; margin-left: 5px\">";
+            //찜 갯수 ajax
+            //찜 갯수 ajax
+            (function(){
+                mainService.jjimcount(lists[i].num,function (count) {
+                    str += count;
+                })
+            })(i);
+            str += "</small>";
+            str += "</div>";
+            str += "</div>";
+            str += "<div style=\"height: 18px;\">";
+            str += "<p class=\"store_item_price\">" + lists[i].price + "P</p>";
+            str += "</div>";
+            str += "</div>";
+            str += "</li>";
+        }
+        $('.all_items ul').append(str);
+        start += standard;
+
+        mainService.jjimCheck(function (jjims) {
+            $(jjims).each(function (i, jjim) {
+                if(jjim.userNum==userNum){
+                    if($(".jjim[name="+jjim.productNum+"]").hasClass("material-symbols-outlined")){
+                        $(".jjim[name="+jjim.productNum+"]").removeClass("material-symbols-outlined");
+                        $(".jjim[name="+jjim.productNum+"]").addClass("material-icons");
+                        $(".jjim[name="+jjim.productNum+"]").css("color","red")
+                    }
+                }
+            })
+        })
+
+    }
+
+
+
+</script>
+</html>

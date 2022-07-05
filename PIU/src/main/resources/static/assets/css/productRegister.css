@@ -1,0 +1,334 @@
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+body{
+    font-family: "맑은 고딕", "Malgun Gothic", "Dotum", "돋움", "arial", "verdana",
+    sans-serif !important;
+    margin: 0;
+    padding: 0;
+    min-width: 1600px;
+    height: 100%;
+    background-color: #ecf0f7 !important;
+    font-size: 14px;
+    line-height: 1.34 !important;
+}
+
+.wrap{
+    height: 100%;
+    padding: 0 0 0 256px;
+    box-sizing: border-box;
+}
+
+
+@media (min-width: 1920px){
+    .content {
+        width: 1616px;
+        margin: 0 auto;
+    }
+}
+
+.content{
+    min-height: 750px;
+    padding: 0 50px 40px;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+.productWrap{
+    position: relative;
+    margin: 0 0 38px;
+    padding: 20px 0 0;
+
+}
+
+table{
+    table-layout: fixed;
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.togglebar{
+    margin: 0 0 -1px 0;
+    height: 50px;
+    border: 1px solid #787d8f;
+    background-color: #8b93a9;
+    box-sizing: border-box;
+}
+
+.togglebar h2{
+    float: left;
+    padding: 0px 0 0 20px;
+    font-size: 20px;
+    color: #fff;
+    font-weight: normal;
+    margin-top: 10px;
+}
+
+.togglebar .ctrl{
+
+    float: right;
+    height: 100%;
+    line-height: 48px;
+
+}
+
+.togglebar .ctrl span{
+    display: inline-block;
+    height: 100%;
+    vertical-align: top;
+}
+
+button{
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    background: transparent;
+}
+
+.toggleArea{
+    padding: 30px 20px;
+    border-radius: 2px;
+    background: #fff;
+
+}
+.formTable{
+    border:1px solid #dedede;
+    line-height: 1.5;
+    background-color: #fff;
+    table-layout: fixed;
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+tbody .formContent{
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+.formContent tr{
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.toggleArea th{
+    border: 1px solid #dedede;
+    text-align: left;
+    word-break: keep-all;
+    padding: 11px 15px 10px;
+    vertical-align: top;
+    color: #2e3039;
+    background-color: #f3f3f3;
+    word-wrap: break-word;
+    width: 190px;
+}
+
+.mBoard th[scope*='row'] + td {
+    height: 32px;
+}
+
+.toggleArea td{
+    border: 1px solid #dedede;
+    padding: 10px 15px;
+    line-height: 24px;
+    vertical-align: top;
+}
+
+.productName{
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    color: #686b6d;
+    width: 500px;
+    margin-right: 5px;
+
+}
+
+input{
+    vertical-align: middle;
+    height: 32px;
+    max-width: 100%;
+    padding: 0 9px 2px;
+    box-sizing: border-box;
+    border: 1px solid #d4d4d4;
+    font-size: 14px;
+    line-height: 26px;
+    color: #686b6d;
+    outline: 0 none;
+    transition: border .2s ease-out;
+
+
+}
+
+.pay{
+    text-align: right;
+    margin-right: 5px;
+}
+.summary{
+    width: 80%;
+    margin-right: 5px;
+}
+.panel-body{
+    height: 400px;
+}
+.check{
+    text-align: center;
+
+
+}
+
+label{
+    margin-right: 20px;
+    position: relative;
+    top: 3px;
+}
+
+input .check{
+    position: relative;
+    top: -16px;
+}
+
+.picture{
+    background-color: #686868;
+    border-radius: 3px;
+    color: #fff;
+    width: 100px;
+}
+
+.submitbtn button{
+    background-color: skyblue;
+    padding: 15px;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+}
+.submitbtn > button + button {
+    margin-left:22px;
+    letter-spacing:3px;
+
+}
+.submitbtn{
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #fff;
+    width: 100%;
+    padding: 20px;
+}
+
+
+
+form input::file-selector-button{
+    display: none;
+}
+
+.count{
+    display: flex;
+    color: #97989b;
+    word-spacing: 3px;
+    vertical-align: bottom;
+}
+
+
+
+.extraImg li{
+    float: left;
+}
+
+label[for='attach0'] div.thumb0{
+    width: 130px;
+    height: 130px;
+    background-image: url("");
+    background-size: 100% 100%;
+    cursor: pointer;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #d4d4d4;
+}
+
+
+
+label[for='attach0'] div.thumb0:hover{
+    background-color: #f5f6f8;
+}
+
+label[for='attach1'] div.thumb1{
+    width: 130px;
+    height: 130px;
+    background-image: url("");
+    background-size: 100% 100%;
+    cursor: pointer;
+    border: 1px solid;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #d4d4d4;
+    background-color: #f5f6f8;
+}
+
+label[for='attach2'] div.thumb2{
+    width: 130px;
+    height: 130px;
+    background-image: url("");
+    background-size: 100% 100%;
+    cursor: pointer;
+    border: 1px solid;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f6f8;
+    border: 1px solid #d4d4d4;
+}
+label[for='attach3'] div.thumb3{
+    width: 130px;
+    height: 130px;
+    background-image: url("");
+    background-size: 100% 100%;
+    cursor: pointer;
+    border: 1px solid;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f6f8;
+    border: 1px solid #d4d4d4;
+}
+label[for='attach4'] div.thumb4{
+    width: 130px;
+    height: 130px;
+    background-image: url("");
+    background-size: 100% 100%;
+    cursor: pointer;
+    border: 1px solid;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f6f8;
+    border: 1px solid #d4d4d4;
+}
+.flex{
+    display: flex;
+}
+textarea {
+    resize: none;
+    width: 100%;
+    height: 200px;
+    border: 1px solid #d4d4d4;
+}
+.textCount, .textTotal{
+    margin-top: 0;
+}
+.textCount1, .textTotal1{
+    margin-top: 0;
+}

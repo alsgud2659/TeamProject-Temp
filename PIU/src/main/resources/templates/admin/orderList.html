@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주문 목록</title>
+</head>
+<link rel="stylesheet" href="/assets/css/admin_style.css">
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+
+
+<body>
+<div class="root">
+
+    <!-- sidebar -->
+    <div th:replace="~{/admin/adminSideBar :: AdminSideBarImport}"></div>
+    <!-- sidebar -->
+
+    <!-- content -->
+    <!-- 주문번호,  -->
+    <div id="container">
+        <div>
+            <h2>주문 목록</h2>
+        </div>
+        <div class="searchBox" id="orderSearchBox">
+            <form id="orderSearchForm" action="/admin/orderList" method="get" th:object="${orderCriteria}">
+                <table>
+                    <tr>
+                        <th>검색분류</th>
+                        <td colspan="3">
+                            <select name="type">
+                                <option value="orderNum" th:selected="*{type} == 'orderNum'">주문번호</option>
+                                <option value="nickname" th:selected="*{type} == 'nickname'">주문자명</option>
+                                <option value="email" th:selected="*{type} == 'email'">주문자 아이디</option>
+                                <option value="phone" th:selected="*{type} == 'phone'">주문자 휴대전화</option>
+                                <option value="address" th:selected="*{type} == 'address'">배송지 주소</option>
+                            </select>
+                            <input type="text" name="keyword"  th:value="*{keyword}" id="" class="orderSearchText">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품</th>
+                        <td colspan="3">
+                            <select name="type1">
+                                <option value="productName" th:selected="*{type1} == 'productName'">상품명</option>
+                                <option value="productNum" th:selected="*{type1} == 'productNum'">상품번호</option>
+                                <option value="manufacturer" th:selected="*{type1} == 'manufacturer'">제조사</option>
+                                <option value="supplier" th:supplier="*{type1} == 'supplier'">공급사</option>
+                            </select>
+                            <input type="text" name="keyword1"th:value="*{keyword1}" id="" class="orderSearchText">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>기간</th>
+                        <td colspan="3">
+                            <div class="dateSelect">
+                                <input type="date" name="startDate"  id="" >
+                                <input type="date" name="endDate"  id="" >
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                    </tr>
+                </table>
+                <div class="btnBox">
+                    <button type="button" id="orderSearchBtn">검색</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 클래스명 변경 -->
+        <div class="listBox" id="orderList">
+            <table>
+                <tr>
+                    <div class="searchResult" th:object="${orderPageDTO}">
+                        <div>
+                                <span>[총
+                                    <strong th:text="*{total}"></strong>
+                                    개]</span>
+
+                        </div>
+                    </div>
+                </tr>
+
+
+                <tr>
+                    <!-- 생활, 주방, 욕실, 반려동물, 화장품, 식품, 문구, 원예  -->
+
+                    <th scope="col"></th>
+                    <th scope="col">주문번호</th>
+                    <th scope="col">주문일</th>
+                    <th scope="col">상품번호</th>
+                    <th scope="col">주문자</th>
+                    <th scope="col">상품명</th>
+                    <th scope="col">결제금액</th>
+                    <th scope="col">배송상태</th>
+                    <th scope="col">상품분류(메모)</th>
+                    <th scope="col">상세보기</th>
+                </tr>
+                <th:block  th:each="order:${orderList}">
+                <tr th:object="${order}">
+                    <td><input type="checkbox"></td>
+                    <td th:text="*{orderNum}"></td>
+                    <td th:text="*{registDate}"></td>
+                    <td th:text="*{productNum}"></td>
+<!--                <td th:text="*{productName}"><a href="#">파랑이</a></td>-->
+                    <td th:text="*{orderName}"></td>
+                    <td th:text="*{productName}"></td>
+                    <td th:text="*{price}"></td>
+                    <td th:if="*{status}=='0'" th:style="${'color:blue;'}">주문접수</td>
+                    <td th:if="*{status}=='1'" th:style="${'color:blue;'}">배송준비</td>
+                    <td th:if="*{status}=='2'" th:style="${'color:blue;'}">배송중</td>
+                    <td th:if="*{status}=='3'" th:style="${'color:blue;'}">배송완료</td>
+                    <td th:text="*{category}"></td>
+                    <td><a th:href="@{/admin/orderInfoDetail(orderNum=*{orderNum},productNum=*{productNum})}">상세보기</a></td>
+                </tr>
+                </th:block>
+            </table>
+            <div th:object="${orderPageDTO}" class="paging" style="text-align: center">
+                <a class="changePage" th:href="*{startPage - 1}" th:if="*{prev}">&lt;</a>
+                <th:block th:each="num:${#numbers.sequence(orderPageDTO.startPage, orderPageDTO.endPage)}">
+                    <a class= "changePages"  href="javascript:void(0);" th:if="${num == orderPageDTO.orderCriteria.pageNum}" th:text="${num}"></a>
+                    <a class="changePage" th:href="${num}" th:unless="${num == orderPageDTO.orderCriteria.pageNum}" th:text="${num}"></a>
+                </th:block>
+                <a class="changePage" th:href="*{endPage + 1}" th:if="*{next}">&gt;</a>
+                <a class="changePage" th:href="*{orderCriteria.pageNum + 1}" th:if="*{orderCriteria.pageNum < realEnd}">&gt;</a>
+            </div>
+        </div>
+        <!-- 페이징 처리 -->
+
+    </div>
+    <form action="/admin/orderList"  method="get" id="pageForm" th:object="${orderCriteria}">
+        <input type="hidden" th:field="*{pageNum}">
+        <input type="hidden" th:field="*{amount}">
+        <input type="hidden" th:field="*{total}" th:value="*{total}">
+        <input type="hidden" th:field="*{startDate}" th:value="*{startDate}">
+        <input type="hidden" th:field="*{endDate}" th:value="*{endDate}">
+        <input type="hidden" th:field="*{keyword}" th:value="*{keyword}">
+        <input type="hidden" th:field="*{keyword1}" th:value="*{keyword1}">
+        <input type="hidden" th:field="*{type1}" th:value="*{type1}">
+        <input type="hidden" th:field="*{type}" th:value="*{type}">
+    </form>
+
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:replace="~{/admin/adminSideBar :: AdminSideBarJSImport}"></script>
+<script th:inline="javascript">
+    $("a.changePage").click(function(e){
+        e.preventDefault();
+        $("#pageForm").find("input[name='pageNum']").val($(this).attr("href"));
+        $("#pageForm").submit();
+    });
+</script>
+<script>
+    $('#orderSearchBtn').on("click", function (e) {
+        $("#orderSearchForm").submit();
+    });
+</script>
+</html>

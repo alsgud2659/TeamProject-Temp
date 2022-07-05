@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유저목록</title>
+</head>
+<link rel="stylesheet" href="/assets/css/admin_style.css">
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+
+<body>
+<div class="root">
+
+    <!-- sidebar -->
+    <div th:replace="~{/admin/adminSideBar :: AdminSideBarImport}"></div>
+
+    <!-- content -->
+    <div id="container">
+        <div>
+            <h2>유저관리</h2>
+        </div>
+        <div class="searchBox" id="userSearchBox">
+            <form id="userSearchForm" action ="/admin/userList/" method="get" th:object="${criteria}">
+                <table id="searchTbl">
+                    <tr>
+                        <th>검색어</th>
+                        <td>
+                            <select name="type">
+                                <option value="total" th:selected="*{type} == 'total'">전체</option>
+                                <option value="user" th:selected="*{type} == 'user'">유저</option>
+                                <option value="company" th:selected="*{type} == 'company'">단체</option>
+                            </select>
+                            <select name="type1">
+                                <option value="nickname"   th:selected="*{type1} == 'nickname'">이름</option>
+                                <option value="phone"  th:selected="*{type1} == 'phone'">휴대폰번호</option>
+                            </select>
+                            <input type="text" value="" name="keyword" th:value="*{keyword}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>주소</th>
+                        <td>
+                            <input type="text" value="" name="keyword1" th:value="*{keyword1}" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>가입일</th>
+                        <td>
+                            <input type="date" name="startDate"  id="" >
+                            <input type="date" name="endDate"  id="" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>승인상태</th>
+                        <td>
+                            <select name="type3" required>
+                                <option th:selected="*{type3}=='TOTAL3'">전체</option>
+                                <option th:selected="*{type3}=='AUTH3'">승인</option>
+                                <option th:selected="*{type3}=='UNAUTH3'">미승인</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>SNS 연동</th>
+                        <td>
+                            <span>전체</span><input type="radio" name="snsCheck" id="" >
+                            <span>카카오톡</span><input type="radio" name="snsCheck" id="">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <div class="btnBox">
+                <button type="button" id="userSearchBtn">검색</button>
+            </div>
+        </div>
+        <div class="listBox" id="userList">
+            <h2>회원 목록</h2>
+            <div class="searchResult" th:object="${pageDTO}">
+                    <span>[총 회원수
+                        <strong th:text="*{total}"></strong>명]</span>
+                <span>검색결과 0건</span>
+            </div>
+            <table>
+                <tr>
+                    <td colspan="12">
+                        <div class="listTitle">
+                            <button type="button" onclick="disable()" class="listBtn" id="userDisabled">비활성화</button>
+                            <button type="button" onclick="enable()" class="listBtn" id="userEnable">활성화</button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">번호</th>
+                    <th scope="col">유형</th>
+                    <th scope="col">상태</th>
+                    <th scope="col">승인</th>
+                    <th scope="col">이름</th>
+                    <th scope="col">아이디</th>
+                    <th scope="col">등록일</th>
+                    <th scope="col">전화번호</th>
+                    <th scope="col">주소</th>
+                    <th scope="col">포인트</th>
+                    <th scope="col">상세보기</th>
+                </tr>
+
+                <th:block  th:each="user:${userList}">
+                    <tr th:object="${user}">
+                        <td><input type="checkbox"  name="statusList" class="userCheck" th:value="*{category}"></td>
+                        <td th:id="nums" th:text="*{num}"></td>
+                        <td th:if="*{category}=='user'"  th:text="유저"></td>
+                        <td th:if="*{category}=='company'" th:text="회사"></td>
+                        <td th:if="*{category}=='admin'" th:text="관리자"></td>
+                        <td th:if="*{status}=='0'" th:text="비활성화" th:style="${'color:red;'}"></td>
+                        <td th:if="*{status}=='1'" th:text="활성화" th:style="${'color:blue;'}"></td>
+                        <td th:if="*{approval}=='0'" th:text="승인" th:style="${'color:blue;'}"></td>
+                        <td th:if="*{approval}=='1'" th:text="승인거절" th:style="${'color:red;'}"></td>
+                        <td th:text ="*{nickname}"></td>
+                        <td th:text="*{email}"></td>
+                        <td th:text="*{registDate}"></td>
+                        <td th:text="*{phone}"></td>
+                        <td th:text="*{address}"></td>
+                        <td th:if="*{category}=='user'" th:text="*{point}"></td>
+                        <td th:if="*{category}=='company'">없음</td>
+                        <td><a th:href="@{/admin/userDetail(num=*{num},category=*{category})}" class="userDetail">상세보기</a></td>
+                    </tr>
+                </th:block>
+
+
+            </table>
+            <div th:object="${pageDTO}" class="paging" style="text-align: center">
+                <a class="changePage" th:href="*{startPage - 1}" th:if="*{prev}">&lt;</a>
+                <th:block th:each="num:${#numbers.sequence(pageDTO.startPage, pageDTO.endPage)}">
+                    <a class= "changePages"  href="javascript:void(0);" th:if="${num == pageDTO.criteria.pageNum}" th:text="${num}"></a>
+                    <a class="changePage" th:href="${num}" th:unless="${num == pageDTO.criteria.pageNum}" th:text="${num}"></a>
+                </th:block>
+                <a class="changePage" th:href="*{endPage + 1}" th:if="*{next}">&gt;</a>
+                <a class="changePage" th:href="*{criteria.pageNum + 1}" th:if="*{criteria.pageNum < realEnd}">&gt;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form action="/admin/userList"  method="get" id="pageForm" th:object="${criteria}">
+    <input type="hidden" th:field="*{pageNum}">
+    <input type="hidden" th:field="*{amount}">
+    <input type="hidden" th:field="*{total}" th:value="*{total}">
+    <input type="hidden" th:field="*{startDate}" th:value="*{startDate}">
+    <input type="hidden" th:field="*{endDate}" th:value="*{endDate}">
+    <input type="hidden" th:field="*{keyword}" th:value="*{keyword}">
+    <input type="hidden" th:field="*{keyword1}" th:value="*{keyword1}">
+    <input type="hidden" th:field="*{type1}" th:value="*{type1}">
+    <input type="hidden" th:field="*{type}" th:value="*{type}">
+</form>
+</div>
+
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+
+    //타임리프에서 필드값으로 해당 유저의 번호 뿌려줄것
+    $("a.changePage").click(function(e){
+        e.preventDefault();
+        $("#pageForm").find("input[name='pageNum']").val($(this).attr("href"));
+        $("#pageForm").submit();
+    });
+    // 비활성화 버튼 클릭시
+    // $('#userDisabled').on("click", function (e) {
+    //     if (confirm("해당 유저를 비활성화 하시겠습니까?")) {
+    //
+    //         // 해당 유저 비활성화
+    //         $.ajax({
+    //             url: "",
+    //             type: "post",
+    //             data: {userNumber: $userNumber},
+    //             success: function () {
+    //             }
+    //         });
+    //     } else {
+    //
+    //     }
+    // });
+    // 활성화 버튼 클릭시
+
+
+
+    let user=[[${userList}]];
+    // console.log(user);
+    var value1= document.getElementById('nums').innerText;
+    // console.log(value1);
+    // var object= {
+    //     "category":,
+    //     "num":
+    // }
+
+    function disable(){
+        var url = "/admin/statusDisable";
+
+        var categoryArr = new Array();
+        var totalArray = $("input[name='statusList']:checked");
+        var categoryArray = new Array();
+        var numberArray=new Array();
+
+        totalArray.each(function (i) {
+            var tr = totalArray.parent().parent().eq(i);
+            var td = tr.children();
+            categoryArr.push(tr.text());
+            var number = td.eq(1).text(); // 회원번호를 가져오기위함
+            categoryArray.push(totalArray[i].value);
+            numberArray.push(number);
+        })
+
+        if (numberArray.length == 0) {
+            alert("비활성화 할 유저들을 선택해 주세요.");
+        } else {
+            var chk = confirm("정말 비활성화 하시겠습니까?");
+            if (chk) {
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    traditional: true, // 데이터 직렬화
+                    data:{list:categoryArray,
+                        list1:numberArray},
+                    success: function () {
+                        alert("비활성화 성공");
+                        location.replace("/admin/userList")
+                    }
+                });
+            }
+        }
+    };
+
+
+    function enable(){
+        var url = "/admin/statusEnable";
+
+        var categoryArr1 = new Array();
+        var totalArray1 = $("input[name='statusList']:checked");
+        var categoryArray1 = new Array();
+        var numberArray1=new Array();
+
+        totalArray1.each(function (i) {
+            var tr1 = totalArray1.parent().parent().eq(i);
+            var td1 = tr1.children();
+            categoryArr1.push(tr1.text());
+            var number1 = td1.eq(1).text(); // 회원번호를 가져오기위함
+            categoryArray1.push(totalArray1[i].value);
+            numberArray1.push(number1);
+        })
+
+        if (numberArray1.length == 0) {
+            alert("활성화 할 유저들을 선택해 주세요.");
+        } else {
+            var chk = confirm("정말 활성화 하시겠습니까?");
+            if (chk) {
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    traditional: true, // 데이터 직렬화
+                    data:{listEn:categoryArray1,
+                        listEn1:numberArray1},
+                    success: function () {
+                        alert("활성화 성공");
+                        location.replace("/admin/userList")
+                    }
+                });
+            }
+        }
+    };
+
+
+
+
+</script>
+<script>
+    $('#userSearchBtn').on("click", function (e) {
+        $("#userSearchForm").submit();
+    });
+
+    // $("a.userDetail").click(function(e){
+    //     e.preventDefault();
+    //     console.log("$(this).attr('href')");
+    //     location.href = "/admin/userDetail" + "?num="+$(this).attr('href');
+    // });
+</script>
+<script th:replace="~{/admin/adminSideBar :: AdminSideBarJSImport}"></script>
+</html>

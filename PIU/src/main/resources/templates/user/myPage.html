@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/mypage_style.css">
+    <link rel="stylesheet" href="/assets/css/Header.css" />
+    <link rel="stylesheet" href="/assets/css/Footer.css" />
+    <script src="https://kit.fontawesome.com/3e4acc40f3.js" crossorigin="anonymous"></script>
+    <title>마이페이지</title>
+</head>
+
+<body class="mypage-total">
+<div th:replace="~{/main/Header :: HeaderImport}"></div>
+<div id="mypage-total-inside">
+    <div class="mypage-outline mypage-linepick">
+        <header class="header-middle" ><a class="header-top" href="/user/infoUpdate">
+            <h2 class="header-text" th:text="${getDetail.getNickname()}"><img src="https://class101.net/images/im-kakao-login.png" alt="kakao" class="header-img"></h2>
+            <div class="header-bottom" th:text="${getDetail.getEmail()}"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                                                                height="14" fill="none" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M8.5 18.5l6-6.5-6-6.5L10 4l7.5 8-7.5 8-1.5-1.5z"
+                      fill="#a2a2a2"></path>
+            </svg></div>
+        </a></header>
+        <div class="mypage-wrap">
+            <aside class="left-side">
+<!--                <section class="first-section-top">-->
+<!--                    <h4 class="first-section-top-letter">내 등급</h4><a color="#00B031" class="second-section-top"-->
+<!--                                                                     href="#">-->
+<!--                    <div class="second-section-middle">-->
+<!--                        <h4 class="second-section-letter">Lv. <i class="sc-6345c08d-9 second-section-icon"></i>-->
+<!--                        </h4><span class="second-section-right">-->
+<!--                                    <div class="second-section-right-letter">혜택보기</div> <svg-->
+<!--                            xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none"-->
+<!--                            viewBox="0 0 24 24">-->
+<!--                                        <path fill-rule="evenodd" d="M8.5 18.5l6-6.5-6-6.5L10 4l7.5 8-7.5 8-1.5-1.5z"-->
+<!--                                              fill="#FFF"></path>-->
+<!--                                    </svg>-->
+<!--                                </span>-->
+<!--                    </div>-->
+<!--                    <div class="second-section-line">-->
+<!--                        <div value="0" class="second-section-box"></div>-->
+<!--                    </div>-->
+<!--                    <div class="second-section-bottom-letter"><span class="second-letter">10,000P</span> 추가 적립시-->
+<!--                        다음 달 Lv. Professional</div>-->
+<!--                </a>-->
+<!--                </section>-->
+                <section class="third-section">
+                    <h4 class="third-section-top">내 정보</h4><a class="third-section-top-a" href="/user/myPassword">
+                    <div class="third-section-top-div">비밀번호 변경</div>
+
+                </a><a class="third-section-middle" href="/user/myPoint">
+                    <div class="third-section-middle-div">내 포인트</div>
+<!--                    <div class="third-section-middle-div2">-->
+                    <!--                        <div class="third-section-middle-div3" th:text="|${getDetail.getPoint()}P|"></div><svg xmlns="http://www.w3.org/2000/svg"-->
+                    <!--                                                                            width="14" height="14" fill="none" class="third-section-middle-div4"-->
+                    <!--                                                                            viewBox="0 0 24 24">-->
+                    <!--                        <path fill-rule="evenodd" d="M8.5 18.5l6-6.5-6-6.5L10 4l7.5 8-7.5 8-1.5-1.5z"-->
+                    <!--                              fill="#cacaca"></path>-->
+                    <!--                    </svg>-->
+                    <!--                    </div>-->
+                </a><a class="third-section-bottom-bottom" href="/user/myQnA">
+                    <div class="third-section-bottom-div3">내 문의</div>
+                    <div class="third-section-bottom-div-div">
+                        <div class="third-section-bottom-div-div2"></div><svg xmlns="http://www.w3.org/2000/svg"
+                                                                              width="14" height="14" fill="none" class="third-section-bottom-div-div2-svg"
+                                                                              viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M8.5 18.5l6-6.5-6-6.5L10 4l7.5 8-7.5 8-1.5-1.5z"
+                              fill="#cacaca"></path>
+                    </svg>
+                    </div>
+                </a><a class="third-section-bottom-last" href="/user/myReview">
+                    <div class="third-section-bottom-last-letter">내 후기</div>
+                    <div class="third-section-bottom-last-letter-div">
+                        <div class="third-section-bottom-last-div"></div><svg xmlns="http://www.w3.org/2000/svg"
+                                                                              width="14" height="14" fill="none" class="third-section-bottom-last-div-svg"
+                                                                              viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M8.5 18.5l6-6.5-6-6.5L10 4l7.5 8-7.5 8-1.5-1.5z"
+                              fill="#cacaca"></path>
+                    </svg>
+                    </div>
+                </a>
+                    <a class="third-section-bottom-last" href="/user/myOrderList">
+                        <div class="third-section-bottom-last-letter">내 주문내역</div>
+                        <div class="third-section-bottom-last-letter-div">
+                            <div class="third-section-bottom-last-div"></div><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                  width="14" height="14" fill="none" class="third-section-bottom-last-div-svg"
+                                                                                  viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M8.5 18.5l6-6.5-6-6.5L10 4l7.5 8-7.5 8-1.5-1.5z"
+                                  fill="#cacaca"></path>
+                        </svg>
+                        </div>
+                    </a>
+                </section>
+                <section class="fifth-section">
+                    <h4 class="fifth-section-first">메뉴</h4><a class="fifth-section-third-div-div3" href="/">
+                    <div class="fifth-section-third-div-div4">로그아웃</div>
+                    <div class="fifth-section-third-div-div4-letter">
+                        <div class="fifth-section-third-space"></div><svg xmlns="http://www.w3.org/2000/svg"
+                                                                          width="14" height="14" fill="none" class="fifth-section-third-space-svg" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M8.5 18.5l6-6.5-6-6.5L10 4l7.5 8-7.5 8-1.5-1.5z"
+                              fill="#cacaca"></path>
+                    </svg>
+                    </div>
+                </a>
+                </section>
+            </aside>
+            <div class="mypage-right">
+                <div class="mypage-right-content">
+                    <hr class="aside-bottom-hr">
+                    <section class="my-join-plogging-list">
+                        <div class="join-plogging-outline">
+                            <div class="join-plogging-title">
+                                <div class="join-plogging-title-inside">
+                                    <h3 class="my-join-plogging">내가 참여한 플로깅</h3>
+                                </div>
+                                <div class="button-box">
+                                        <span class="prev_1">
+                                            <p>&lt;</p>
+                                        </span>
+                                    <span class="next_1">
+                                            <p>&gt;</p>
+                                        </span>
+                                </div>
+                            </div>
+                            <button type="button" style="margin-bottom: 20px;" onclick = "location.href = '/project/add/'+ ">후기작성</button>
+                            <div class="join-plogging-wrap">
+                                <ul class="yslides_1">
+                                    <li class="join-plogging-lists" th:each="project:${inProjectList}">
+                                        <div class="join-plogging-list" th:object="${project}">
+                                            <div class="join-plogging-item">
+                                                <a class="join-plogging-a" th:href="@{/project/projectDetail(num=*{num})}">
+                                                    <div class="join-plogging-content">
+                                                        <div class="join-plogging-content-up">
+                                                                <span class="join-plogging-content-image" th:href="*{num}">
+                                                                </span>
+                                                        </div>
+                                                        <div class="join-plogging-list-summary">
+                                                            <div class="join-plogging-list-title">
+                                                                <p class="join-plogging-title-name" th:text="*{title}">
+                                                                </p>
+                                                            </div>
+                                                            <div class="join-plogging-list-content" th:text="*{content}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+<!--                                                            <div class="jjim-wrap" >-->
+<!--                                                                <div class="jjim-plus" id="join-project-jjim">-->
+<!--                                                                    <div class="jjim-icon">-->
+<!--                                                                        <svg xmlns="http://www.w3.org/2000/svg"-->
+<!--                                                                             width="12" height="12" fill="none"-->
+<!--                                                                             viewBox="0 0 24 24">-->
+<!--                                                                            <path class="join-project-jjim check" th:name="*{num}" fill-rule="evenodd"-->
+<!--                                                                                  d="M1.5 8.824C1.5 5.607 3.962 3 7 3c2.5 0 4 1.5 5 3 1-1.5 2.5-3 5-3 3.038 0 5.5 2.607 5.5 5.824C22.5 14.827 16.684 18.52 12 21 7.316 18.52 1.5 14.827 1.5 8.824z"-->
+<!--                                                                                  fill="#d7d7d7"></path>-->
+<!--                                                                        </svg>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                                <p class="join-project-jjim-count" th:name="*{num}"></p>-->
+<!--                                                            </div>-->
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="my-visited-plogging-list">
+                        <div class="visited-plogging-outline">
+                            <div class="visited-plogging-title">
+                                <div class="visited-plogging-title-inside">
+                                    <p class="my-visited-plogging">내가 둘러본 플로깅</p>
+                                </div>
+                                <div class="button-box">
+                                        <span class="prev_2">
+                                            <p>&lt;</p>
+                                        </span>
+                                    <span class="next_2">
+                                            <p>&gt;</p>
+                                        </span>
+                                </div>
+                            </div>
+
+                            <div class="visited-plogging-wrap">
+                                <ul class="yslides_2">
+                                    <li class="visited-plogging-lists" th:each="project:${seenProjectList}">
+                                        <div class="visited-plogging-list" th:object="${project}">
+                                            <div class="visited-plogging-item">
+                                                <a class="visited-plogging-a" th:href="@{/project/projectDetail(num=*{num})}">
+                                                    <div class="visited-plogging-content">
+
+                                                        <div class="visited-plogging-content-up">
+                                                                <span class="visited-plogging-content-image" th:href="*{num}">
+                                                                </span>
+                                                        </div>
+                                                        <div class="visited-plogging-list-summary">
+                                                            <div class="visited-plogging-list-title">
+                                                                <p class="visited-plogging-title-name" th:text="*{title}">
+                                                                </p>
+                                                            </div>
+                                                            <div class="visited-plogging-list-content" th:text="*{content}">
+                                                            </div>
+<!--                                                            <div class="jjim-wrap">-->
+<!--                                                                <div class="jjim-plus">-->
+<!--                                                                    <div class="jjim-icon">-->
+<!--                                                                        <svg xmlns="http://www.w3.org/2000/svg"-->
+<!--                                                                             width="12" height="12" fill="none"-->
+<!--                                                                             viewBox="0 0 24 24">-->
+<!--                                                                            <path fill-rule="evenodd"-->
+<!--                                                                                  d="M1.5 8.824C1.5 5.607 3.962 3 7 3c2.5 0 4 1.5 5 3 1-1.5 2.5-3 5-3 3.038 0 5.5 2.607 5.5 5.824C22.5 14.827 16.684 18.52 12 21 7.316 18.52 1.5 14.827 1.5 8.824z"-->
+<!--                                                                                  fill="#d7d7d7"></path>-->
+<!--                                                                        </svg>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                                <p th:text="*{jjimCount}" ></p>-->
+<!--                                                            </div>-->
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="my-jjim-plogging-list">
+                        <div class="jjim-plogging-outline">
+                            <div class="jjim-plogging-title">
+                                <div class="jjim-plogging-title-inside">
+                                    <p class="my-jjim-plogging">내가 찜한 플로깅</p>
+                                </div>
+                                <div class="button-box">
+                                        <span class="prev_3">
+                                            <p>&lt;</p>
+                                        </span>
+                                    <span class="next_3">
+                                            <p>&gt;</p>
+                                        </span>
+                                </div>
+                            </div>
+
+                            <div class="jjim-plogging-wrap">
+                                <ul class="yslides_3">
+                                    <li class="jjim-plogging-lists" th:each="project:${jjimProjectList}">
+                                        <div class="jjim-plogging-list" th:object="${project}">
+                                            <div class="jjim-plogging-item">
+                                                <a class="jjim-plogging-a" th:href="@{/project/projectDetail(num=*{num})}">
+                                                    <div class="jjim-plogging-content">
+                                                        <div class="jjim-plogging-content-up">
+                                                                <span class="jjim-plogging-content-image" th:href="*{num}">
+                                                                </span>
+                                                        </div>
+                                                        <div class="jjim-plogging-list-summary">
+                                                            <div class="jjim-plogging-list-title">
+                                                                <p class="jjim-plogging-title-name" th:text="*{title}">
+                                                                </p>
+                                                            </div>
+                                                            <div class="jjim-plogging-list-content" th:text="*{content}">
+                                                            </div>
+<!--                                                            <div class="jjim-wrap">-->
+<!--                                                                <div class="jjim-plus">-->
+<!--                                                                    <div class="jjim-icon">-->
+<!--                                                                        <svg xmlns="http://www.w3.org/2000/svg"-->
+<!--                                                                             width="12" height="12" fill="none"-->
+<!--                                                                             viewBox="0 0 24 24">-->
+<!--                                                                            <path fill-rule="evenodd"-->
+<!--                                                                                  d="M1.5 8.824C1.5 5.607 3.962 3 7 3c2.5 0 4 1.5 5 3 1-1.5 2.5-3 5-3 3.038 0 5.5 2.607 5.5 5.824C22.5 14.827 16.684 18.52 12 21 7.316 18.52 1.5 14.827 1.5 8.824z"-->
+<!--                                                                                  fill="#d7d7d7"></path>-->
+<!--                                                                        </svg>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                                <p th:text="*{jjimCount}" ></p>-->
+<!--                                                            </div>-->
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="my-pay-store">
+                        <div class="pay-store-outline">
+                            <div class="pay-store-title">
+                                <div class="pay-store-title-inside">
+                                    <h3 class="my-pay-store">내가 구매한 상품</h3>
+                                </div>
+                                <div class="button-box">
+                                        <span class="prev_4">
+                                            <p>&lt;</p>
+                                        </span>
+                                    <span class="next_4">
+                                            <p>&gt;</p>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="pay-store-wrap">
+                                <ul class="yslides_4">
+                                    <li class="pay-store-lists" th:each="product:${inProductList}">
+                                        <div class="pay-store-list" th:object="${product}">
+                                            <div class="pay-store-item">
+                                                <a class="pay-store-a" th:href="@{/store/detail(num=*{num})}">
+                                                    <div class="pay-store-content">
+                                                        <div class="pay-store-content-up">
+                                                                <span class="pay-store-content-image" th:href="*{num}">
+                                                                </span>
+                                                        </div>
+                                                        <div class="pay-store-list-summary">
+                                                            <div class="pay-store-list-title">
+                                                                <p class="pay-store-title-name" th:text="*{name}">
+                                                                </p>
+                                                            </div>
+                                                            <div class="pay-store-list-content" th:text="*{content}">
+                                                            </div>
+<!--                                                            <div class="jjim-wrap">-->
+<!--                                                                <div class="jjim-plus">-->
+<!--                                                                    <div class="jjim-icon">-->
+<!--                                                                        <svg xmlns="http://www.w3.org/2000/svg"-->
+<!--                                                                             width="12" height="12" fill="none"-->
+<!--                                                                             viewBox="0 0 24 24">-->
+<!--                                                                            <path fill-rule="evenodd"-->
+<!--                                                                                  d="M1.5 8.824C1.5 5.607 3.962 3 7 3c2.5 0 4 1.5 5 3 1-1.5 2.5-3 5-3 3.038 0 5.5 2.607 5.5 5.824C22.5 14.827 16.684 18.52 12 21 7.316 18.52 1.5 14.827 1.5 8.824z"-->
+<!--                                                                                  fill="#d7d7d7"></path>-->
+<!--                                                                        </svg>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                                <span th:text="*{jjimCount}" ></span>-->
+<!--                                                            </div>-->
+                                                            <div class="space-enter">
+                                                            </div>
+                                                            <div class="product-price" th:text="*{price}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="my-visited-store">
+                        <div class="visited-store-outline">
+                            <div class="visited-store-title">
+                                <div class="visited-store-title-inside">
+                                    <h3 class="my-visited-store">내가 둘러본 상품</h3>
+                                </div>
+                                <div class="button-box">
+                                        <span class="prev_5">
+                                            <p>&lt;</p>
+                                        </span>
+                                    <span class="next_5">
+                                            <p>&gt;</p>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="visited-store-wrap">
+                                <ul class="yslides_5">
+                                    <li class="visited-store-lists" th:each="product:${seenProductList}">
+                                        <div class="visited-store-list" th:object="${product}">
+                                            <div class="visited-store-item">
+                                                <a class="visited-store-a" th:href="@{/store/detail(num=*{num})}">
+                                                    <div class="visited-store-content">
+                                                        <div class="visited-store-content-up">
+                                                                <span class="visited-store-content-image" th:href="*{num}">
+                                                                </span>
+                                                        </div>
+                                                        <div class="visited-store-list-summary">
+                                                            <div class="visited-store-list-title">
+                                                                <p class="visited-store-title-name" th:text="*{name}">
+                                                                </p>
+                                                            </div>
+                                                            <div class="visited-store-list-content" th:text="*{content}">
+                                                            </div>
+<!--                                                            <div class="jjim-wrap">-->
+<!--                                                                <div class="jjim-plus">-->
+<!--                                                                    <div class="jjim-icon">-->
+<!--                                                                        <svg xmlns="http://www.w3.org/2000/svg"-->
+<!--                                                                             width="12" height="12" fill="none"-->
+<!--                                                                             viewBox="0 0 24 24">-->
+<!--                                                                            <path fill-rule="evenodd"-->
+<!--                                                                                  d="M1.5 8.824C1.5 5.607 3.962 3 7 3c2.5 0 4 1.5 5 3 1-1.5 2.5-3 5-3 3.038 0 5.5 2.607 5.5 5.824C22.5 14.827 16.684 18.52 12 21 7.316 18.52 1.5 14.827 1.5 8.824z"-->
+<!--                                                                                  fill="#d7d7d7"></path>-->
+<!--                                                                        </svg>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                                <span th:text="*{jjimCount}" ></span>-->
+<!--                                                            </div>-->
+                                                            <div class="space-enter">
+                                                            </div>
+                                                            <div class="product-price" th:text="*{price}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="my-jjim-store">
+                        <div class="jjim-store-outline">
+                            <div class="jjim-store-title">
+                                <div class="jjim-store-title-inside">
+                                    <h3 class="my-jjim-store">내가 찜한 상품</h3>
+                                </div>
+                                <div class="button-box">
+                                        <span class="prev_6">
+                                            <p>&lt;</p>
+                                        </span>
+                                    <span class="next_6">
+                                            <p>&gt;</p>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="jjim-store-wrap">
+                                <ul class="yslides_6" >
+                                    <li class="jjim-store-lists" th:each="product:${jjimProductList}">
+                                        <div class="jjim-store-list" th:object="${product}">
+                                            <div class="jjim-store-item">
+                                                <a class="jjim-store-a" th:href="@{/store/detail(num=*{num})}">
+                                                    <div class="jjim-store-content">
+                                                        <div class="jjim-store-content-up">
+                                                                <span class="jjim-store-content-image" th:href="*{num}">
+                                                                </span>
+                                                        </div>
+                                                        <div class="jjim-store-list-summary">
+                                                            <div class="jjim-store-list-title">
+                                                                <p class="jjim-store-title-name" th:text="*{name}">
+                                                                </p>
+                                                            </div>
+                                                            <div class="jjim-store-list-content" th:text="*{content}">
+                                                            </div>
+<!--                                                            <div class="jjim-wrap">-->
+<!--                                                                <div class="jjim-plus">-->
+<!--                                                                    <div class="jjim-icon">-->
+<!--                                                                        <svg xmlns="http://www.w3.org/2000/svg"-->
+<!--                                                                             width="12" height="12" fill="none"-->
+<!--                                                                             viewBox="0 0 24 24">-->
+<!--                                                                            <path fill-rule="evenodd"-->
+<!--                                                                                  d="M1.5 8.824C1.5 5.607 3.962 3 7 3c2.5 0 4 1.5 5 3 1-1.5 2.5-3 5-3 3.038 0 5.5 2.607 5.5 5.824C22.5 14.827 16.684 18.52 12 21 7.316 18.52 1.5 14.827 1.5 8.824z"-->
+<!--                                                                                  fill="#d7d7d7"></path>-->
+<!--                                                                        </svg>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                                <span th:text="*{jjimCount}" ></span>-->
+<!--                                                            </div>-->
+                                                            <div class="space-enter">
+                                                            </div>
+                                                            <div class="product-price" th:text="*{price}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{/main/Footer :: FooterImport}"></div>
+<script src="/assets/js/mypage.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+// let jjimProjectList = [[${jjimProjectList}]];
+// let jjimProductList = [[${jjimProductList}]];
+// let inProjectList = [[${inProjectList}]];
+// let inProductList =[[${inProductList}]];
+// let seenProjectList = [[${seenProjectList}]];
+// let seenProductList = [[${seenProductList}]];
+//
+// let userNum = [[${getDetail.num}]];
+// show()
+// function show() {
+//     $.ajax({
+//         url: "/userR/jjim",
+//         type: "get",
+//         success: function (jjims) {
+//             console.log("들어옴");
+//             $(jjims).each(function (i, jjim) {
+//                 if (jjim.userNum == userNum) {
+//                     if ($(".join-project-jjim[name=" + jjim.projectNum + "]").hasClass("check")) {
+//                         $(".join-project-jjim[name=" + jjim.projectNum + "]").removeClass("check");
+//                         $(".join-project-jjim[name=" + jjim.projectNum + "]").addClass("checked");
+//                         $(".join-project-jjim[name=" + jjim.projectNum + "]").css("fill", "red")
+//                     }
+//                 }
+//                 $.ajax({
+//                     url : "/userR/jjimCount?projectNum=" + jjim.projectNum,
+//                     type : "get",
+//                     async : false,
+//                     success : function(count) {
+//                         $('.join-project-jjim-count').text(count);
+//                     }
+//                 })
+//             })
+//         }
+//     })
+//
+// }
+//
+//     $('.join-project-jjim').on("click",function () {
+//         console.log("들어옴");
+//         let projectNum = $(this).attr("name");
+//         console.log(projectNum);
+//         if($(this).hasClass("check")) {
+//             $(this).removeClass("check");
+//             $(this).addClass("checked");
+//             $(this).css("fill","red");
+//             $.ajax({
+//                 url : "/userR/jjim",
+//                 type : "post",
+//                 data : {userNum : userNum, category: "2", projectNum : projectNum},
+//                 success : function(result) {
+//                     show();
+//                 }
+//             })
+//
+//         } else {
+//             $(this).addClass("check");
+//             $(this).removeClass("checked");
+//             $(this).css("fill","#d7d7d7");
+//
+//             $.ajax({
+//                 url : "/userR/jjim",
+//                 type : "delete",
+//                 data : {userNum : userNum, category : "2", projectNum : projectNum},
+//                 success : function () {
+//                     show();
+//                 }
+//             })
+//         }
+//     })
+
+
+
+    let str = "";
+    $(".join-plogging-content-image").each(function (i ,h) {
+        let projectNum=$(this).attr("href");
+        console.log(projectNum);
+        $.ajax({
+            url: "/projectFile/list/"+projectNum,
+            type: "get",
+            success : function (files) {
+                str += "<picture class='join-plogging-main-image'>";
+                str += "<img src='/projectFile/display1?fileName=" + files[0].uploadPath + "/" + files[0].uuid + "_"  + files[0].fileName + "'>";
+                str += "</picture>";
+                $(h).html(str);
+                str = "";
+            }
+        })
+    })
+
+    $(".visited-plogging-content-image").each(function (i ,h) {
+        let projectNum=$(this).attr("href");
+        console.log(projectNum);
+        $.ajax({
+            url: "/projectFile/list/"+projectNum,
+            type: "get",
+            success : function (files) {
+                str += "<picture class='visited-plogging-main-image'>";
+                str += "<img src='/projectFile/display1?fileName=" + files[0].uploadPath + "/" + files[0].uuid + "_"  + files[0].fileName + "'>";
+                str += "</picture>";
+                $(h).html(str);
+                str = "";
+            }
+        })
+    })
+
+    $(".jjim-plogging-content-image").each(function (i ,h) {
+        let projectNum=$(this).attr("href");
+        $.ajax({
+            url: "/projectFile/list/"+projectNum,
+            type: "get",
+            success : function (files) {
+                str += "<picture class='jjim-plogging-main-image'>";
+                str += "<img src='/projectFile/display1?fileName=" + files[0].uploadPath + "/" + files[0].uuid + "_"  + files[0].fileName + "'>";
+                str += "</picture>";
+                $(h).html(str);
+                str = "";
+            }
+        })
+    })
+
+
+    $(".pay-store-content-image").each(function (i ,h) {
+        let productNum=$(this).attr("href");
+        $.ajax({
+            url: "/productFile/list/"+productNum,
+            type: "get",
+            success : function (files) {
+                str += "<picture class='pay-store-main-image'>";
+                str += "<img src='/productFile/display?fileName=" + files[0].uploadPath + "/" + files[0].uuid + "_"  + files[0].fileName + "'>";
+                str += "</picture>";
+                $(h).html(str);
+                str = "";
+            }
+        })
+    })
+
+    $(".visited-store-content-image").each(function (i ,h) {
+        let productNum=$(this).attr("href");
+        $.ajax({
+            url: "/productFile/list/"+productNum,
+            type: "get",
+            success : function (files) {
+                str += "<picture class='visited-store-main-image'>";
+                str += "<img src='/productFile/display?fileName=" + files[0].uploadPath + "/" + files[0].uuid + "_"  + files[0].fileName + "'>";
+                str += "</picture>";
+                $(h).html(str);
+                str = "";
+            }
+        })
+    })
+
+    $(".jjim-store-content-image").each(function (i ,h) {
+        let productNum=$(this).attr("href");
+        $.ajax({
+            url: "/productFile/list/"+productNum,
+            type: "get",
+            success : function (files) {
+                str += "<picture class='jjim-store-main-image'>";
+                str += "<img src='/productFile/display?fileName=" + files[0].uploadPath + "/" + files[0].uuid + "_"  + files[0].fileName + "'>";
+                str += "</picture>";
+                $(h).html(str);
+                str = "";
+            }
+        })
+    })
+
+
+
+
+</script>
+</body>
+</html>

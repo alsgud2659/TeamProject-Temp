@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/3e4acc40f3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/mypage_style.css">
+    <title>내 문의내역</title>
+</head>
+
+<body class="my-body-total">
+<div id="my-review-top">
+    <div class="my-review-main">
+        <div class="my-review-title">
+            <div class="my-review-title-box">
+                    <span class="my-review-left-sign">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="css-5wsq80">
+                            <path
+                                    d="M15.175 2.075 16.59 3.49c.1.1.1.255 0 .355L8.435 12l8.16 8.16c.1.1.1.255 0 .355L15.18 21.93c-.1.1-.255.1-.355 0l-9.75-9.75c-.1-.1-.1-.255 0-.355l9.745-9.75c.1-.1.26-.1.355 0Z"
+                                    class="my-review-left-sign-span"></path>
+                        </svg>
+                    </span>
+                <div class="my-review-real-title-box">
+                    <h5 class="my-review-real-user" th:text="|${user.getNickname()}님의 문의내역|"></h5>
+                </div>
+            </div>
+        </div>
+        <div th:each="qnaDTO:${qnaList}">
+        <div class="my-real-review-box" th:object="${qnaDTO}">
+            <div class="my-real-review-box-inside"><a href="#">
+                <div class="my-review-profile">
+                    <div size="32" class="review-step1"><span
+                            class="review-step2">
+                                    <picture class="review-step3">
+                                    </picture>
+                                </span></div>
+                    <div class="review-step5">
+                        <div class="review-step6"th:text="*{qnaUserName}"></div>
+                        <div class="review-step7">
+
+                            <div class="review-step8" th:text="*{qnaUpdateDate}"></div>
+                            <div class="review-step9" th:if="*{projectName ==''}" th:text="*{productName}"></div>
+                            <div class="review-step9" th:unless="*{projectName == ''}" th:text="*{projectName}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-review-bottom-space"></div>
+                <pre
+                        class="review-by1" th:text="*{qnaContent}"></pre>
+            </a>
+                <div class="review-by2"></div>
+
+            </div>
+            <div class="review-with4"></div>
+            <div class="sc-f8caeb8b-0 review-with5">
+                <hr color="#f8f8f8" class="review-with6">
+            </div>
+            <div class="review-with7"></div>
+            <div class="my-review-bottom-space"></div>
+            <div width="100%" class="review-with8" th:if="*{commentContent!=''}" style="display: flex">
+                <div class="review-with9">
+                    <div class="review-read"><span size="24" class="review-read1">
+                        <img class="commentProfile" sizes='100vw' width='33px'  th:src="@{/userFile/display?fileName=} + *{uploadPath} +@{/} + *{fileName}">
+                    </span></div>
+                    <div class="review-read2">
+                        <div class="review-read3">
+                            <div font-weight="600" color="#3a3a3a" class="review-read4" th:if="*{commentUserName != ''}" th:text="*{commentUserName}"></div>
+                            <div font-weight="600" color="#3a3a3a" class="review-read4" th:unless="*{commentUserName != ''}" th:text="*{commentCompanyName}"></div>
+                            <div class="review-read5" th:text="*{commentUpdateDate}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-read6">
+                    <div class="review-read7">
+                            <pre th:text="*{commentContent}"></pre>
+                    </div>
+                </div>
+                <div class="review-read8">
+                    <div class="review-read9"></div>
+                    <div class="review-read10"></div>
+                </div>
+                <div class="review-list"></div>
+                <div class="review-list1"></div>
+            </div>
+            <div class="review-list2"></div>
+        </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/assets/js/mypage.js"></script>
+<script th:inline="javascript">
+    let fileName = [[${user.profileFileName}]];
+    let uploadPath = [[${user.profileUploadPath}]];
+
+    let str = "<img sizes='100vw' width='100px' src='/userFile/display?fileName=" + uploadPath + "/"  + fileName + "'>";
+    $('.review-step3').html(str);
+
+
+</script>
+</html>

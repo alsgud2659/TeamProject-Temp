@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유저정보</title>
+</head>
+<link rel="stylesheet" href="/assets/css/admin_style.css">
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+
+<body>
+<div class="root">
+
+    <!-- sidebar -->
+    <div th:replace="~{/admin/adminSideBar :: AdminSideBarImport}"></div>
+
+    <!-- content -->
+    <div id="container">
+        <div th:object="${detailVO}">
+            <h2 th:if="*{category}=='user'" th:text="유저정보"></h2>
+            <h2 th:if="*{category}=='company'" th:text="단체정보"></h2>
+            <input type="hidden" id="category1" th:value="*{category}">
+            <input type="hidden" id="num1" th:value="*{num}">
+        </div>
+        <div class="listBox" id="userDetail">
+            <div>
+                <h2>기본정보</h2>
+            </div>
+            <table id="basicInfo" th:object="${detailVO}">
+
+                <tr>
+                    <th>아이디</th>
+                    <td th:if="*{category}=='user'" th:text="*{email}"></td>
+                    <td th:if="*{category}=='company'" th:text="*{email}"></td>
+                </tr>
+                <tr>
+                    <th th:if="*{category}=='user'" th:text="닉네임"></th>
+                    <th th:if="*{category}=='company'" th:text="단체명"></th>
+                    <td><input type="text" name="" id="" th:value="*{nickname}" readonly></td>
+                </tr>
+                <tr>
+                    <th th:if="*{category}=='user'" th:text="비밀번호"></th>
+                    <th th:if="*{category}=='company'" th:text="비밀번호"></th>
+                    <td><input type="text" name="" id="password1" th:value="*{password}"></td>
+                </tr>
+                <tr>
+                    <th th:if="*{category}=='user'" th:text="전화번호"></th>
+                    <th th:if="*{category}=='company'" th:text="단체번호"></th>
+                    <td><input type="text" name="" id="" th:value="*{phone}" readonly></td>
+
+                </tr>
+                <tr>
+                    <th th:if="*{category}=='user'" th:text="회원주소"></th>
+                    <th th:if="*{category}=='company'" th:text="단체주소"></th>
+                    <td><input type="text" name="" id="" th:value="*{address}" readonly></td>
+                </tr>
+                <tr>
+                    <th th:if="*{category}=='user'" th:text="사업자번호"></th>
+                    <th th:if="*{category}=='company'" th:text="사업자번호"></th>
+                    <td><input type="text" name="" id="" th:if="*{category}=='company'" th:value="*{businessNumber}">
+                        <input type="text" name="" id=""  th:if="*{category}=='user'" value="일반 회원은 사업자 번호가 없습니다" readonly></td>
+                </tr>
+
+                <tr>
+                    <th>등록날짜</th>
+                    <td th:text="*{registDate}"></td>
+                </tr>
+                <tr>
+                    <th>상태</th>
+                    <td>
+                        <span th:if="*{status}=='1'">활성화</span>
+                        <span th:if="*{status}=='0'">비활성화</span>
+                        <a href="javascript:void(0);" onclick="statusDisable()" th:if="*{status}=='1'">비활성화</a>
+                        <a href="javascript:void(0);" onclick="statusEnable()"th:if="*{status}=='0'">활성화</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>승인여부</th>
+                    <td>
+                        <span th:if="*{approval}=='1'">승인</span>
+                        <span th:if="*{approval}=='0'">승인거절</span>
+                        <a href="javascript:void(0);" onclick="approvalDisable()" th:if="*{approval}=='1'">승인해제</a>
+                        <a href="javascript:void(0);" onclick="approvalEnable()" th:if="*{approval}=='0'">승인</a>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <h2>사용정보</h2>
+            </div>
+
+            <table id="pointInfo"  th:object="${detailVO}">
+                <tr>
+                    <th>포인트</th>
+                    <td th:if="*{category}=='user'" th:text="*{point}"></td>
+                    <td th:if="*{category}=='company'" >회사는 포인트가 없습니다</td>
+                </tr>
+                <tr>
+                    <th>회원가입일</th>
+                    <td th:text="*{registDate}"></td>
+                </tr>
+                <!--                <tr>-->
+                <!--                    <th>최근접속일</th>-->
+                <!--                    <td>2022-06-13 20:00</td>-->
+                <!--                </tr>-->
+            </table>
+            <div>
+                <button id="modifyInfo" type="button">수정</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:replace="~{/admin/adminSideBar :: AdminSideBarJSImport}"></script>
+
+<script th:inline="javascript">
+
+    let stateNum=[[${detailVO.num}]]
+
+
+    let category = document.getElementById("category1").value;
+    let num = document.getElementById("num1").value;
+
+
+    $('#modifyInfo').on("click", function (e) {
+        var password = document.getElementById("password1").value;
+        if (confirm("해당유저의 정보를 수정하시겠습니까?")) {
+
+            $.ajax({
+                url: "/admin/modifyInfo",
+                type: "post",
+                data: {password: password,
+                    category: category,
+                    num:num
+                },
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+    });
+
+    function statusDisable(){
+        if (confirm("해당유저를 비활성화 하시겠습니까?")) {
+            $.ajax({
+                url: "/admin/detailDisable",
+                type: "post",
+                data: {stateNum: stateNum,
+                    category: category},
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+    }
+
+
+    function statusEnable(){
+        console.log(stateNum);
+        console.log(category);
+        if (confirm("해당유저를 활성화 하시겠습니까?")) {
+            $.ajax({
+                url: "/admin/detailEnable",
+                type: "post",
+                data: {stateNum: stateNum,
+                    category: category},
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+
+    }
+    function approvalDisable(){
+        console.log(stateNum);
+        console.log(category);
+        if (confirm("해당유저를 승인거절 하시겠습니까?")) {
+            $.ajax({
+                url: "/admin/detailApprovalDisable",
+                type: "post",
+                data: {stateNum: stateNum,
+                    category: category},
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+
+    }
+    function approvalEnable(){
+        console.log(stateNum);
+        console.log(category);
+        if (confirm("해당유저를 승인 하시겠습니까?")) {
+            $.ajax({
+                url: "/admin/detailApprovalEnable",
+                type: "post",
+                data: {stateNum: stateNum,
+                    category: category},
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+
+    }
+
+</script>
+</html>
