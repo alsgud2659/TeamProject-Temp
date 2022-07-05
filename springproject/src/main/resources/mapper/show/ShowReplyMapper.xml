@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.teamprojeect.mapper.show.ShowReplyMapper">
+
+    <!--댓글 등록-->
+    <insert id="insert">
+        INSERT INTO TBL_SHOW_REPLY
+        (REPLY_NUMBER, USER_NUMBER, SHOW_NUMBER, REPLY_CONTENT)
+        VALUES (SEQ_USER_SHOW_REPLY_NUMBER.NEXTVAL, #{userNumber}, #{showNumber}, #{replyContent})
+    </insert>
+
+    <!--댓글 수정-->
+    <update id="update">
+        UPDATE TBL_SHOW_REPLY
+        SET REPLY_CONTENT = #{replyContent}, REPLY_UPDATE_DATE = SYSDATE
+        WHERE REPLY_NUMBER = #{replyNumber}
+    </update>
+
+    <!--댓글 삭제-->
+    <delete id="delete">
+        DELETE FROM TBL_SHOW_REPLY WHERE REPLY_NUMBER = #{replyNumber}
+    </delete>
+
+    <!--댓글 개수-->
+    <select id="getTotal" resultType="_int">
+        SELECT COUNT(REPLY_NUMBER) FROM TBL_SHOW_REPLY /*집계함수는 결과가 한 개 나옴*/
+        WHERE SHOW_NUMBER = #{showNumber}
+    </select>
+
+    <!--댓글 목록-->
+    <select id="getList" resultType="showReplyVO">
+                <![CDATA[
+    SELECT REPLY_NUMBER , SHOW_NUMBER, REPLY_CONTENT, REPLY_REGISTER_DATE, REPLY_UPDATE_DATE, USER_NAME, USER_NUMBER FROM
+    (
+      SELECT ROWNUM RN, REPLY_NUMBER, SHOW_NUMBER, REPLY_CONTENT, REPLY_REGISTER_DATE, REPLY_UPDATE_DATE, USER_NAME, USER_NUMBER
+      FROM (
+      SELECT REPLY_NUMBER, SHOW_NUMBER, REPLY_CONTENT, REPLY_REGISTER_DATE, REPLY_UPDATE_DATE, USER_NAME, USER_NUMBER
+      FROM (
+                      SELECT REPLY_NUMBER, SHOW_NUMBER, REPLY_CONTENT, REPLY_REGISTER_DATE, REPLY_UPDATE_DATE, USER_NAME, ts.USER_NUMBER
+                FROM TBL_SHOW_REPLY ts, TBL_USER tu
+                WHERE ts.USER_NUMBER = tu.USER_NUMBER
+                )
+      ORDER BY REPLY_UPDATE_DATE DESC
+      )
+      WHERE SHOW_NUMBER = #{showNumber} AND ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+        )
+        WHERE RN > (#{criteria.pageNum} - 1 ) * #{criteria.amount}
+        ]]>
+    </select>
+
+    <!-- 특정 유저가 쇼에 남긴 댓글 -->
+    <select id="getUserShowReply" resultType="showReplyVO">
+        SELECT USER_NUMBER, USER_NAME, REPLY_NUMBER, REPLY_CONTENT, REPLY_UPDATE_DATE, SHOW_NUMBER, SHOW_NAME, SHOW_TYPE
+        FROM (SELECT ROWNUM RN, USER_NUMBER, USER_NAME, REPLY_NUMBER, REPLY_CONTENT, REPLY_UPDATE_DATE, SHOW_NUMBER, SHOW_NAME, SHOW_TYPE
+        FROM (SELECT tu.USER_NUMBER, tu.USER_NAME, tsr.REPLY_NUMBER, tsr.REPLY_CONTENT, tsr.REPLY_UPDATE_DATE,tsr.SHOW_NUMBER, ts.SHOW_NAME, ts.SHOW_TYPE
+        FROM TBL_SHOW_REPLY tsr, TBL_USER tu, TBL_SHOW ts
+        WHERE tsr.USER_NUMBER =tu.USER_NUMBER AND tsr.SHOW_NUMBER = ts.SHOW_NUMBER AND tu.USER_NUMBER = #{userNumber}
+        ORDER BY REPLY_UPDATE_DATE DESC)
+        <![CDATA[
+        WHERE ROWNUM < #{criteria.pageNum} * #{criteria.amount}
+        )
+        WHERE RN > (#{criteria.pageNum} - 1) * #{criteria.amount}
+        ]]>
+    </select>
+
+    <!-- 특정 유저가 쇼에 남긴 댓글 수 -->
+    <select id="getTotalUserShowReply" resultType="_int">
+        SELECT COUNT(*) FROM(
+        SELECT tu.USER_NUMBER, tsr.REPLY_CONTENT, tsr.REPLY_UPDATE_DATE,tsr.SHOW_NUMBER, ts.SHOW_NAME, ts.SHOW_TYPE
+        FROM TBL_SHOW_REPLY tsr, TBL_USER tu, TBL_SHOW ts
+        WHERE tsr.USER_NUMBER =tu.USER_NUMBER AND tsr.SHOW_NUMBER = ts.SHOW_NUMBER AND tu.USER_NUMBER = #{userNumber}
+        ORDER BY REPLY_UPDATE_DATE DESC)
+    </select>
+
+</mapper>

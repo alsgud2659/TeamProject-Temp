@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>작품 리스트</title>
+    <link rel="stylesheet" href="/assets/css/work/workList.css"/>
+    <!-- 제이쿼리 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="/assets/js/work/work.js"></script>
+</head>
+
+<header th:include="~{/header/header3 :: head}">
+
+</header>
+<body>
+    <div class="work_wrap">
+        <p class="work_tit">작품 목록</p>
+
+        <div class="work_layout">
+            <div class="search_division">
+                <!-- <div class="regist_btn">
+                    <a href="workRegister.html">작품 등록 신청</a>
+                </div> -->
+                <div class="hash_txtwrap">
+                    <ul class="hash_txt">
+                        <li>
+                            아래 해시태그를 클릭해주세요.
+                            <a href="javascript:location.reload();" class="hash_on" alt="해시태그 새로고침"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="hash_division" style="padding-top: 105px;">
+                <th:block th:each="tag:${workTag}">
+                <div class="hash_tag_wrap">
+                    <div class="hash_tag">
+                        <a href="#" th:tag="${tag}" th:text="${'#'+tag}" class="tag" style="padding-bottom: 3px;"></a>
+                    </div>
+                </div>
+                </th:block>
+            </div>
+            <div class="regist_division">
+                <div class="regist_btn">
+                    <a href="/work/workRegister">작품 등록 신청</a>
+                </div>
+            </div>
+            <div class="work_list">
+                <ul class="works">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer th:include="~{/footer/footer :: foot}">
+
+    </footer>
+
+</body>
+<script th:inline="javascript">
+    let tag;
+    let pageNum = 1;
+    // 해시태그 클릭시 색상변경
+    $(".hash_tag a").on("click", function(e){
+        if($(e.target).hasClass('on')){
+            $(e.target).removeClass('on');
+            tagList();
+        } else {
+            $(e.target).addClass('on');
+            let tagName = $(e.target).text();
+            let tag= tagName.substring(1);
+            console.log(tag);
+            tagList(tag);
+        }
+    });
+
+
+    let $work = $(".workList ul");
+
+    $(document).ready(function () {
+        tagList();
+    })
+    console.log($work);
+
+    function tagList(tag, page) {
+        workService.getWorkKeywordList(tag, page, function (total, list) {
+            console.log("in module..."+tag);
+            $work.empty();
+            let str = "";
+            if(list == null || list.length == 0) {
+                $work.html("");
+                return;
+            }
+
+            $.each(list, function (i, work) {
+                let infoNumber = Number(work.workNumber);
+
+                str += `<li>`;
+                str += `<p class='works_tit'>`+work.workName+`</p>`;
+                str += `<p class='worker'>`+work.artistName+`</p>`;
+                str += `<a href='/work/workInfo?pageNum=1&amount=100&type&keyword&workNumber=`+work.workNumber+`' class='works_img'>`;
+                str += `<img src='https://cdn.icon-icons.com/icons2/3414/PNG/512/empty_pages_multiple_icon_217991.png' id='img-`+infoNumber+`' alt=''></a>`;
+                str += `<p class='tags'>`+work.workTag+`</p>`;
+                str += `</li>`;
+
+                console.log("list in~~~~");
+                getImage(infoNumber);
+                });
+                $("ul.works").html(str);
+                pageNum = page;
+            }, function (a,b,c){
+            console.log(a,b,c);
+        });
+    }
+
+    function getImage(num) {
+        workService.getImg(num, function (file){
+            console.log("--------------------------------------"+file.fileName);
+            let src = "/file/work/display?fileName=" + file.uploadPath + "/" + file.uuid + "_"  + file.fileName;
+            $("#img-"+num).attr("src", src);
+        });
+    }
+
+    let sessionUserNumber = [[${session.userNumber}]];
+    let sessionArtistNumber = [[${artistNumber}]];
+    $(".regist_btn").click(function (e){
+        e.preventDefault();
+        if(sessionUserNumber == null) {
+            alert("로그인 후 이용해주세요.");
+            location.href = "/user/login";
+            return;
+        }
+        if(sessionArtistNumber == null) {
+            if(confirm("아티스트 계정 등록 후 이용하실 수 있습니다. 계정을 등록하시겠습니까?")){
+                location.href="/myPage/myPage";
+                return;
+            }else {
+                location.href="/work/workList";
+                return;
+            }
+        }
+
+        location.href = "/work/workRegister";
+    })
+</script>
+</html>

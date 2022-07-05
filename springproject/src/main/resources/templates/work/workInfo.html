@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/work/workInfo.css"/>
+    <!-- 제이쿼리 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <title>작품 상세보기</title>
+</head>
+
+<header th:include="~{/header/header3 :: head}">
+
+</header>
+<body>
+    <div class="work_detail_wrap">
+        <div class="work_detail">
+            <div class="detail">
+                <p>상세보기</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="work_info_wrap" th:object="${work}">
+        <div class="work_info_content">
+            <div class="work_info">
+                <div class="info_left">
+                    <div class="img_box">
+                        <img id="img-view" src="" alt="">
+                    </div>
+<!--                    <div class="like_box">-->
+<!--                        <a href="javascript:changeLike()" class="like">-->
+<!--                            <img src="/images/work/unlike.png" alt="" class="img1">-->
+<!--                            <img src="/images/work/like.png" alt="" class="img2" style="display: none;">-->
+<!--                            <span class="like_txt1">123</span>-->
+<!--                            <span class="like_txt2">Likes</span>-->
+<!--                        </a>-->
+<!--                    </div>-->
+                </div>
+                <div class="modify-link" style="text-align: right; display: none; flex-direction: row-reverse;"><a th:href="${'/work/workUpdate?pageNum='+criteria.pageNum+'&amount='+criteria.amount+'&type&keyword&workNumber='+work.workNumber}">수정하기</a></div>
+                <div class="info_right">
+                    <div class="info_area1">
+                        <dl>
+                            <dt>작품명</dt>
+                            <dd th:text="*{'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+workName}"></dd>
+                            <dt>아티스트</dt>
+                            <dd th:text="*{'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+artistName}"></dd>
+                            <dt>발매일</dt>
+                            <dd th:text="*{'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+workReleaseDate}"></dd>
+                            <dt>장르</dt>
+                            <dd th:text="*{'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+workGenre}"></dd>
+                            <dt>태그</dt>
+                            <dd th:text="*{'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+workTag}"></dd>
+                        </dl>
+                    </div>
+                    <div class="info_area2">
+                        <dl>
+                            <dt>작품 설명</dt>
+                            <dd th:text="*{workDescription}">
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="info_area2">
+                        <div class="purchase_link_wrap">
+                        <a th:href="*{workPurchaseUrl}" class="purchase_link">구매링크</a>
+                        </div>
+                    </div>
+                </div>              
+            </div>
+            <div class="vid_wrap">
+                <iframe th:if="*{#strings.startsWith(workYoutubeUrl,'https://www.youtube.com/embed/')}" width="1200" height="600" th:src="*{workYoutubeUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe th:if="*{#strings.startsWith(workYoutubeUrl,'https://youtu.be/')}" width="1200" height="600" th:src="*{#strings.replace(workYoutubeUrl,'https://youtu.be/','https://www.youtube.com/embed/')}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe th:if="*{#strings.startsWith(workYoutubeUrl,'https://www.youtube.com/watch?v=')}" width="1200" height="600" th:src="*{#strings.replace(workYoutubeUrl,'https://www.youtube.com/watch?v=','https://www.youtube.com/embed/')}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <footer th:include="~{/footer/footer :: foot}">
+
+    </footer>
+
+</body>
+<script src="/assets/js/work/work.js"></script>
+<script th:inline="javascript">
+    let number = [[${work.workNumber}]];
+
+    let sessionArtistNumber = [[${session.artistNumber}]];
+    let infoArtistNumber = [[${artistNumber}]]
+    console.log(sessionArtistNumber);
+    if(sessionArtistNumber != null) {
+        if(sessionArtistNumber == infoArtistNumber){
+            $(".modify-link").attr("style","text-align: right; display: flex; flex-direction: row-reverse;")
+        }
+    }
+
+    $(document).ready(function (){
+        console.log(number);
+        getImage(number);
+    })
+
+    function getImage(num) {
+        workService.getImg(num, function (file){
+            console.log("--------------------------------------"+file);
+            let src = "/file/work/display?fileName=" + file.uploadPath + "/" + file.uuid + "_"  + file.fileName;
+            $("#img-view").attr("src", src);
+        });
+    }
+</script>
+</html>

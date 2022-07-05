@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>비밀번호 찾기</title>
+    <link rel="stylesheet" href="/assets/css/login/login.css"/>
+    <link
+            rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
+    />
+</head>
+<body>
+<div class="loginWrap">
+    <div class="sign-logo">
+
+        <a href="/main/" class="pf-logo" id="logo" style="text-decoration: none; color: #ff8c1b;"><h1>Buskers</h1></a>
+    </div>
+    <div class="loginBox idFindBox"  th:object="${userVO}">
+        <h1>비밀번호 찾기</h1>
+        <p>해당 아이디에 등록된 번호로 <br> 임시 비밀번호가 전송되었습니다.</p>
+        <p>임시 비밀번호로 다시 로그인해주세요.</p>
+        <p>로그인 후에는 비밀번호를 변경해 주시기 바랍니다.</p>
+
+        <div class="pwResult">
+            <span class="idResultId"  th:text="|아이디  *{userId}|"></span>
+            <div>
+                <span class="idResultDate">가입일</span>
+                <span class="idResultDate"  th:text="*{userRegisterDate}"></span>
+            </div>
+        </div>
+        <div class="findNext-button">
+            <input
+                    type="button"
+                    id="login-button"
+                    class="login-click login-button"
+                    value="로그인"
+                    onclick="login();"
+            />
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="/assets/js/login/idpwFind.js?ver=1"></script>
+<script>
+    function login() {
+        $(location).attr("href", "/user/login")
+    }
+</script>
+</html>

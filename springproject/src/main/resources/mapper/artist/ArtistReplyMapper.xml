@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.teamprojeect.mapper.artist.ArtistReplyMapper">
+
+    <!--댓글 등록-->
+    <insert id="insert">
+        INSERT INTO TBL_ARTIST_REPLY
+        (REPLY_NUMBER, USER_NUMBER, ARTIST_NUMBER, REPLY_CONTENT)
+        VALUES (SEQ_USER_ARTIST_REPLY_NUMBER.NEXTVAL, #{userNumber}, #{artistNumber}, #{replyContent})
+    </insert>
+
+    <!--댓글 수정-->
+    <update id="update">
+        UPDATE TBL_ARTIST_REPLY
+        SET REPLY_CONTENT = #{replyContent}, REPLY_UPDATE_DATE = SYSDATE
+        WHERE REPLY_NUMBER = #{replyNumber}
+    </update>
+
+    <!--댓글 삭제-->
+    <delete id="delete">
+        DELETE FROM TBL_ARTIST_REPLY WHERE REPLY_NUMBER = #{replyNumber}
+    </delete>
+
+    <!--댓글 개수-->
+    <select id="getTotal" resultType="_int">
+        SELECT COUNT(REPLY_NUMBER) FROM TBL_ARTIST_REPLY /*집계함수는 결과가 한 개 나옴*/
+        WHERE ARTIST_NUMBER = #{artistNumber}
+    </select>
+
+    <select id="getList" resultType="artistReplyVO">
+                <![CDATA[
+    SELECT REPLY_NUMBER , ARTIST_NUMBER, REPLY_CONTENT, REPLY_REGISTER_DATE, REPLY_UPDATE_DATE, USER_NAME FROM
+    (
+      SELECT ROWNUM RN, REPLY_NUMBER, ARTIST_NUMBER, REPLY_CONTENT, REPLY_REGISTER_DATE, REPLY_UPDATE_DATE, USER_NAME
+      FROM (
+      SELECT REPLY_NUMBER, ARTIST_NUMBER, REPLY_CONTENT, REPLY_REGISTER_DATE, REPLY_UPDATE_DATE, USER_NAME
+      FROM (
+                      SELECT *
+                FROM TBL_ARTIST_REPLY ta, TBL_USER tu
+                WHERE ta.USER_NUMBER = tu.USER_NUMBER
+                )
+      ORDER BY REPLY_UPDATE_DATE DESC
+      )
+      WHERE ARTIST_NUMBER = #{artistNumber} AND ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+        )
+        WHERE RN > (#{criteria.pageNum} - 1 ) * #{criteria.amount}
+        ]]>
+    </select>
+
+    <!-- 아티스트한테 유저가 남긴 댓글 -->
+    <select id ="getUserReplyList" resultType="artistReplyVO">
+    SELECT USER_NUMBER, USER_NAME, REPLY_NUMBER, REPLY_CONTENT, REPLY_UPDATE_DATE, ARTIST_NUMBER, ARTIST_TYPE, ARTIST_NAME
+    FROM (SELECT ROWNUM RN, USER_NUMBER, USER_NAME, REPLY_NUMBER, REPLY_CONTENT, REPLY_UPDATE_DATE, ARTIST_NUMBER, ARTIST_TYPE, ARTIST_NAME
+    FROM (SELECT tu.USER_NUMBER, tu.USER_NAME, tar.REPLY_NUMBER, tar.REPLY_CONTENT, tar.REPLY_UPDATE_DATE,tar.ARTIST_NUMBER, ta.ARTIST_TYPE, ta.ARTIST_NAME
+    FROM TBL_ARTIST_REPLY tar, TBL_USER tu, TBL_ARTIST ta
+    WHERE tar.USER_NUMBER =tu.USER_NUMBER AND tar.ARTIST_NUMBER = ta.ARTIST_NUMBER AND tu.USER_NUMBER = #{userNumber}
+    ORDER BY REPLY_UPDATE_DATE DESC)
+    <![CDATA[
+    WHERE ROWNUM < #{criteria.pageNum} * #{criteria.amount}
+    )
+    WHERE RN > (#{criteria.pageNum} - 1) * #{criteria.amount}
+    ]]>
+    </select>
+
+    <!-- 유저가 아티스트한테 남긴 전체 댓글 개수 -->
+    <select id="getTotalUserReply" resultType="_int">
+    SELECT COUNT (*) FROM(
+    SELECT tu.USER_NUMBER,  tar.REPLY_CONTENT, tar.REPLY_UPDATE_DATE,tar.ARTIST_NUMBER, ta.ARTIST_TYPE, ta.ARTIST_NAME
+    FROM TBL_ARTIST_REPLY tar, TBL_USER tu, TBL_ARTIST ta
+    WHERE tar.USER_NUMBER =tu.USER_NUMBER AND tar.ARTIST_NUMBER = ta.ARTIST_NUMBER AND tu.USER_NUMBER = #{userNumber}
+    ORDER BY REPLY_UPDATE_DATE DESC)
+    </select>
+
+</mapper>

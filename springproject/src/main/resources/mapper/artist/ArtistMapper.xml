@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.teamprojeect.mapper.artist.ArtistMapper">
+
+    <!-- 아티스트 등록 신청 (status 1) -->
+    <insert id="insertApply">
+        <selectKey keyProperty="artistNumber" resultType ="long" order="BEFORE">
+            SELECT SEQ_ARTIST.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_ARTIST
+        (ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE, ARTIST_ACCOUNT)
+        VALUES(#{artistNumber}, #{userNumber}, #{artistName}, #{artistDescription}, #{artistType}, #{artistAccount})
+    </insert>
+
+    <!--관리자 등록,수정 승인 (status -> 3)-->
+    <update id="insertAdmin">
+        UPDATE TBL_ARTIST
+        SET ARTIST_STATUS = 3
+        WHERE ARTIST_NUMBER = #{artistNumber}
+    </update>
+
+    <!--관리자 등록,수정 승인 (user_artist_status -> 4)-->
+    <update id="changeStatus">
+        UPDATE TBL_USER
+        SET USER_ARTIST_STATUS = 4
+        WHERE USER_NUMBER = #{userNumber}
+    </update>
+
+    <!--아티스트 정보 수정 신청 (status 2)-->
+    <update id="approveArtistApply">
+        UPDATE TBL_ARTIST
+        SET ARTIST_NAME = #{artistName}, ARTIST_DESCRIPTION = #{artistDescription}, ARTIST_TYPE = #{artistType}, ARTIST_ACCOUNT = #{artistAccount}, ARTIST_STATUS = 2
+        WHERE ARTIST_NUMBER = #{artistNumber}
+    </update>
+
+    <!--관리자 수정 반려 (status -> 3)-->
+    <update id="rejectArtistApply">
+        UPDATE TBL_ARTIST
+        SET ARTIST_STATUS = 0
+        WHERE ARTIST_NUMBER = #{artistNumber}
+    </update>
+
+    <!--아티스트 신청,수정 리스트-->
+    <select id="getArtistApplyList" resultType="artistVO">
+        <![CDATA[
+            SELECT ARTIST_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, USER_ID, ARTIST_STATUS, USER_ARTIST_STATUS, ARTIST_TYPE
+            FROM (
+                SELECT /*+ INDEX_DESC(TBL_ARTIST SYS_C007141) */
+                ROWNUM RN, ARTIST_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, USER_ID, ARTIST_STATUS, USER_ARTIST_STATUS, ARTIST_TYPE
+                FROM (
+                    SELECT *
+                    FROM TBL_ARTIST ta, TBL_USER tu
+                    WHERE ta.USER_NUMBER  = tu.USER_NUMBER
+                )
+                WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+                ]]>
+        <choose>
+            <when test="isUpdate == true">
+                AND ARTIST_STATUS = 2
+            </when>
+            <when test="isUpdate == false">
+                AND ARTIST_STATUS = 1
+            </when>
+        </choose>
+        )
+        <![CDATA[
+            WHERE RN > (#{criteria.pageNum} - 1) * #{criteria.amount}
+            ]]>
+    </select>
+
+    <!--아티스트 리스트-->
+    <select id="getArtistList" resultType="artistVO">
+        <![CDATA[
+            SELECT ARTIST_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, USER_ID, ARTIST_STATUS, ARTIST_TYPE
+            FROM (
+                SELECT /*+ INDEX_DESC(TBL_ARTIST SYS_C007141) */
+                ROWNUM RN, ARTIST_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, USER_ID, ARTIST_STATUS, ARTIST_TYPE
+                FROM (
+                    SELECT *
+                    FROM TBL_ARTIST ta JOIN TBL_USER tu
+                    ON ta.USER_NUMBER = tu.USER_NUMBER
+                )
+                WHERE ARTIST_STATUS = 3 AND ROWNUM <= #{pageNum} * #{amount}
+                )
+            WHERE RN > (#{pageNum} - 1) * #{amount}
+        ]]>
+    </select>
+
+    <!--총 아티스트 수-->
+    <select id="getAllArtistTotal" resultType="_int">
+        SELECT COUNT(ARTIST_NUMBER)
+        FROM TBL_ARTIST
+        WHERE ARTIST_STATUS = 3
+    </select>
+
+    <!--총 아티스트 신청 수-->
+    <select id="getArtistApplyTotal" resultType="_int">
+        SELECT COUNT(ARTIST_NUMBER)
+        FROM TBL_ARTIST
+        <choose>
+            <when test="isUpdate == true">
+                WHERE ARTIST_STATUS = 2
+            </when>
+            <when test="isUpdate == false">
+                WHERE ARTIST_STATUS = 1
+            </when>
+        </choose>
+    </select>
+
+
+    <!--관리자 수정 승인 (status -> 3)--> <!---->
+    <update id="updateAdmin">
+        UPDATE TBL_ARTIST
+        SET ARITST_STATUS = 3
+        WHERE ARTIST_NUMBER = #{artistNumber}
+    </update>
+
+    <!--아티스트 삭제--> <!---->
+    <update id="delete">
+        UPDATE TBL_ARTIST SET ARTIST_STATUS = 4 WHERE ARTIST_NUMBER = #{artistNumber}
+    </update>
+
+
+
+
+    <!--    <select id="getList" resultType="artistVO">-->
+    <!--        SELECT-->
+    <!--        <trim prefix="a.*">-->
+    <!--            <choose>-->
+    <!--                <when test="listDTO.artistSortingType == 'NEW'.toString()">-->
+    <!--                    FROM TBL_ARTIST a ORDER BY a.ARTIST_NUMBER DESC-->
+    <!--                </when>-->
+    <!--                <when test="listDTO.artistSortingType == 'LIKE'.toString()">-->
+    <!--                    , likescount-->
+    <!--                    FROM (-->
+    <!--                    SELECT ARTIST_NUMBER, COUNT(ARTIST_NUMBER) as likescount-->
+    <!--                    FROM TBL_LIKE GROUP BY ARTIST_NUMBER ORDER BY likescount DESC-->
+    <!--                    ) l-->
+    <!--                    JOIN TBL_ARTIST a-->
+    <!--                    ON a.ARTIST_NUMBER = l.ARTIST_NUMBER-->
+    <!--                    ORDER BY LIKESCOUNT DESC-->
+    <!--                </when>-->
+    <!--            </choose>-->
+    <!--        </trim>-->
+    <select id="getList" resultType="artistVO">
+        SELECT ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE
+        <choose>
+            <when test="listDTO.artistSortingType == 'NEW'.toString()">
+                FROM (
+                SELECT ROWNUM RN, ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE
+                FROM (
+                SELECT a.ARTIST_NUMBER, a.USER_NUMBER, a.ARTIST_NAME, a.ARTIST_DESCRIPTION , a.ARTIST_TYPE FROM TBL_ARTIST a
+                WHERE a.ARTIST_STATUS = 3 ORDER BY a.ARTIST_NUMBER DESC
+                )
+            </when>
+            <when test="listDTO.artistSortingType == 'LIKE'.toString()">
+                , likescount
+                FROM (
+                SELECT ROWNUM RN, ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE
+
+                FROM (
+                (SELECT ARTIST_NUMBER, COUNT (ARTIST_NUMBER) as likescount
+                FROM TBL_LIKE GROUP BY ARTIST_NUMBER ORDER BY likescount DESC ) l JOIN TBL_ARTIST a
+                ON a.ARTIST_NUMBER = l.ARTIST_NUMBER
+                ORDER BY LIKESCOUNT DESC
+                )
+            </when>
+        </choose>
+        <![CDATA[
+                WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+                )
+                WHERE RN > (#{criteria.pageNum} - 1) * #{criteria.amount}
+            ]]>
+    </select>
+
+    <select id="getListMusician" resultType="artistVO">
+        SELECT ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE
+        <choose>
+            <when test="listDTO.artistSortingType == 'NEW'.toString()">
+                FROM (
+                SELECT ROWNUM RN, ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE
+                FROM (
+                SELECT a.ARTIST_NUMBER, a.USER_NUMBER, a.ARTIST_NAME, a.ARTIST_DESCRIPTION , a.ARTIST_TYPE FROM TBL_ARTIST a
+                WHERE a.ARTIST_TYPE = 1 AND a.ARTIST_STATUS = 3 ORDER BY a.ARTIST_NUMBER DESC
+                )
+            </when>
+            <when test="listDTO.artistSortingType == 'LIKE'.toString()">
+                , likescount
+                FROM (
+                SELECT ROWNUM RN, ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE
+
+                FROM (
+                (SELECT ARTIST_NUMBER, COUNT (ARTIST_NUMBER) as likescount
+                FROM TBL_LIKE GROUP BY ARTIST_NUMBER ORDER BY likescount DESC ) l JOIN TBL_ARTIST a
+                ON a.ARTIST_NUMBER = l.ARTIST_NUMBER
+                ORDER BY LIKESCOUNT DESC
+                )
+            </when>
+        </choose>
+        <![CDATA[
+                WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+                )
+                WHERE RN > (#{criteria.pageNum} - 1) * #{criteria.amount}
+            ]]>
+    </select>
+
+    <select id="getListPerformance" resultType="artistVO">
+        SELECT ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE
+        <choose>
+            <when test="listDTO.artistSortingType == 'NEW'.toString()">
+                FROM (
+                SELECT ROWNUM RN, ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE
+                FROM (
+                SELECT a.ARTIST_NUMBER, a.USER_NUMBER, a.ARTIST_NAME, a.ARTIST_DESCRIPTION , a.ARTIST_TYPE FROM TBL_ARTIST a
+                WHERE a.ARTIST_TYPE = 2 AND a.ARTIST_STATUS = 3 ORDER BY a.ARTIST_NUMBER DESC
+                )
+            </when>
+            <when test="listDTO.artistSortingType == 'LIKE'.toString()">
+                , likescount
+                FROM (
+                SELECT ROWNUM RN, ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE
+
+                FROM (
+                (SELECT ARTIST_NUMBER, COUNT (ARTIST_NUMBER) as likescount
+                FROM TBL_LIKE GROUP BY ARTIST_NUMBER ORDER BY likescount DESC ) l JOIN TBL_ARTIST a
+                ON a.ARTIST_NUMBER = l.ARTIST_NUMBER
+                ORDER BY LIKESCOUNT DESC
+                )
+            </when>
+        </choose>
+        <![CDATA[
+                WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+                )
+                WHERE RN > (#{criteria.pageNum} - 1) * #{criteria.amount}
+            ]]>
+    </select>
+
+    <select id="getArtistTotal" resultType="_int">
+        SELECT COUNT(*) FROM TBL_ARTIST
+    </select>
+
+    <!--    <select id="getListMusician" resultType="artistVO">-->
+    <!--        SELECT-->
+    <!--        <trim prefix="a.*">-->
+    <!--            <choose>-->
+    <!--                <when test="listDTO.artistSortingType == 'NEW'.toString()">-->
+    <!--                    FROM TBL_ARTIST a WHERE a.ARTIST_TYPE = 1 ORDER BY a.ARTIST_NUMBER DESC-->
+    <!--                </when>-->
+    <!--                <when test="listDTO.artistSortingType == 'LIKE'.toString()">-->
+    <!--                    , likescount-->
+    <!--                    FROM (SELECT ARTIST_NUMBER, COUNT(ARTIST_NUMBER) as likescount-->
+    <!--                    FROM TBL_LIKE GROUP BY ARTIST_NUMBER ORDER BY likescount DESC) l JOIN TBL_ARTIST a-->
+    <!--                    ON a.ARTIST_NUMBER = l.ARTIST_NUMBER-->
+    <!--                    WHERE a.ARTIST_TYPE = 1-->
+    <!--                    ORDER BY LIKESCOUNT DESC-->
+    <!--                </when>-->
+    <!--            </choose>-->
+    <!--        </trim>-->
+    <!--    </select>-->
+
+    <!--    <select id="getListPerformance" resultType="artistVO">-->
+    <!--        SELECT-->
+    <!--        <trim prefix="a.*">-->
+    <!--            <choose>-->
+    <!--                <when test="listDTO.artistSortingType == 'NEW'.toString()">-->
+    <!--                    FROM TBL_ARTIST a WHERE a.ARTIST_TYPE = 2 ORDER BY a.ARTIST_NUMBER DESC-->
+    <!--                </when>-->
+    <!--                <when test="listDTO.artistSortingType == 'LIKE'.toString()">-->
+    <!--                    , likescount-->
+    <!--                    FROM (SELECT ARTIST_NUMBER, COUNT(ARTIST_NUMBER) as likescount-->
+    <!--                    FROM TBL_LIKE GROUP BY ARTIST_NUMBER ORDER BY likescount DESC) l JOIN TBL_ARTIST a-->
+    <!--                    ON a.ARTIST_NUMBER = l.ARTIST_NUMBER-->
+    <!--                    WHERE a.ARTIST_TYPE = 2-->
+    <!--                    ORDER BY LIKESCOUNT DESC-->
+    <!--                </when>-->
+    <!--            </choose>-->
+    <!--        </trim>-->
+    <!--    </select>-->
+
+
+    <select id="getList2" resultType="artistVO">
+        SELECT ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE  , likescount
+
+        FROM (
+                SELECT ROWNUM RN, ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE
+
+                FROM (
+                (SELECT ARTIST_NUMBER, COUNT(ARTIST_NUMBER) as likescount
+                FROM TBL_LIKE GROUP BY ARTIST_NUMBER ORDER BY likescount DESC ) l JOIN TBL_ARTIST a
+                ON a.ARTIST_NUMBER = l.ARTIST_NUMBER
+                ORDER BY LIKESCOUNT DESC
+                )
+        <![CDATA[
+                WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+                )
+                WHERE RN > (#{criteria.pageNum} - 1) * #{criteria.amount}
+            ]]>
+    </select>
+
+
+
+
+    <!--강래시작-->
+
+
+
+    <!--랭킹 전체-->
+
+    <select id="rankingListAll" resultType="artistDTO">
+    SELECT rownum rankingCount, k.*
+    FROM (
+            SELECT a.* , likescount
+            FROM (SELECT ARTIST_NUMBER, COUNT(ARTIST_NUMBER) as likescount
+            FROM TBL_LIKE
+            GROUP BY ARTIST_NUMBER ORDER BY likescount DESC) l JOIN TBL_ARTIST a
+            ON a.ARTIST_NUMBER = l.ARTIST_NUMBER
+            ORDER BY LIKESCOUNT DESC
+            )k
+    </select>
+
+
+
+
+
+    <!--랭킹 뮤지션-->
+
+    <select id="rankingListMusician" resultType="artistDTO">
+    SELECT rownum rankingCount, j.*
+    FROM (
+            SELECT a.* , likescount
+            FROM (SELECT ARTIST_NUMBER, COUNT(ARTIST_NUMBER) as likescount
+            FROM TBL_LIKE
+            GROUP BY ARTIST_NUMBER ORDER BY likescount DESC) l JOIN TBL_ARTIST a
+            ON a.ARTIST_NUMBER = l.ARTIST_NUMBER
+            WHERE a.ARTIST_TYPE = 1
+            ORDER BY LIKESCOUNT DESC
+            )j
+    </select>
+
+
+
+
+
+    <!--랭킹 퍼포먼스-->
+
+    <select id="rankingListPerformance" resultType="artistDTO">
+    SELECT rownum rankingCount, h.*
+    FROM (
+            SELECT a.* , likescount
+            FROM (SELECT ARTIST_NUMBER, COUNT(ARTIST_NUMBER) as likescount
+            FROM TBL_LIKE
+            GROUP BY ARTIST_NUMBER ORDER BY likescount DESC) l JOIN TBL_ARTIST a
+            ON a.ARTIST_NUMBER = l.ARTIST_NUMBER
+            WHERE a.ARTIST_TYPE = 2
+            ORDER BY LIKESCOUNT DESC
+            )h
+    </select>
+
+
+
+
+    <!--강래 끝-->
+
+
+
+
+
+
+    <!--아티스트 목록 개수-->
+
+
+    <!--랭킹 목록-->
+    <!--    <select id="rankingList" resultType="artistVO">-->
+
+    <!--    </select>-->
+
+    <!--랭킹 목록 개수-->
+    <select id="getTotal" resultType="_int">
+        SELECT COUNT(*) FROM TBL_ARTIST WHERE ARTIST_STATUS = 3
+
+    </select>
+
+    <select id="getTotalMusician" resultType="_int">
+        SELECT COUNT(*) FROM TBL_ARTIST WHERE ARTIST_TYPE = 1 AND ARTIST_STATUS = 3
+    </select>
+
+    <select id="getTotalPerformance" resultType="_int">
+        SELECT COUNT(*) FROM TBL_ARTIST WHERE ARTIST_TYPE = 2 AND ARTIST_STATUS = 3
+    </select>
+
+    <!--아티스트 상세 정보-->
+    <select id="getDetail" resultType="artistVO">
+        SELECT ARTIST_NUMBER, USER_NUMBER, ARTIST_NAME, ARTIST_DESCRIPTION, ARTIST_TYPE, ARTIST_DONATION, ARTIST_ACCOUNT, ARTIST_STATUS
+        FROM TBL_ARTIST
+        WHERE ARTIST_NUMBER = #{artistNumber}
+    </select>
+
+    <!--아티스트 좋아요 체크 -->
+    <select id="checkArtistLike" resultType="_int">
+        SELECT COUNT (*) FROM TBL_LIKE
+        WHERE USER_NUMBER = #{userNumber} AND ARTIST_NUMBER = #{artistNumber}
+    </select>
+
+    <select id="artistLikeCount" resultType="_int">
+    SELECT NVL(SUM_DATA, 0) FROM (
+        SELECT COUNT(*) AS SUM_DATA
+        FROM TBL_LIKE
+        WHERE ARTIST_NUMBER = #{artistNumber}
+        )
+    </select>
+
+    <!-- 마이페이지 세션용 : 아티스트 상세 정보 -->
+    <select id="getDetail2" resultType="artistVO">
+        SELECT ta.ARTIST_NUMBER, tu.USER_NUMBER, ta.ARTIST_NAME, ta.ARTIST_DESCRIPTION, ta.ARTIST_TYPE, ta.ARTIST_DONATION, ta.ARTIST_ACCOUNT, ta.ARTIST_STATUS, tu.USER_ARTIST_STATUS
+        FROM TBL_ARTIST ta, TBL_USER tu
+        WHERE ta.USER_NUMBER = tu.USER_NUMBER AND tu.USER_NUMBER=#{userNumber} AND USER_ARTIST_STATUS=4
+    </select>
+
+
+</mapper>

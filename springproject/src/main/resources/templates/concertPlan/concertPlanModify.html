@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/concertPlan/show_correction.css"/>
+
+
+    <style>
+        .clear {
+            clear: both;
+        }
+
+        .fileList .fileName {
+            padding-left: 20px;
+        }
+
+        .fileList .fileSize {
+            padding-right: 20px;
+            float: right;
+        }
+
+        .img_box li {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            list-style: none;
+            width: 430px;
+            height: 600px;
+            background-color: #fff;
+        }
+    </style>
+
+    <!-- 제이쿼리 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <title>공연일정 수정</title>
+</head>
+<header th:include="~{/header/header3 :: head}">
+
+</header>
+
+<body>
+
+<div class="show_detail_wrap">
+    <div class="show_detail">
+        <div class="detail">
+            <p>공연일정 수정</p>
+        </div>
+    </div>
+</div>
+<div th:object="${concert}">
+    <div class="show_info_wrap">
+        <form action="/concert/concertPlanModify" method="post" id="modifyForm" name="modifyForm">
+            <input type="hidden" th:field="*{showNumber}">
+            <input type="hidden" th:field="${criteria.pageNum}">
+            <input type="hidden" th:field="${criteria.amount}">
+            <!-- enctype="multipart/form-data"-->
+            <div class="show_info_content">
+                <div class="show_info">
+                    <div class="info_left">
+                        <div class="img_box">
+                        </div>
+                    </div>
+                    <div class="info_right">
+                        <div class="info_area1">
+                            <dl>
+                                <dt>분류*</dt>
+                                <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select
+                                        name="showType" class="classification" th:field="*{showType}" th:value="*{showType}">
+                                    <option style="background: white;" th:text="선택" value=""></option>
+                                    <option style="background: white;" th:text="뮤지션" th:value=1></option>
+                                    <option style="background: white;" th:text="퍼포먼스" th:value=2></option>
+                                </select></dd>
+                                <span><p class="warning_msg1">공연 분류를 선택해 주세요.</p></span>
+                                <dt>공연이름*</dt>
+                                <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="showName" th:field="*{showName}"
+                                                                               class="input_text"></dd>
+                                <span><p class="warning_msg2">공연 이름을 입력해 주세요.</p></span>
+
+                                <dt>공연일자*</dt>
+                                <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="date" name="showDay" th:field="*{showDay}"
+                                                                               class="input_text"></dd>
+                                <span><p class="warning_msg3">공연 일자를 입력해 주세요.</p></span>
+
+                                <dt>공연시간*</dt>
+                                <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="time" name="showTime" th:field="*{showTime}"
+                                                                               class="input_text"></dd>
+                                <span><p class="warning_msg4">공연 시간을 입력해 주세요.</p></span>
+
+                                <dt>공연장소*</dt>
+                                <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" class="input_text" th:field="*{showAddress}"
+                                                                               id="address_kakao" name="showAddress">
+                                </dd>
+                                <span><p class="warning_msg5">공연 장소를 입력해 주세요.</p></span>
+
+                                <dt>상세주소</dt>
+                                <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" class="input_text" th:field="*{showLocation}"
+                                                                                     name="showLocation"></dd>
+                                <span><p class="warning_msg6">공연 상세 주소를 입력해 주세요.</p></span>
+                            </dl>
+                        </div>
+                        <div class="info_area2">
+                            <dl>
+                                <dt>상세내용</dt>
+                                <dd>
+                                    <textarea name="showContent" id="" cols="84" rows="20" th:field="*{showContent}"></textarea>
+                                    <span><p class="warning_msg7">공연 상세 내용을 입력해 주세요.</p></span>
+                                </dd>
+
+                            </dl>
+                        </div>
+                        <div class="info_area2" style="float: right;">
+                            <div class="purchase_link_wrap">
+                                <input type="submit" class="purchase_link" value="수정완료">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type='hidden' id='fileName' name='file.fileName' value=''>
+            <input type='hidden' id='uuid' name='file.uuid' value=''>
+            <input type='hidden' id='uploadPath' name='file.uploadPath' value=''>
+        </form>
+    </div>
+</div>
+</form>
+
+<footer th:include="~{/footer/footer :: foot}">
+</footer>
+</body>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script th:inline="javascript">
+    let showNumber = [[${concert.showNumber}]];
+    let $fileName = "";
+    $(document).ready(function () {
+        $.getJSON("/file/concert/file", {showNumber: showNumber}, function(file){
+            console.log(file)
+            showUploadResult(file);
+            $fileName = file.uploadPath + "/s_" + file.uuid + "_" + file.fileName;
+            console.log("$fileName")
+            console.log($fileName)
+        })
+    })
+
+    let $showImage = $(".img_box");
+    function showUploadResult(file) {
+        let str = "";
+        str += "<li class='data' data-filename='" + file.fileName.substring(file.fileName.indexOf("_") + 1) + "' data-uuid='" + file.uuid + "' data-uploadpath='" + file.uploadPath + "' data-image='" + file.image + "' style='list-style: none;'>";
+        str += '<input id="file_drop" class="file_drop" readonly placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;공연 포스터를 드래그 앤 드롭으로 등록해주세요."  style="display: none;">'
+        str += "<img id='image-samplebox' class=\"file_drop\" src='/file/concert/display?fileName=" + file.uploadPath + "/" + file.uuid + "_"  + file.fileName + "' style=\"width: 100%; height: auto; overflow: hidden;\">";
+        str += "</li><span data-file='" + file.uploadPath + "/s_" + file.uuid + "_" + file.fileName + "' style='display: none;'></span>";
+        $showImage.html(str);
+    }
+
+    // 주소
+    window.onload = function () {
+        document.getElementById("address_kakao").addEventListener("click", function () { //주소입력칸을 클릭하면
+            //카카오 지도 발생
+            new daum.Postcode({
+                oncomplete: function (data) { //선택시 입력값 세팅
+                    document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                    document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+                }
+            }).open();
+        });
+    }
+
+    // 드래그 해서 영역에 아이템을 내리면 그게 files에 저장되고 그 이미지 url따서 그걸 div 영역에 이미지 태그로 넣는거
+    var fileList = []; //파일 정보를 담아 둘 배열
+    let str = "";
+    $(function () {
+        //드래그앤드랍
+        $(".img_box").on("dragenter", function (e) { // 드래그 한 아이템을 영역 위로 올렸을 때 반응
+            e.preventDefault(); // 페이지를 이동시킨다거나 form 안에 있는 input 등을 전송한다던가 그러한 동작이 있는데 e.preventDefault 는 그 동작을 중단
+            e.stopPropagation(); // e.stopPropagation는 이벤트가 상위 엘리먼트에 전달되지 않게 막아 준다.
+
+            $("#file_drop").show();
+            $("#image-samplebox").hide();
+
+        }).on("dragover", function (e) { // 드래그 하면서 마우스가 대상 객체의 위에 자리 잡고 있을 때 발생함.
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).css("background-color", "#FFF2E5");
+
+        }).on("dragleave", function (e) { // 드래그가 영역을 벗어났을 때
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).css("background-color", "#FFF");
+
+        }).on("drop", function (e) { // 아이템을 떨어뜨렸을 때
+            e.preventDefault();
+            // 아이템을 떨어트리면
+            var files = e.originalEvent.dataTransfer.files; // 기본 event를 불러오고.기본 event로 전송된 데이터를 가져와서.files 를 찾는다.
+
+            $("#file_drop").hide();
+            $("#image-samplebox").show();
+
+            $("#image-samplebox").attr("src", window.URL.createObjectURL(files[0]));
+            let formData = new FormData();
+            formData.append("uploadFiles", files[0]);
+
+            $.ajax({
+                url: "/file/concert/delete",
+                type: "post",
+                data: {fileName: $fileName},
+                success: function(){
+                }
+            });
+
+            $.ajax({
+                url: "/file/concert/upload",
+                type: "post",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (file) {
+                    // showUploadResult(files);
+                    fileList.push(file[0]);
+
+                    $("#fileName").val(file[0].fileName)
+                    $("#uuid").val(file[0].uuid)
+                    $("#uploadPath").val(file[0].uploadPath)
+                }
+            });
+        });
+        let formData = new FormData($("#fileForm")[0]);
+    });
+
+</script>
+<!-- 유효성 검사 -->
+<script>
+    $(".purchase_link").on("click", function (e) {
+        if (!$("select[name=showType]").val()) {
+            // console.log("length");
+            $(".warning_msg1").show();
+            $(".info_area2").css("min-height", "120px");
+            $("input[name=showType]").focus();
+            return false;
+        } else {
+            $(".warning_msg1").hide();
+        }
+
+        if (!$("input[name=showName]").val()) {
+            // console.log("length1");
+            $(".warning_msg2").show();
+            $(".info_area2").css("min-height", "120px");
+            $("input[name=showName]").focus();
+            return false;
+        } else {
+            $(".warning_msg2").hide();
+        }
+
+        if (!$("input[name=showDay]").val()) {
+            // console.log("length2");
+            $(".warning_msg3").show();
+            $(".info_area2").css("min-height", "120px");
+            $("input[name=showDay]").focus();
+            return false;
+        } else {
+            $(".warning_msg3").hide();
+        }
+
+        if (!$("input[name=showTime]").val()) {
+            // console.log("length3");
+            $(".warning_msg4").show();
+            $(".info_area2").css("min-height", "120px");
+            $("input[name=showTime]").focus();
+            return false;
+        } else {
+            $(".warning_msg4").hide();
+        }
+
+        if (!$("input[name=showAddress]").val()) {
+            // console.log("length4");
+            $(".warning_msg5").show();
+            $(".info_area2").css("min-height", "120px");
+            $("input[name=showAddress]").focus();
+            return false;
+        } else {
+            $(".warning_msg5").hide();
+        }
+
+        if (!$("input[name=showLocation]").val()) {
+            // console.log("length4");
+            $(".warning_msg6").show();
+            $(".info_area2").css("min-height", "120px");
+            $("input[name=showLocation]").focus();
+            return false;
+        } else {
+            $(".warning_msg6").hide();
+        }
+
+        if (!$("textarea[name=showContent]").val()) {
+            // console.log("length4");
+            $(".warning_msg7").show();
+            $(".info_area2").css("min-height", "120px");
+            $("input[name=showContent]").focus();
+            return false;
+        } else {
+            $(".warning_msg7").hide();
+        }
+        //console.log("aaa");
+        alert("수정이 완료되었습니다.")
+        $("form#modifyForm");
+        return true;
+    })
+</script>
+</html>

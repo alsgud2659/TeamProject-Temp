@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/recruit/recruitList.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/assets/js/recruit/jquery.dropotron.min.js"></script>
+    <script src="/assets/js/recruit/browser.min.js"></script>
+    <script src="/assets/js/recruit/breakpoints.min.js"></script>
+    <script src="/assets/js/recruit/util.js"></script>
+    <script src="/assets/js/recruit/main.js"></script>
+</head>
+
+<header th:include="~{/header/header3 :: head}">
+
+</header>
+<body>
+
+    <!-- 아티스트 모집공고 -->
+    <div class="big-box-2">
+        <div>
+            <div>
+                <p class="box-name">아티스트 모집 공고</p>
+            </div>
+            <div>
+                <div class="small-5-box" style="text-align:center;">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 표 -->
+    <div class="search-line">
+<!--        가져온거-->
+
+        <!-- rank_big_category 주간, 월간, 연간 div -->
+        <div class="rank_big_category">
+            <div class="rank_category">
+
+                <!-- rank_calendar 주간, 월간, 연간에 따른 calendar -->
+                <div class="rank_category_tiny category" selectedcategoryid="1">
+                    <a id="week-rank" style="cursor: pointer;" categoryId="1" class="on">전체</a>
+                    <a id="month-rank" style="cursor: pointer;" categoryId="2">뮤지션</a>
+                    <a id="year-rank" style="cursor: pointer;" categoryId="3">퍼포먼스</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="board-list">
+        <div class="board-table">
+            <table>
+                <thead>
+                <tr><th scope="col">구분</th><th scope="col">제목</th><th scope="col">공고시작 일시</th><th scope="col">게시물 번호</th></tr>
+                </thead>
+                <tbody class="list">
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+    <!-- 페이징 -->
+    <div class="paging">
+        <div class="list-pagenation">
+
+        </div>
+    </div>
+    <!-- <a href="#" class="moveTopBtn"> -->
+        <!-- <a href="#" class="return-top"></a>
+        <img src="return-top.png" alt="">
+        <div class="moveTopBtn">↑</div>
+    </a> -->
+    
+
+    <!-- 맨위로 가기 이미지 버튼 시작 -->
+<a href="#" class="jcm-top hidden-xs hidden-sm">
+    <i class="icon icon-angle-up"></i>
+    <!-- <img src="return-top2.jpg" alt=""> -->
+</a>
+
+    <footer th:include="~{/footer/footer :: foot}">
+
+    </footer>
+</body>
+
+<!-- 맨위로 올리는 버튼 -->
+<script src="/assets/js/recruit/recruitment.js"></script>
+<script th:inline="javascript">
+    // const $topBtn = document.querySelector(".moveTopBtn");
+    $(".rank_category_tiny a").on("click", function(e){
+        if($(e.target).hasClass('on')){
+            $(".rank_category_tiny a").removeClass('on');
+            $(e.target).addClass('on');
+        } else {
+            $(".rank_category_tiny a").removeClass('on');
+            $(e.target).addClass('on');
+        }
+    });
+
+    $( document ).ready( function() {$( window ).scroll( function() {if ( $( this ).scrollTop() > 200 ) {$( '.jcm-top' ).fadeIn();} else {$( '.jcm-top' ).fadeOut();}} );$( '.jcm-top' ).click( function() {$( 'html, body' ).animate( { scrollTop : 0 }, 400 );return false;} );} )
+        // <!-- 맨위로 가기 이미지 버튼 끝 -->
+
+
+    let pageNum = 1;
+    let amountN = 10;
+    let $table = $(".list");
+    let $page = $(".small-5-box");
+    let $paging = $(".list-pagenation");
+    let type = "A";
+    $(".rank_category_tiny a").on('click', function (e) {
+       e.preventDefault();
+       let id_check = $(this).attr("id");
+       if(id_check == 'week-rank') {
+           if(type != "A"){
+               type = "A";
+               RecruitList(type, pageNum,amountN);
+               RecruitListFour(type,pageNum,4);
+           }
+       }else if(id_check == 'month-rank') {
+           if(type != "M"){
+               type = "M";
+               RecruitList(type, pageNum,amountN);
+               RecruitListFour(type,pageNum,4);
+           }
+       }else if(id_check == 'year-rank') {
+           if(type != "P"){
+               type = "P";
+               RecruitList(type, pageNum,amountN);
+               RecruitListFour(type,pageNum,4);
+           }
+       }
+    });
+
+    RecruitList(type,pageNum,amountN);
+
+    function RecruitList(type, page, amount){
+        recruitmentService.getRecruitList(type, page,amount, function (total,list) {
+            $table.empty();
+            let str = "";
+            if(list == null || list.length == 0) {
+                $table.html("");
+                return;
+            }
+
+            $.each(list, function (i, recru) {
+                str += "<tr>";
+                str += "<td>";
+                str += (recru.recruitmentType == 'A') ? "전체": (recru.recruitmentType == 'M') ? "뮤지션": "퍼포먼스";
+                str += "</td>";
+                str += "<td><a href='/recruit/recruitInfo?pageNum="+pageNum+"&amount=10&type&keyword&recruitmentNumber=" +recru.recruitmentNumber+ "' class='clickLink'><em>" + recru.recruitmentName + "</em></a></td>";
+                str += "<td>" + (recru.recruitmentDay).substring(0,11) + " " + recru.recruitmentTime + "</td>";
+                str += "<td>"+recru.recruitmentNumber+"</td>"
+                str += "</tr>"
+            });
+            $table.append(str);
+            pageNum = page;
+            amountN = amount;
+            paging(total);
+        }, function (a,b,c){
+            console.log(a,b,c);
+        });
+    }
+
+    function paging(total) {
+        $paging.empty();
+        let endPage = Math.ceil(pageNum / 10.0) * 10;
+        let startPage = endPage - 9;
+        let realEnd = Math.ceil(total / 10.0);
+
+        if(endPage > realEnd){
+            endPage = realEnd;
+        }
+
+        let prev = startPage > 1;
+        let next = endPage * 10 < total;
+        let str = "";
+
+        str += `<a class="mypage-page-first changePage" href="${1}">&lt;&lt;</a>`;
+        if(prev) {
+            str += `<a class="mypage-page-prev changePage" href="${startPage-1}">&lt;</a>`;
+        }
+        for(let i = startPage; i <= endPage; i++){
+            str += pageNum == i ? `<a class="changePage"><p>${i}</p></a>` : `<a class="changePage" href="`+i+`">${i}</a>`;
+        }
+        if(next){
+            str += `<a class="mypage-page-next changePage" href="${endPage+1}">&gt;</a>`;
+        }
+        str += `<a class="mypage-page-last changePage" href="${realEnd}">&gt;&gt;</a>`;
+
+        $paging.append(str);
+    }
+
+    RecruitListFour(type,pageNum,4);
+
+    function RecruitListFour(type, page, amount){
+        recruitmentService.getRecruitList(type, page,amount, function (total,list) {
+            $page.empty();
+            let str = "";
+            if(list == null || list.length == 0) {
+                $page.html("");
+                return;
+            }
+
+            $.each(list, function (i, recru) {
+
+                let infoNumber = Number(recru.recruitmentNumber);
+
+                str += "<div class=\"image-plus-box\">";
+                str += "<div>";
+                str += "<a href='/recruit/recruitInfo?pageNum="+pageNum+"&amount=10&type&keyword&recruitmentNumber=" +recru.recruitmentNumber+ "' class='clickLink'><img src='https://cdn.icon-icons.com/icons2/3414/PNG/512/empty_pages_multiple_icon_217991.png' id='img-"+recru.recruitmentNumber+"' alt='#' width='220' height='300'></a>";
+                str += "</div>";
+                str += "<div class='small-5-box-textbox'>";
+                str += "<p class='small-5-box-uptext'>"+(recru.recruitmentDay).substring(0,11)+" "+recru.recruitmentTime+"</p>";
+                str += "<p class=\"small-5-box-downtext\">"+recru.recruitmentLocation+"</p>"
+                str += "</div>"
+                str += "</div>"
+
+                console.log("list in~~~~");
+                getImage(infoNumber);
+            });
+            $page.append(str);
+            pageNum = page;
+            amountN = amount;
+        }, function (a,b,c){
+            console.log(a,b,c);
+        });
+    }
+
+    function getImage(num) {
+        recruitmentService.getImg(num, function (file){
+            console.log("--------------------------------------"+file);
+            let src = "/file/work/display?fileName=" + file.uploadPath + "/" + file.uuid + "_"  + file.fileName;
+            $("#img-"+num).attr("src", src);
+        });
+    }
+
+    $(".list-pagenation").on("click", "a.changePage", function (e) {
+        e.preventDefault();
+        pageNum = $(this).attr("href");
+        RecruitList(type, pageNum);
+    })
+</script>
+
+</html>

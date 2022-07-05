@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.teamprojeect.mapper.user.UserMapper">
+    <!--회원가입-->
+    <insert id="join">
+        INSERT INTO TBL_USER
+        (USER_NUMBER, USER_ID, USER_PW, USER_NAME, USER_PHONE_NUMBER)
+        VALUES (SEQ_USER.NEXTVAL, #{userId}, #{userPw}, #{userName}, #{userPhoneNumber})
+    </insert>
+
+    <!--회원가입시 휴대폰 번호 조회 -> 있으면 ID 찾기 실행-->
+    <select id="searchPhoneNumber" resultType="string">
+        SELECT USER_PHONE_NUMBER
+        FROM TBL_USER
+        WHERE USER_PHONE_NUMBER = #{userPhoneNumber}  AND USER_STATUS = 1
+    </select>
+
+    <!--회원가입시 아이디 조회 -> 있으면 ID 찾기 실행-->
+    <select id="searchId" resultType="string">
+        SELECT USER_ID
+        FROM TBL_USER
+        WHERE USER_ID = #{userId}  AND USER_STATUS = 1
+    </select>
+
+    <!-- 회원가입 : ID, PW 찾기-->
+    <select id="find" resultType="userVO">
+        SELECT USER_ID, USER_REGISTER_DATE
+        FROM TBL_USER
+        WHERE USER_PHONE_NUMBER = #{text}  AND USER_STATUS = 1
+    </select>
+
+    <!-- 회원가입 : ID, PW 찾기-->
+    <select id="findCount" resultType="_Long">
+        SELECT COUNT(*)
+        FROM TBL_USER
+        WHERE USER_PHONE_NUMBER = #{text}  AND USER_STATUS = 1
+    </select>
+
+    <!-- 회원가입 : ID, PW 찾기-->
+    <select id="findPwCount" resultType="_Long">
+        SELECT COUNT(*)
+        FROM TBL_USER
+        WHERE USER_PHONE_NUMBER = #{userPhoneNumber} AND USER_ID = #{userId}  AND USER_STATUS = 1
+    </select>
+
+    <!--로그인-->
+    <select id="login" resultType="_Long">
+        SELECT USER_NUMBER
+        FROM TBL_USER
+        WHERE USER_ID = #{userId} AND USER_PW = #{userPw} AND (USER_STATUS = 1 OR USER_STATUS = 3)
+    </select>
+
+    <!-- 마이페이지 : 정보 조회-->
+    <select id="getUserDetail" resultType="userVO">
+        SELECT USER_NUMBER, USER_ID, USER_PW, USER_NAME, USER_PHONE_NUMBER, USER_EMAIL, USER_ARTIST_STATUS, USER_REGISTER_DATE, USER_STATUS
+        FROM TBL_USER
+        WHERE USER_NUMBER= #{userNumber}
+    </select>
+
+    <!-- 마이페이지 : 정보 수정-->
+    <update id="update">
+        UPDATE TBL_USER
+        SET USER_NAME = #{userName}, USER_PHONE_NUMBER = #{userPhoneNumber}, USER_EMAIL = #{userEmail}
+        WHERE USER_NUMBER = #{userNumber}
+    </update>
+
+    <!-- 마이페이지 : 관리자에 의한 아티스트 계정 등록시 status값 변경-->
+        <update id="updateArtist">
+        UPDATE TBL_USER
+        SET USER_ARTIST_STATUS = 4
+        WHERE USER_NUMBER = #{userNumber}
+    </update>
+
+    <!-- 마이페이지 : 비밀번호 수정-->
+    <update id="updatePw">
+        UPDATE TBL_USER
+        SET USER_PW = #{password}
+        WHERE USER_NUMBER = #{userNumber}
+    </update>
+
+    <!-- 마이페이지 : 회원 탈퇴-->
+    <update id="delete">
+        UPDATE TBL_USER
+        SET USER_STATUS = 0
+        WHERE USER_NUMBER = #{userNumber}
+    </update>
+
+    <select id="getUserList" resultType="userVO">
+        SELECT USER_NUMBER, USER_ID, USER_NAME, USER_PHONE_NUMBER, USER_ARTIST_STATUS, USER_REGISTER_DATE, USER_STATUS, ARTIST_STATUS
+        FROM (
+        SELECT ROWNUM RN, USER_NUMBER, USER_ID, USER_NAME, USER_PHONE_NUMBER, USER_ARTIST_STATUS, USER_REGISTER_DATE, USER_STATUS, ARTIST_STATUS
+        FROM (
+        SELECT tu.USER_NUMBER, USER_ID, USER_NAME, USER_PHONE_NUMBER, USER_ARTIST_STATUS, USER_REGISTER_DATE, USER_STATUS, ARTIST_STATUS
+        FROM TBL_USER tu JOIN TBL_ARTIST ta ON tu.USER_NUMBER = ta.USER_NUMBER
+        ORDER BY USER_REGISTER_DATE DESC
+        )
+        WHERE USER_STATUS = 1
+        <choose>
+            <when test="isArtist == true">
+                AND ARTIST_STATUS = 3
+            </when>
+        </choose>
+        <choose>
+            <when test="criteria.keyword != null">
+                AND (USER_NAME LIKE '%'||#{criteria.keyword}||'%' OR USER_ID LIKE '%'||#{criteria.keyword}||'%')
+            </when>
+        </choose>
+        <![CDATA[
+            AND ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+        )
+        WHERE RN > (#{criteria.pageNum} - 1) * #{criteria.amount}
+        ]]>
+    </select>
+
+    <select id="getTotal" resultType="_int">
+        SELECT COUNT(USER_STATUS)
+        FROM TBL_USER
+        WHERE USER_STATUS = 1
+    </select>
+
+    <select id="getArtistTotal" resultType="_int">
+        SELECT COUNT(USER_STATUS)
+        FROM TBL_USER
+        WHERE USER_STATUS = 1 AND USER_ARTIST_STATUS = 4
+    </select>
+
+    <select id="getSearchTotal" resultType="_int">
+        SELECT COUNT(USER_STATUS)
+        FROM (
+            SELECT USER_NUMBER, USER_ID, USER_NAME, USER_PHONE_NUMBER, USER_ARTIST_STATUS, USER_REGISTER_DATE, USER_STATUS
+            FROM TBL_USER
+            WHERE (USER_NAME LIKE '%'||#{keyword}||'%' OR USER_ID LIKE '%'||#{keyword}||'%')
+        )
+        WHERE USER_STATUS = 1
+    </select>
+
+    <insert id="kakaoJoin">
+        <selectKey keyProperty="userNumber" resultType="long" order="BEFORE">
+            SELECT SEQ_USER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_USER
+        (USER_NUMBER, USER_ID, USER_NAME, USER_PW)
+        VALUES (#{userNumber}, #{userId}, #{userName}, #{userPw})
+    </insert>
+    <select id="kakaoLogin" resultType="_Long">
+        SELECT USER_NUMBER
+        FROM TBL_USER
+        WHERE USER_ID = #{userId}  AND USER_STATUS = 1
+    </select>
+</mapper>

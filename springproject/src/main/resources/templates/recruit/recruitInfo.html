@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<!-- <html lang="en"> -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout">
+    
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/assets/css/recruit/recruitInfo.css">
+
+</head>
+
+<!-- <th:block th:replace="/templates/header/header3.html :: fragment-header"></th:block> -->
+
+<!--configFragment 선언-->
+<th:block th:fragment="fragment-header">
+    <!-- 이 영역에 공통으로 사용할 css, js library를 선언한다. -->
+    <link rel="stylesheet" th:href="@{/assets/css/header/header3.css}" >
+        
+    <!-- <script th:src="@{/js/common/common.js}"></script> -->
+
+    <!-- Content Page의 CSS fragment 삽입 -->
+    <th:block layout:fragment="css"></th:block>
+
+    <!-- Content Page의 script fragment 삽입 -->
+    <th:block layout:fragment="script"></th:block>
+</th:block>
+<header th:include="~{/header/header3 :: head}">
+
+</header>
+<body>
+    <div class="content">
+        <p class="title-text">아티스트 모집 공고</p>
+    </div>
+    <div class="big-box" style="display: block;" th:object="${recruitment}">
+        <div class="detail-title">
+            <span class="orange-box">new</span>
+            <p th:text="*{recruitmentName}"></p>
+        </div>
+        <div class="detail-date">
+            <span th:text="*{'등록일 : '+recruitmentRegisterDate}">
+            </span>
+            <span>조회수 : 506</span>
+        </div>
+        <div class="detail-view">
+            <div class="view-layout">
+                <div class="view-left">
+<!--                    <img th:if="*{file == null}" src="http://tkfile.yes24.com/upload2/PerfBlog/202205/20220523/20220523-42255.jpg" width="180"-->
+<!--                        height="252">-->
+                    <img id="img-view" src="" width="180"
+                        height="252">
+                </div>
+                <div class="view-right">
+                    <p class="view-title" th:text="*{recruitmentName}"></p>
+                    <div class="view-box">
+                        <div>
+                            <p class="noti" id="noti1"></p>
+                            <div class="view-long-box">
+                                <span class="title1"><em>신청기간</em></span>
+                                <span class="title1"  th:text="*{(recruitmentDay).substring(0,11)+' '+recruitmentTime}"></span>
+                                <span class="title1" th:text="*{recruitmentLocation}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view-btns">
+                        <!-- <a>신청하기</a> -->
+                        <!-- <a class="small-right-box"><span id="title1">신청하기</span></a> -->
+                        <a th:href="*{recruitmentUrl}" class="small-right-box"><span id="title1">신청하기</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 디테일 페이지 내용 -->
+        <div class="view-content">
+            <!--공연개요, 할인정보, 기획사정보-->
+            <div class="noti-view-coment">
+                <p class="noti-view-comen-tit">공연 개요</p>
+                <div class="noti-view-comen-txt" th:text="*{recruitmentSummary}">
+                </div>
+            </div>
+            <div class="noti-view-coment">
+                <p class="noti-view-comen-tit">공연 소개</p>
+                <div class="noti-view-comen-txt" th:text="*{recruitmentCondition}">
+                </div>
+            </div>
+            <div class="noti-view-coment">
+                <p class="noti-view-comen-tit">모집 조건</p>
+                <div class="noti-view-comen-txt" th:text="*{recruitmentIntroduce}">
+                </div>
+            </div>
+            <div class="noti-view-coment">
+                <p class="noti-view-comen-tit">기획사 정보</p>
+                <div class="noti-view-comen-txt" th:text="*{recruitmentHost}">
+                </div>
+            </div>
+            <div class="btn-box">
+                <div class="last-btn">
+                    <a href="/recruit/recruitList" class="noti-list">목록보기</a>
+                </div>
+            </div>
+ 
+        </div>
+
+    </div>
+    <!-- 맨위로 가기 이미지 버튼 시작 -->
+    <a href="#" class="jcm-top hidden-xs hidden-sm">
+        <i class="icon icon-angle-up"></i>
+        <!-- <img src="return-top2.jpg" alt=""> -->
+    </a>
+
+    <footer th:include="~{/footer/footer :: foot}">
+
+    </footer>
+
+</body>
+<script src="/assets/js/recruit/recruitment.js"></script>
+<script th:inline="javascript">
+    let number = [[${recruitment.recruitmentNumber}]];
+    $( document ).ready( function() {$( window ).scroll( function() {if ( $( this ).scrollTop() > 200 ) {$( '.jcm-top' ).fadeIn();} else {$( '.jcm-top' ).fadeOut();}} );$( '.jcm-top' ).click( function() {$( 'html, body' ).animate( { scrollTop : 0 }, 400 );return false;} );} )
+
+    $(document).ready(function (){
+        console.log(number);
+        getImage(number);
+    })
+
+
+    function getImage(num) {
+        recruitmentService.getImg(num, function (file){
+            console.log("--------------------------------------"+file);
+            let src = "/file/recruitment/display?fileName=" + file.uploadPath + "/" + file.uuid + "_"  + file.fileName;
+            $("#img-view").attr("src", src);
+        });
+    }
+
+
+</script>
+
+</html>

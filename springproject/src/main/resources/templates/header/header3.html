@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"></html> -->
+    <!-- thymeleaf사용한다는 선언 -->
+    
+    <!-- <th:block th:fragment="fragment-header"></th:block> -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/header/header3.css">
+</head>
+
+<body th:fragment="head">
+    <div class="header-box">
+
+
+        <div class="black-box" id="black-box" style="position: relative;">
+           <div class="black-box-right">
+               <a href="/user/login" id="consiceLogin" th:if="${session.userNumber} == null">로그인</a>
+               <a href="/user/logout" id="consiceLogout" th:if="${session.sessionCheck} == 'u'">로그아웃</a>
+               <a href="/logout" id="consicekakaoLogout"  th:if="${session.sessionCheck} == 'k'">로그아웃</a>
+<!--               <a href="" id="kakao"  th:if="${session.sessionCheck} == 'k'">카카오톡 탈퇴</a>-->
+               <a href="/user/login" th:if="${session.userNumber} == null">마이페이지</a>
+               <a href="/myPage/myPage" th:if="${session.userNumber} != null and ${session.userStatus} != 3">마이페이지</a>
+               <a href="/admin/adminMain" th:if="${session.userStatus} == 3">관리자페이지</a>
+               <a href="/user/userJoin"  th:if="${session.userNumber} == null">회원가입</a>
+           </div>
+        </div>
+       
+        
+        <header class="white-box" id="white-box" style="height: 100px;">
+
+            <div class="white-box-left">
+<!--               <a href="#" class="pf-ham">-->
+<!--                   <span class="pf-ham1"></span>-->
+<!--                   <span class="pf-ham2"></span>-->
+<!--                   <span class="pf-ham3"></span>-->
+<!--               </a>-->
+               <h1><a href="/main/" class="pf-logo" id="logo"><img src="/images/header/logo.png" style="width: 197%;" alt="" class="fixed"></a></h1>
+           </div>
+
+           
+           <div class="white-box-center" style="">
+               <h2 style="height: auto;"><a href="/artist/artistList" class="">아티스트 정보<span></span></a>
+       
+               
+                   <div style="display: none;">
+                       <a href="/New/Genre/GenreList.aspx?genretype=1&amp;genre=15456" class="">싱어송라이터</a>
+                       <a href="/New/Genre/GenreList.aspx?genretype=2&amp;genre=15462" class="">댄스팀</a>
+                       <a href="/New/Genre/GenreList.aspx?genretype=2&amp;genre=15463" class="">행위예술</a>
+                   </div>
+               
+               </h2>
+               <h2 style="height: auto;"><a href="/ranking/rankingAll" class="">아티스트 랭킹<span></span></a>
+       
+               
+                   <div style="display: none;">
+                       <a href="/New/Genre/GenreList.aspx?genretype=1&amp;genre=15457" class="">랭킹</a>
+                       <a href="/New/Genre/GenreList.aspx?genretype=2&amp;genre=15465" class="">지역별 랭킹</a>
+                   </div>
+               
+               </h2>
+
+               <h2 style="height: auto;"><a href="/concert/concertPlanList" class="">공연예정<span></span></a>
+
+
+                   <!-- <div style="display: none;">
+                       <a href="/New/Genre/GenreList.aspx?genretype=1&amp;genre=15460" class="">공연위치</a>
+                   </div> -->
+
+               </h2>
+               <h2 style="height: auto;"><a href="/concert/concertLive" class="">실시간공연<span></span></a>
+
+
+                   <!-- <div style="display: none;">
+                       <a href="/New/Genre/GenreList.aspx?genretype=1&amp;genre=999" class="">전체보기</a>
+                   </div> -->
+
+               </h2>
+
+
+               <h2 style="height: auto;"><a href="/work/workList" class="">작품목록<span></span></a>
+       
+               
+                   <!-- <div style="display: none;">
+                       <a href="/New/Genre/GenreList.aspx?genretype=1&amp;genre=15458" class="">전체보기</a>
+                   </div> -->
+               
+               </h2>
+               <h2 style="height: auto;"><a href="/recruit/recruitList" class="">모집공고<span></span></a>
+       
+               
+                   <!-- <div style="display: none;">
+                       <a href="/New/Genre/GenreList.aspx?genretype=1&amp;genre=15459" class="">전체보기</a>
+                       <a href="/New/Genre/GenreList.aspx?genretype=2&amp;genre=15471" class="">지역별공연</a>
+                   </div> -->
+               
+               </h2>
+
+
+               <!-- <div id="search">
+                   <input type="text">
+                   <button>검색</button>
+               </div> -->
+
+               <!-- <div class="search">
+                <input type="text" placeholder="검색어 입력">
+                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+              </div> -->
+<!--              <div class="white-box-right" id="search-right">-->
+<!--              <div class="srch-box" autocomplete="off">-->
+<!--                <input type="text" id="searchWord" autocomplete="off">-->
+<!--                <input type="hidden" name="" id="searchType" value="" autocomplete="off">-->
+<!--                <a href="#" onclick="jsf_mm_Search();"><img src="http://tkfile.yes24.com/imgNew/common/pf-srch.png" alt="" class="trans"><img src="http://tkfile.yes24.com/imgNew/common/pf-srch-w.png" alt="" class="fixed"></a>-->
+<!--            </div>-->
+<!--            </div>-->
+
+           </div>
+
+
+               </header>
+           </div>
+
+    <script type="text/javascript">
+        function kakaoLogout() {
+            if (!Kakao.Auth.getAccessToken()) {
+                alert('Not logged in.')
+                return
+            }
+            Kakao.Auth.logout(function() {
+                alert('logout ok\naccess token -> ' + Kakao.Auth.getAccessToken())
+            })
+        }
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="/assets/js/header/header.js"></script>
+</body>
+
+<script th:inline="javascript">
+$(document).ready(function () {
+    if([[$session.userNumber]] == null) {
+        console.log("널이야.")
+    } else {
+        console.log("널이야2.")
+    }
+    // let session = ;
+    console.log(($(location).attr('host')));
+})
+
+$("#kakao").click(function (e) {
+    e.preventDefault();
+    secession();
+})
+function secession() {
+    Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function(response) {
+            console.log(response);
+            //callback(); //연결끊기(탈퇴)성공시 서버에서 처리할 함수
+            window.location.href='/'
+        },
+        fail: function(error) {
+            console.log('탈퇴 미완료')
+            console.log(error);
+        },
+    });
+};
+
+</script>
+</html>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.teamprojeect.mapper.work.WorkMapper">
+    <!-- 작품 등록 신청 (status 1) -->
+    <insert id="insertApply">
+        <selectKey keyProperty="workNumber" resultType="long" order="BEFORE">
+            SELECT SEQ_WORK.NEXTVAL FROM DUAL
+        </selectKey>
+        <![CDATA[
+        INSERT INTO TBL_WORK
+        (WORK_NUMBER,ARTIST_NUMBER, WORK_NAME, WORK_GENRE, WORK_DESCRIPTION, WORK_YOUTUBE_URL, WORK_PURCHASE_URL, WORK_TAG, WORK_RELEASE_DATE, WORK_REGISTER_DATE, WORK_UPDATE_DATE, WORK_STATUS)
+        VALUES(#{workNumber}, #{artistNumber}, #{workName}, #{workGenre},#{workDescription}, #{workYoutubeUrl}, #{workPurchaseUrl}, #{workTag}, #{workReleaseDate}, SYSDATE, SYSDATE, 1)
+        ]]>
+    </insert>
+
+    <!--관리자 등록 승인 (status -> 3)-->
+    <update id="insertAdmin">
+        <![CDATA[
+        UPDATE TBL_WORK
+        SET WORK_STATUS = 3
+        WHERE WORK_NUMBER = #{workNumber}
+        ]]>
+    </update>
+
+    <!--아티스트 정보 수정 신청 (status 2)-->
+    <update id="updateApply">
+        <![CDATA[
+        UPDATE TBL_WORK
+        SET WORK_NAME = #{workName}, WORK_DESCRIPTION = #{workDescription}, WORK_YOUTUBE_URL = #{workYoutubeUrl}, WORK_PURCHASE_URL = #{workPurchaseUrl},
+         WORK_UPDATE_DATE = SYSDATE, WORK_STATUS = 2
+        WHERE WORK_NUMBER = #{workNumber}
+        ]]>
+    </update>
+
+    <!--관리자 수정 승인 (status -> 3)--> <!---->
+    <update id="updateAdmin">
+        <![CDATA[
+        UPDATE TBL_WORK
+        SET WORK_STATUS = 3
+        WHERE WORK_NUMBER = #{workNumber}
+        ]]>
+    </update>
+
+    <!--작품 삭제 및 신청 반려--> <!---->
+    <update id="delete">
+        <![CDATA[
+        UPDATE TBL_WORK SET WORK_STATUS = 4 WHERE WORK_NUMBER = #{workNumber}
+        ]]>
+    </update>
+
+    <!-- 작품 등록 신청 상세보기 -->
+    <select id="getDetail" resultType="workVO">
+        SELECT WORK_NUMBER, WORK_NAME, ARTIST_NAME, WORK_GENRE, WORK_DESCRIPTION, WORK_YOUTUBE_URL, WORK_PURCHASE_URL, WORK_TAG, WORK_RELEASE_DATE, WORK_REGISTER_DATE,
+                WORK_UPDATE_DATE
+        FROM (
+            SELECT *
+                    FROM TBL_ARTIST ta, TBL_WORK tw
+                    WHERE ta.ARTIST_NUMBER  = tw.ARTIST_NUMBER
+            )
+        WHERE WORK_NUMBER = #{workNumber}
+    </select>
+
+    <select id="getArtist" resultType="_int">
+        SELECT ARTIST_NUMBER
+        FROM TBL_WORK
+        WHERE WORK_NUMBER = #{workNumber}
+    </select>
+
+    <!-- 작품 등록 신청 전체 목록 -->
+    <select id="getList" resultType="workVO">
+        <![CDATA[
+            SELECT WORK_NUMBER, WORK_NAME, ARTIST_NAME, WORK_GENRE, WORK_DESCRIPTION, WORK_YOUTUBE_URL, WORK_PURCHASE_URL, WORK_TAG, WORK_RELEASE_DATE, WORK_REGISTER_DATE, WORK_UPDATE_DATE
+            FROM (
+                SELECT /*+ INDEX_DESC(TBL_WORK SYS_C007147) */
+                ROWNUM RN, WORK_NUMBER, WORK_NAME, ARTIST_NAME, WORK_GENRE, WORK_DESCRIPTION, WORK_YOUTUBE_URL, WORK_PURCHASE_URL, WORK_TAG, WORK_RELEASE_DATE, WORK_REGISTER_DATE, WORK_UPDATE_DATE
+                FROM (
+                    SELECT *
+                    FROM TBL_ARTIST ta, TBL_WORK tw
+                    WHERE ta.ARTIST_NUMBER  = tw.ARTIST_NUMBER
+                )
+                WHERE WORK_STATUS = 1 AND ROWNUM <= #{pageNum} * #{amount}
+                )
+            WHERE RN > (#{pageNum} - 1) * #{amount}
+        ]]>
+    </select>
+
+    <!--작품 태그 검색-->
+    <select id="getKeyword" resultType="workVO">
+        <![CDATA[
+            SELECT WORK_NUMBER, WORK_NAME, ARTIST_NAME, WORK_GENRE, WORK_DESCRIPTION, WORK_YOUTUBE_URL, WORK_PURCHASE_URL, WORK_TAG, WORK_RELEASE_DATE, WORK_REGISTER_DATE, WORK_UPDATE_DATE
+            FROM (
+                SELECT /*+ INDEX_DESC(TBL_WORK SYS_C007238) */
+                ROWNUM RN, WORK_NUMBER, WORK_NAME, ARTIST_NAME, WORK_GENRE, WORK_DESCRIPTION, WORK_YOUTUBE_URL, WORK_PURCHASE_URL, WORK_TAG, WORK_RELEASE_DATE, WORK_REGISTER_DATE, WORK_UPDATE_DATE
+                FROM (
+                    SELECT *
+                    FROM TBL_ARTIST ta, TBL_WORK tw
+                    WHERE ta.ARTIST_NUMBER  = tw.ARTIST_NUMBER
+                )
+                WHERE WORK_STATUS = 3 AND ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+                ]]>
+            <choose>
+                <when test="listDTO.tag != null">
+                    <foreach collection="listDTO.tag" item="tag">
+                        AND WORK_TAG LIKE '%'||#{tag}||'%'
+                    </foreach>
+                </when>
+            </choose>
+        <![CDATA[
+            )
+            WHERE RN > (#{criteria.pageNum} - 1) * #{criteria.amount}
+        ]]>
+        ORDER BY WORK_REGISTER_DATE DESC
+    </select>
+
+    <!--태그 뽑기-->
+    <select id="getTag" resultType="string">
+        SELECT WORK_TAG
+        FROM TBL_WORK
+    </select>
+
+    <select id="getTotalApply" resultType="_int">
+        SELECT COUNT(WORK_NUMBER)
+        FROM TBL_WORK
+        WHERE WORK_STATUS = 1
+    </select>
+
+    <select id="getTotalListApply" resultType="_int">
+        SELECT COUNT(WORK_NUMBER)
+        FROM TBL_WORK
+        WHERE WORK_STATUS = 3
+    </select>
+</mapper>
