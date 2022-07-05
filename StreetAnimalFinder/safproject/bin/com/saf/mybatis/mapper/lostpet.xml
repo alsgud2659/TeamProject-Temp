@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Public 3.0//EN" "http//mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Lostpet">
+
+	<!-- 실종동물 작성 -->
+	<insert id="insert" parameterType="lostPetVO">
+		insert into lostpet (lpstatus, lparea1, lparea2, lparea3, lpspecies, lpbreed, lpgender, lpage, lpcolor, lptime, lpcontent, unum)
+		values(#{lpstatus}, #{lparea1},#{lparea2},#{lparea3}, #{lpspecies}, #{lpbreed}, #{lpgender}, #{lpage}, #{lpcolor}, #{lptime}, #{lpcontent},#{unum})
+	</insert>
+
+	<!-- 최근 실종동물 번호 -->
+	<select id="getSeq" resultType="_int">
+		select lpnumber from lostpet
+		order by 1 desc limit 0, 1;
+	</select>
+
+	<!-- 첨부파일 추가 -->
+	<insert id="imginsert" parameterType="LostPetFilesVO">
+		insert into file (fname,
+		foriginal, lpnumber)
+		values(#{fname}, #{foriginal}, #{lpnumber} )
+	</insert>
+
+	<!-- 실종동물 목록 -->
+	<select id="selectAll" parameterType="map"
+		resultType="lostpetDTO">
+		select lpnumber, lparea1, lparea2, lparea3, lpspecies,lpgender, lpage, lpcolor, lpbreed, lptime, lpstatus, lpcontent, user.unum, user.uphone, user.uname
+		from lostpet LEFT JOIN user
+		ON lostpet.unum = user.unum
+		WHERE lpstatus != 3
+		ORDER BY 1 desc
+	</select>
+
+   <!-- 실종돔물 상세보기(전체 정보 조회) -->
+   <select id="selectDetail" parameterType="_int" resultType="lostPetDTO">
+      SELECT lpnumber, lpstatus, lparea1, lparea2, lparea3, lpspecies, lpbreed, lpgender, lpage, lpcolor,lptime, lpcontent, user.unum, user.uphone, user.uname
+		from lostpet LEFT JOIN user
+		ON lostpet.unum = user.unum
+      WHERE lpnumber = #{lpnumber}
+   </select>
+   
+   
+   	<!-- 실종동물 삭제 -->
+	<delete id="delete" parameterType="_int">
+		update lostpet
+		set lpstatus= '3'
+		where lpnumber = #{lpnumber}
+	</delete>
+	
+	<!-- 실종동물 수정 -->
+	<update id="update" parameterType="lostPetVO">
+		update lostpet
+		set lpstatus=#{lpstatus}, lparea1=#{lparea1}, lparea2=#{lparea2}, lparea3=#{lparea3}, lpspecies=#{lpspecies}, lpbreed=#{lpbreed}, lpgender=#{lpgender}, lpage=#{lpage}, lpcolor=#{lpcolor}, lptime=#{lptime}, lpcontent=#{lpcontent}
+		where lpnumber = #{lpnumber}
+	</update>
+   
+   
+   	<!-- 첨부파일 가져오기 -->
+	<select id="FileDelect" parameterType="_int" resultType="LostPetFilesVO">
+		SELECT fname, lpnumber, foriginal FROM file 
+		where lpnumber = #{lpnumber}
+	</select> 
+   
+
+	
+<!-- 		첨부파일 추가
+	<insert id="fileInsert" parameterType="fileVO">
+		insert into file (fname, bnumber, foriginal) 
+		values(#{fname}, #{bnumber}, #{foriginal})
+	</insert>
+	
+	-->
+	
+<!-- 첨부파일 삭제 -->
+	<delete id="imgdelete" parameterType="_int">
+		delete from file where lpnumber = #{lpnumber}
+	</delete>
+	
+	<!-- 찾았어요 -->
+	<select id="getFindCount" resultType="_int">
+		select
+		count(case when lpstatus=3 then 1 end ) as TotalFound
+		from lostpet
+	</select>
+	
+	
+	
+	  <!-- 댓글 목록 -->
+   <select id="selectReplies" parameterType="_int" resultType="LostPetReplyDTO">
+      select rnumber, lpnumber, r.unum, u.uid, rcontent 
+      from reply r join user u 
+      on r.unum = u.unum and lpnumber = #{lpnumber}
+      order by 1 desc
+   </select>
+   
+   <!-- 댓글 등록 -->
+   <insert id="insertReply" parameterType="LostPetReplyVO">
+      insert into reply (lpnumber, unum, rcontent) 
+      values(#{lpnumber}, #{unum}, #{rcontent})
+   </insert>
+   
+   <!-- 댓글 삭제 -->
+   <delete id="deleteReply" parameterType="_int">
+      delete from reply where rnumber = #{rnumber}
+   </delete>
+   
+   <!-- 댓글 수정 -->
+   <update id="updateReply" parameterType="LostPetReplyVO">
+      update reply 
+      set rcontent = #{rcontent} 
+      where rnumber = #{rnumber}
+   </update>
+	
+	
+	
+</mapper>

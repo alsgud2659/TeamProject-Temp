@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+
+	<!-- 아이디 중복검사 -->
+	<select id="checkId" parameterType="string" resultType="_int">
+		select count(uId) from user 
+		where uId = #{uId}
+	</select>
+	
+	<!-- 회원 가입 -->
+   <insert id="join" parameterType="UserVO">
+      insert into user (uid, upw, uphone, uimage, uname, uaddr1, uaddr2, uemail)
+      values (#{uid}, #{upw}, #{uphone}, #{uimage}, #{uname}, #{uaddr1}, #{uaddr2}, #{uemail})
+      
+   </insert>
+	
+	<!-- 로그인 -->
+   <select id="login" parameterType="map" resultType="_int">
+      select unum from user where uid=#{uid} and upw=#{upw}
+   </select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="updateUser" parameterType="userVO">
+		update user
+		set uphone = #{uphone}, uaddr1 = #{uaddr1}, uaddr2 = #{uaddr2}, uemail = #{uemail}
+		where unum = #{unum}
+	</update>
+	
+	<!-- 프로필 변경 -->
+	<update id="updateUserProfile" parameterType="userVO">
+		update user
+		set uname = #{uname}
+		where unum = #{unum}
+	</update>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updateUpw" parameterType="userVO">
+		update user
+		set upw = #{upw}
+		where unum = #{unum}
+	</update>
+	
+	<!-- 회원탈퇴 -->
+	<delete id="delUser" parameterType="_int">
+		delete from user where unum = #{unum}
+	</delete>
+	
+	<!-- 회원 정보 조회 -->
+	<select id="getUserInfo" parameterType="_int" resultType="userVO">
+		select 
+			unum, uid, upw, uimage, uphone, uname, uaddr1, uaddr2, uemail
+		from user where unum = #{unum}			
+	</select>
+
+	
+	
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,132 @@
+<tr class="modi-table-tr">
+                                <th class="modi-table-th">
+                                    <span class="col1-sp">생년월일</span>
+                                </th>
+                                <td class="modi-table-td">
+                                    <div div class="modi-item">
+                                        <select name="ybirth" id="_ybirth" class="sel-con">
+                                            <option value>선택</option>
+                                            <option value="2022">2022</option>
+                                        </select> 년 &nbsp;&nbsp;
+                                        <select name="mbirth" id="_mbirth" class="sel-con">
+                                            <option value>선택</option>
+                                            <option value="01">01</option>
+                                        </select> 월 &nbsp;&nbsp;
+                                        <select name="dbirth" id="_dbirth" class="sel-con">
+                                            <option value>선택</option>
+                                            <option value="01">01</option>
+                                        </select> 일 &nbsp;&nbsp;
+                                        <div>
+                                            <table class="cal-type">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="radio" name="caltype" checked="checked" id="caltype1">
+                                                            <label for="caltype1">양력</label>
+                                                        </td>
+                                                        <td>
+                                                            <input type="radio" name="caltype" id="caltype0">
+                                                            <label for="caltype0">음력</label>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="div_info_maroon">
+                                        <span class="setSubTextColor"></span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <section class="container">
+        <div class="row">
+            <div style="flex: 0 0 50%; max-width: 50%">
+                <img class="img-fluid" src="1.jpg" alt="">
+            </div>
+            <div style="flex: 0 0 50%; max-width: 50%">
+                <div style="padding-top: 5.71429rem !important; padding-bottom: 5.71429rem !important;">
+                    <h3 class="font-weight-bold">내 프로필 보기</h3>
+                    <p>프로필을 수정 할 수 있습니다.</p>
+                    <div class="goPoint">
+                        <div>
+                            <a class="atobutton" href="mypage_profile.html">내 프로필 보기</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div style="flex: 0 0 50%; max-width: 50%">
+                <div style="padding-top: 5.71429rem !important; padding-bottom: 5.71429rem !important;">
+                    <h3 class="font-weight-bold">회원정보 수정</h3>
+                    <p>회원정보를 수정 할 수 있는 페이지로 이동합니다.</p>
+                    <div class="goPoint">
+                        <div>
+                            <a class="atobutton" href="mypage_modify.html">회원정보 수정</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+                </div>
+            </div>
+            <div style="flex: 0 0 50%; max-width: 50%">
+                <img class="img-fluid" src="2.PNG" alt="">
+            </div>
+        </div>
+
+        <div class="row">
+            <div style="flex: 0 0 50%; max-width: 50%">
+                <img class="img-fluid" src="3.jpg" alt="">
+            </div>
+            <div style="flex: 0 0 50%; max-width: 50%">
+                <div style="padding-top: 5.71429rem !important; padding-bottom: 5.71429rem !important;">
+                    <h3 class="font-weight-bold">비밀번호 변경</h3>
+                    <p>비밀번호를 변경합니다.</p>
+                    <div class="goPoint">
+                        <div>
+                            <a class="atobutton" href="mypage_pw.html">비밀번호 변경</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div style="flex: 0 0 50%; max-width: 50%">
+                <div style="padding-top: 5.71429rem !important; padding-bottom: 5.71429rem !important;">
+                    <h3 class="font-weight-bold">회원탈퇴</h3>
+                    <p>회원탈퇴를 합니다.</p>
+                    <div class="goPoint">
+                        <div>
+                            <a class="atobutton" href="mypage_exit.html">회원탈퇴</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+                </div>
+            </div>
+            <div style="flex: 0 0 50%; max-width: 50%">
+                <img class="img-fluid" src="4.PNG" alt="">
+            </div>
+        </div>
+    </section>
+
+
+
+    <div class="img_box">
+                            <a href="#">
+                                <div>
+                                    <img src="meil.png" alt="">
+                                </div>
+                            </a>
+                    </div>

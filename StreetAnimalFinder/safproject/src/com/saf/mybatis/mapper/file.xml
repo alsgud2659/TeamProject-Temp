@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="File">
+	<!--게시판 첨부파일 추가 -->
+	<insert id="insert" parameterType="fileVO">
+		insert into file (fname, bnumber, foriginal) 
+		values(#{fname}, #{bnumber}, #{foriginal})
+	</insert>
+	
+	<!--게시판  첨부파일 삭제 -->
+	<delete id="delete" parameterType="_int">
+		delete from file where bnumber = #{bnumber}
+	</delete>
+	
+	<!--게시판  첨부파일 가져오기 -->
+	<select id="select" parameterType="_int" resultType="boardVO">
+		select fname, bnumber, foriginal from file 
+		where bnumber = #{bnumber}
+	</select>
+	
+	<!-- 실종동물 첨부파일 추가 -->
+	<insert id="lostpetinsertfile" parameterType="boardVO">
+		insert into file (fname, lpnumber, foriginal) 
+		values(#{fname}, #{lpnumber}, #{foriginal})
+	</insert>
+	
+	<!-- 실종동물 첨부파일 삭제 -->
+	<delete id="lostpetdeletefile" parameterType="_int">
+		delete from file where lpnumber = #{lpnumber}
+	</delete>
+	
+	<!-- 실종동물 첨부파일 가져오기 -->
+	<select id="lostpetselectfile" parameterType="_int" resultType="boardVO">
+		select fname, lpnumber, foriginal from file 
+		where lpnumber = #{lpnumber}
+	</select>
+	
+	<!-- 유저 프로필 첨부파일 추가 -->
+	<insert id="userinsertfile" parameterType="boardVO">
+		insert into file (fname, uid, foriginal) 
+		values(#{fname}, #{uid}, #{foriginal})
+	</insert>
+	
+	<!-- 유저 프로필 첨부파일 삭제 -->
+	<delete id="userdeletefile" parameterType="_int">
+		delete from file where uid = #{uid}
+	</delete>
+	
+	<!-- 유저 프로필 첨부파일 가져오기 -->
+	<select id="userselectfile" parameterType="_int" resultType="boardVO">
+		select fname, uid, foriginal from file 
+		where uid = #{uid}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

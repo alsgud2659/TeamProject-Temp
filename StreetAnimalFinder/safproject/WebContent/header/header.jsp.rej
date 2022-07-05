@@ -1,0 +1,9 @@
+diff a/safproject/WebContent/header/header.jsp b/safproject/WebContent/header/header.jsp	(rejected hunks)
+@@ -86,6 +86,7 @@
+    	<a href=""style="text-decoration:none; ">커뮤니티</a>
+     </div>
+ =======
++>>>>>>> .merge_file_a23124
+ </header>
+ 
+ 

@@ -1,0 +1,333 @@
+/* body font */
+body {
+  font-family: "Gotham", "Noto Sans KR", sans-serif !important;
+  line-height: 1.6;
+  color: #333;
+  text-rendering: optimizeLegibility;
+  background-color: #fff;
+}
+
+body.faq {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.font-weight-bold {
+  font-weight: 700 !important;
+}
+
+/* div 공통? */
+
+div {
+  display: block;
+}
+
+/* 목차 ul div*/
+.g-my-30 {
+  margin-top: 2.14286rem !important;
+  margin-bottom: 2.14286rem !important;
+}
+
+.justyfy-content-between {
+    justify-content: flex-end !important;
+}
+
+.col-lg-8 {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* 목차 ul*/
+.list-inline {
+  padding-left: 0;
+  list-style: none;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+ul.menu {
+  font-size: 0.8rem;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+  margin-top: 0;
+  font-size: 1.3rem;
+}
+
+/* 목차 li */
+ul li {
+  display: inline-block;
+}
+
+.g-mb-10 {
+  margin-bottom: 0.71429rem !important;
+  padding-right: 1.5rem !important;
+}
+
+.px-4 {
+  padding-left: 1.5rem !important;
+}
+
+.fence {
+  color: #e0dbdb;
+}
+
+/* 목차 li 글자 */
+.faq-list-a {
+  color: #019267 !important;
+  text-transform: uppercase !important;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+a {
+  text-decoration: none !important;
+  outline: none;
+  background-color: transparent;
+}
+
+/* 목차 클릭시 이동 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 내용박스 div 레이아웃 1 */
+.g-mb-120 {
+  margin-bottom: 8.57143rem !important;
+}
+
+.faq-container {
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (min-width: 576px) {
+  .faq-container {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .faq-container {
+    max-width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .faq-container {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .faq-container {
+    max-width: 1140px;
+  }
+}
+
+/* 내용박스 div 레이아웃 2 */
+.g-py-50 {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.faq-box-gap {
+  margin-bottom: 3.57143rem !important;
+}
+
+/* 내용박스 div 레이아웃 3 */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+/* 내용박스 div 레이아웃 4 */
+.col {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* 내용박스 div 레이아웃 5-1 */
+.text-center {
+  text-align: center !important;
+}
+
+.g-mb-20 {
+  margin-bottom: 0;
+}
+
+.faq-h4 {
+  margin-bottom: 0.5rem !important;
+  line-height: 1.4;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  font-size: 1.29rem;
+  display: block;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.mb-2,
+.my-2 {
+  margin-top: 2rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+/* 내용박스 div 레이아웃 5-2 */
+.u-accodion-color-primary {
+  font-weight: 400;
+  line-height: 1.6;
+  color: #333;
+  font-size: 1rem;
+  text-align: left;
+}
+
+/* 내용박스 div 레이아웃 6 */
+.card {
+  position: relative;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.g-brd-none {
+  border: none !important;
+}
+.rounded-0 {
+  border-radius: 0 !important;
+}
+
+/* 내용박스 div 레이아웃 7 질문 */
+.g-brd-bottom {
+  border-bottom: solid 1px transparent !important;
+  margin: 20px;
+}
+
+.g-brd-gray-light-v4 {
+  border-color: #f0eded !important;
+}
+
+.g-pa-0 {
+  padding: 0 !important;
+}
+
+.h5 {
+  font-size: 1.07rem;
+  font-weight: 500;
+  margin-top: 0;
+}
+ 
+.content {
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.g-px-30 {
+  padding-left: 2.14286rem !important;
+  padding-right: 2.14286rem !important;
+}
+
+.g-py-20 {
+  padding-top: 0rem !important;
+  padding-bottom: 0rem !important;
+}
+
+.g-color-main {
+  color: #555 !important;
+}
+
+/* 레이아웃 7 효과 */
+.content-wrap {
+
+}
+
+.d-flex {
+  
+}
+/* .tpt {
+  line-height: 25px;
+  border-radius: 5px;
+} */
+
+/* 레이아웃 8 본문 */
+.g-pa-30 {
+  padding-top: 2.414286rem !important;
+  padding-bottom: 2.414286rem !important;
+  padding-right: 2.414286rem !important;
+  padding-left: 0 !important;
+}
+
+.g-color-gray-dark-4 {
+  color: #777;
+}
+
+.u-accordion__body {
+  font-size: 0.8rem;
+}
+
+/* 내용 */
+
+/* 테두리 */
+.faq-box {
+  box-shadow: 0 0 2px #c9c7c7;
+  border-radius: 0.25rem !important;
+}
+
+/* 내용 폰트 */
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+.h7,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.4;
+}
+
+h2 {
+}
